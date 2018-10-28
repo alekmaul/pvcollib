@@ -17,7 +17,7 @@ https://github.com/alekmaul/pvcollib/wiki/Introduction
 
 PVCollib and affiliated tools are distributed under the MIT license (see pvcollib_license.txt file)
 
-If you want to donate to support PVSneslib development:  
+If you want to donate to support PVcollib development:  
 [![Paypal](https://www.paypalobjects.com/fr_FR/FR/i/btn/x-click-but04.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y5USKF23DQVLC)
 
 Thanks =)

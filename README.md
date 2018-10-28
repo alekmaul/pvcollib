@@ -1,7 +1,7 @@
 # A C library for the ColecoVision #
 PVcollib V1.0.0 (dd, mmm, yyyy)  
 
-PVcolLib is an open and free library to develop programs for Nintendo SNES in C language.
+PVcolLib is an open and free library to develop programs for ColecoVision in C language.
 
 It contains sdcc compiler / linker and a library (sources included) which offer facilities to use backgrounds / sprites / pads / music & sound on ColecoVision system. 
 C Library is based on works from Daniel Bienvenu, a great Colecovision coder and music composer (http://ccjvq.com/newcoleco/indexfr.html).

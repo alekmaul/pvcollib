@@ -1,0 +1,103 @@
+\hypertarget{a00053}{}\section{video.\+h File Reference}
+\label{a00053}\index{video.\+h@{video.\+h}}
+
+
+contains the basic definitions for controlling the video hardware.  
+
+
+{\ttfamily \#include $<$coleco/coltypes.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{a00053_a556fbfbc86f53ebce1cd33b75508a30b}\label{a00053_a556fbfbc86f53ebce1cd33b75508a30b}} 
+void \hyperlink{a00053_a556fbfbc86f53ebce1cd33b75508a30b}{vdp\+\_\+disablenmi} (void)
+\begin{DoxyCompactList}\small\item\em Disable N\+MI interruption Disallows N\+MI interruption to occur. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_a52fcf46fb1e68b8fcc6f1f7c8eba5e72}\label{a00053_a52fcf46fb1e68b8fcc6f1f7c8eba5e72}} 
+void \hyperlink{a00053_a52fcf46fb1e68b8fcc6f1f7c8eba5e72}{vdp\+\_\+disablevdp} (void)
+\begin{DoxyCompactList}\small\item\em Disable V\+DP interruption Disallows V\+DP to work (so screen is not active) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_acfc547ddc2c924a276f1ee0351751102}\label{a00053_acfc547ddc2c924a276f1ee0351751102}} 
+void \hyperlink{a00053_acfc547ddc2c924a276f1ee0351751102}{vdp\+\_\+enablenmi} (void)
+\begin{DoxyCompactList}\small\item\em Enable N\+MI interruption Allows N\+MI interruption to occur. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_a79f55e5785e18e189852d14a78f7da64}\label{a00053_a79f55e5785e18e189852d14a78f7da64}} 
+void \hyperlink{a00053_a79f55e5785e18e189852d14a78f7da64}{vdp\+\_\+enablevdp} (void)
+\begin{DoxyCompactList}\small\item\em Enable V\+DP interruption Allows V\+DP to work (so screen is now active) \end{DoxyCompactList}\item 
+void \hyperlink{a00053_ac70a5cddd82471f4d7ca9b84d8a58760}{vdp\+\_\+setchar} (u8 first, u8 count, unsigned offset, u8 flags)
+\begin{DoxyCompactList}\small\item\em Put some chars of default font. \end{DoxyCompactList}\item 
+void \hyperlink{a00053_a56edf716a6be2b5850249d24861fc845}{vdp\+\_\+setdefaultchar} (u8 flags)
+\begin{DoxyCompactList}\small\item\em Put default font. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_a29716781cc1ede1b6958c0a329c245ea}\label{a00053_a29716781cc1ede1b6958c0a329c245ea}} 
+void \hyperlink{a00053_a29716781cc1ede1b6958c0a329c245ea}{vdp\+\_\+setmode1txt} (void)
+\begin{DoxyCompactList}\small\item\em Activate mode 1 in text mode Activate Mode 1 of T\+MS in text mode, 16K of V\+R\+AM, sprites 16x16 1 V\+R\+AM (duplicated each for 8 lines) that can be populate C\+H\+R\+G\+EN is located at \$0000, C\+O\+L\+T\+AB is located at \$2000. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_a508aaacd078ecdecf5883795c04bc40c}\label{a00053_a508aaacd078ecdecf5883795c04bc40c}} 
+void \hyperlink{a00053_a508aaacd078ecdecf5883795c04bc40c}{vdp\+\_\+setmode2bmp} (void)
+\begin{DoxyCompactList}\small\item\em Activate mode 2 in bitmap mode Activate Mode 2 of T\+MS in bitmap mode, 16K of V\+R\+AM, sprites 16x16 1 V\+R\+AM area (complete screen of 24 lines) that can be populate. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{a00053_a82f80697be61ae9fc4651379b907190a}\label{a00053_a82f80697be61ae9fc4651379b907190a}} 
+void \hyperlink{a00053_a82f80697be61ae9fc4651379b907190a}{vdp\+\_\+setmode2txt} (void)
+\begin{DoxyCompactList}\small\item\em Activate mode 2 in text mode Activate Mode 2 of T\+MS in text mode, 16K of V\+R\+AM, sprites 16x16 3 V\+R\+AM areas (each for 8 lines) that can be populate. \end{DoxyCompactList}\item 
+void \hyperlink{a00053_a83dfd82e385330c883c67c30137f9857}{vdp\+\_\+waitvblank} (u16 numtime)
+\begin{DoxyCompactList}\small\item\em Wait for vblank interrupt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains the basic definitions for controlling the video hardware. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{a00053_ac70a5cddd82471f4d7ca9b84d8a58760}\label{a00053_ac70a5cddd82471f4d7ca9b84d8a58760}} 
+\index{video.\+h@{video.\+h}!vdp\+\_\+setchar@{vdp\+\_\+setchar}}
+\index{vdp\+\_\+setchar@{vdp\+\_\+setchar}!video.\+h@{video.\+h}}
+\subsubsection{\texorpdfstring{vdp\+\_\+setchar()}{vdp\_setchar()}}
+{\footnotesize\ttfamily vdp\+\_\+setchar (\begin{DoxyParamCaption}\item[{u8}]{first,  }\item[{u8}]{count,  }\item[{unsigned}]{offset,  }\item[{u8}]{flags }\end{DoxyParamCaption})}
+
+
+
+Put some chars of default font. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first} & 1st char to put \\
+\hline
+{\em count} & number of chars \\
+\hline
+{\em offset} & address location in video memory for the chararter patterns \\
+\hline
+{\em flags} & type of font Put some chars of default font in V\+R\+AM with the flags \+: F\+N\+T\+N\+O\+R\+M\+AL for the normal font F\+N\+T\+I\+T\+A\+L\+IC for the italic font F\+N\+T\+B\+O\+LD for the bold font F\+N\+T\+B\+O\+L\+D\+\_\+\+I\+T\+A\+L\+IC fot both italic and bold font \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{a00053_a56edf716a6be2b5850249d24861fc845}\label{a00053_a56edf716a6be2b5850249d24861fc845}} 
+\index{video.\+h@{video.\+h}!vdp\+\_\+setdefaultchar@{vdp\+\_\+setdefaultchar}}
+\index{vdp\+\_\+setdefaultchar@{vdp\+\_\+setdefaultchar}!video.\+h@{video.\+h}}
+\subsubsection{\texorpdfstring{vdp\+\_\+setdefaultchar()}{vdp\_setdefaultchar()}}
+{\footnotesize\ttfamily vdp\+\_\+setdefaultchar (\begin{DoxyParamCaption}\item[{u8}]{flags }\end{DoxyParamCaption})}
+
+
+
+Put default font. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flags} & character format Put default font in V\+R\+AM with the flags \+: F\+N\+T\+N\+O\+R\+M\+AL for the normal font F\+N\+T\+I\+T\+A\+L\+IC for the italic font F\+N\+T\+B\+O\+LD for the bold font F\+N\+T\+B\+O\+L\+D\+\_\+\+I\+T\+A\+L\+IC fot both italic and bold font \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{a00060}{helloworld/helloworld.\+c}.\end{Desc}
+\mbox{\Hypertarget{a00053_a83dfd82e385330c883c67c30137f9857}\label{a00053_a83dfd82e385330c883c67c30137f9857}} 
+\index{video.\+h@{video.\+h}!vdp\+\_\+waitvblank@{vdp\+\_\+waitvblank}}
+\index{vdp\+\_\+waitvblank@{vdp\+\_\+waitvblank}!video.\+h@{video.\+h}}
+\subsubsection{\texorpdfstring{vdp\+\_\+waitvblank()}{vdp\_waitvblank()}}
+{\footnotesize\ttfamily vdp\+\_\+waitvblank (\begin{DoxyParamCaption}\item[{u16}]{numtime }\end{DoxyParamCaption})}
+
+
+
+Wait for vblank interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em numtime} & number of vblank to wait Waits for a vertical blank interrupt a number of time \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{a00060}{helloworld/helloworld.\+c}.\end{Desc}

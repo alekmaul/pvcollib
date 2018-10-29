@@ -1,0 +1,15 @@
+XL2
+H 1 areas 3 global symbols
+M pvclconsole
+S .__.ABS. Def0000
+A _CODE size 16 flags 0 addr 0
+S _random Def0000
+S _strlencol Def0008
+T 00 00
+R 00 00 00 00
+T 00 00 CD FD 1F ED 5F AD 6F C9
+R 00 00 00 00
+T 08 00
+R 00 00 00 00
+T 08 00 E1 D1 D5 E5 21 00 00 1A B7 C8 23 13 18 F9
+R 00 00 00 00

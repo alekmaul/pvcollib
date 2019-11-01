@@ -1,11 +1,11 @@
 # A C library for the ColecoVision #
-PVcollib V1.0.0 (dd, mmm, yyyy)  
+PVcollib V1.0.0 (11, 01, 2019)  
 
 PVcollib is an open and free library to develop programs for ColecoVision in C language.
 
 It contains sdcc compiler / linker and a library (sources included) which offer facilities to use backgrounds / sprites / pads / music & sound on ColecoVision system.   
 Sdcc compiler from Philipp Klaus Krause - SDCC Release Manager  (https://sourceforge.net/projects/sdcc/files/).  
-C Library is based on works from Daniel Bienvenu, a great Colecovision coder and music composer (http://ccjvq.com/newcoleco/indexfr.html).   
+C Library is based on works from Amy Purple (aka newcoleco), a great Colecovision coder and music composer (<no website currently>).
 
 It also contains examples to help how to use functions with the library. You can find the library Doxygen documentation in the ['docs' directory](pvcollib/docs/html/files.html).  
 

@@ -1,10 +1,8 @@
 # path to colecodev root directory (for emulators, devkitcol, pvcollib)
 export DEVKITCOL := /c/colecodev/
-#export DEVKITCOL := /z/vboxshared/DropboxSvnClient/trunk/colecodev/pvcollib/pvcollib
 
 # path to devkitcol root directory for compiler
 export DEVKITSDCC := /c/colecodev/devkitcol
-#export DEVKITSDCC := /z/vboxshared/DropboxSvnClient/trunk/colecodev/pvcollib/devkitcol
 
 # change global path with SGDK
 export PATH	:=	$(DEVKITSDCC):$(PATH)
@@ -44,12 +42,6 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
  
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
- 
-#---------------------------------------------------------------------------------
-# Name of text file containing build number.
-BUILD_NUMBER_FILE=buildnumber.txt
-BUILD_INCLUD_FILE=buildnum.h
-BUILD_MAIN_FILE=main.c
  
 #---------------------------------------------------------------------------------
 export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel) 

@@ -1,10 +1,13 @@
 # path to colecodev root directory (for emulators, devkitcol, pvcollib)
-export DEVKITCOL := /c/colecodev/
-#export DEVKITCOL := /z/vboxshared/DropboxSvnClient/trunk/colecodev/pvcollib
+#export DEVKITCOL := /c/colecodev/
+export DEVKITCOL := /z/DropboxSvnClient/trunk/colecodev/pvcollib
 
 # path to devkitcol root directory for compiler
-export DEVKITSDCC := /c/colecodev/devkitcol
-#export DEVKITSDCC := /z/vboxshared/DropboxSvnClient/trunk/colecodev/pvcollib/devkitcol
+#export DEVKITSDCC := /c/colecodev/devkitcol
+export DEVKITSDCC := /z/DropboxSvnClient/trunk/colecodev/pvcollib/devkitcol
+
+# change global path with PVcollib
+export PATH	:=	/c/msys/bin:$(DEVKITSDCC):$(PATH)
 
 #---------------------------------------------------------------------------------
 ifeq ($(strip $(DEVKITCOL)),)
@@ -14,7 +17,7 @@ endif
 export TOPDIR	:=	$(CURDIR)
 
 export PVCOLLIB_MAJOR	:= 1
-export PVCOLLIB_MINOR	:= 0
+export PVCOLLIB_MINOR	:= 1
 export PVCOLLIB_PATCH	:= 0
 
 
@@ -65,7 +68,7 @@ install: dist-bin
 #---------------------------------------------------------------------------------
 docs:
 #---------------------------------------------------------------------------------
-	doxygen PVCOLLIB.dox
+	../tools/doxygen pvcollib.dox
 
 #---------------------------------------------------------------------------------
 include/coleco/libversion.h : Makefile

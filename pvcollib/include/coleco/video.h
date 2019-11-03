@@ -173,8 +173,8 @@ void vdp_duplicatevram(void);
 
 /*! \fn  vdp_putvram(unsigned offset,void *data,unsigned count)
 	\brief Change VRAM with some data
-	\param data address of data to use
 	\param offset address in VRAM of 1st data to fill
+	\param data address of data to use
 	\param count number of data
 	Fill the VRAM with some non compressed data 
 */

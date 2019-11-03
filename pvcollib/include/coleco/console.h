@@ -2,7 +2,7 @@
 
 	Generic console functions.
 
-	Copyright (C) 2018
+	Copyright (C) 2018-2019
 		Alekmaul
 
 	This software is provided 'as-is', without any express or implied
@@ -34,6 +34,13 @@
 
 #include <coleco/coltypes.h>
 
+/**
+ *  \brief
+ *      buffer42 used for some functions.
+ *      can be used by program too.
+ */
+extern u8 buffer32[32];
+
 /*! \fn random(void)
 	\brief return a randomized number
 	\return unsigned short of a randomized number
@@ -48,5 +55,13 @@ u16 random(void);
 	Return the length of the string
 */
 u16 strlencol(char *text);
+
+/*! \fn utoa(char *text)
+	\brief return the length of a string
+	\param value value to convert to text
+	\param buffer text that will receive vvalue converted
+	Convert an unsigned value to ascii text
+*/
+void utoa(unsigned value,char *buffer);
 
 #endif

@@ -1,6 +1,6 @@
 ;---------------------------------------------------------------------------------
 ;
-;	Copyright (C) 2018
+;	Copyright (C) 2018-2019
 ;		Alekmaul 
 ;
 ;	This software is provided 'as-is', without any express or implied
@@ -22,7 +22,7 @@
 ;
 ;---------------------------------------------------------------------------------
 
-	; this module is completly based on Daniel Bienvenu crt0.s module
+	; this module is completly based on Amy Purple (aka newcoleco) crt0.s module
 
 	.module crtcol
 
@@ -30,6 +30,7 @@
 	.globl snd_settable
 
 	; global from this code
+	.globl snd_areas
 	.globl  _buffer32
 	.globl _no_nmi
 	.globl _vdp_status
@@ -38,8 +39,11 @@
 	.globl _keypad_1
 	.globl _joypad_2
 	.globl _keypad_2
-	.globl snd_areas
-	
+
+	.globl _spinner_enabled
+	.globl _spinner_1
+	.globl _spinner_2
+
 	.globl _vid_freq
 	.globl _vid_frsw
 	
@@ -86,30 +90,35 @@ _joypad_2::
 	.ds    1
 _keypad_2::
 	.ds    1	
+_spinner_enabled::
+	.ds	1
 _vid_freq::
 	.ds 1
 _vid_frsw::
 	.ds 1
 	
+_spinner_1 = 0x73eb
+_spinner_2 = 0x73ec
+
 	; CARTRIDGE HEADER (IN ROM), From Daniel Bienvenu post 
 	; http://atariage.com/forums/topic/168314-coleco-cartridge-header-from-official-documentation/
 	; $8000 : CARTRIDGE
-  ;       game type = bytes AA 55 , display CV logo title screen
-  ;       test type = bytes 55 AA , execute your game no delay
-  ;       otherwise it is invalid and display "INSERT CARTRIDGE"
+	;       game type = bytes AA 55 , display CV logo title screen
+	;       test type = bytes 55 AA , execute your game no delay
+	;       otherwise it is invalid and display "INSERT CARTRIDGE"
 	; $8002 : LOCAL_SPR_TBL
 	;        it is the memory address where is your sprites table
-  ;        for their coordinates, patterns and colors.
-  ; $8004 : SPRITE_ORDER
-  ;        it is a table of usually maximum 32 bytes
-  ;        that simply say in which order each sprite entry
-  ;        should display. The corresponding initialisation function
-  ;        set the values as 0,1,2,3,4... which mean that the first
-  ;        entry (entry 0) is first, then the second entry (entry 1)
-  ;        is second to be disaplayed. By reordering these numbers, you
-  ;        affect the order of sprites, allowing to do flickering if needed.
-  ; $8006 : WORK_BUFFER
-  ;        it is usually a big memory RAM space that can be used by
+	;        for their coordinates, patterns and colors.
+	; $8004 : SPRITE_ORDER
+	;        it is a table of usually maximum 32 bytes
+	;        that simply say in which order each sprite entry
+	;        should display. The corresponding initialisation function
+	;        set the values as 0,1,2,3,4... which mean that the first
+	;        entry (entry 0) is first, then the second entry (entry 1)
+	;        is second to be disaplayed. By reordering these numbers, you
+	;        affect the order of sprites, allowing to do flickering if needed.
+	; $8006 : WORK_BUFFER
+	;        it is usually a big memory RAM space that can be used by
   ;        some BIOS functions to calculate graphics manipulations
   ;        like mobile and semi-mobile objects, tiles rotations, etc.
   ; $8008 : CONTROLLER_MAP
@@ -158,13 +167,13 @@ _vid_frsw::
 	.db	0xc9,0,0				; no RST 20 support
 	.db	0xc9,0,0				; no RST 28 support
 	.db	0xc9,0,0				; no RST 30 support
-	.db	0xc9,0,0				; no RST 38 support  (spinner)
+	jp  _int_spinner            ; RST38 - spinner interrupt
 	jp	_int_nmi
 
 	;; CODE STARTS HERE WITH NMI
         .area _CODE
 _int_nmi:
-	push	af
+        push	af
         ld	a,#1
         ld      (_nmi_flag),a           ; set NMI flag
 	;;;
@@ -194,16 +203,16 @@ _int_nmi:
         push    hl
         call    0x1f76                   ; update controllers
         ld      a,(0x73ee)
-        and	#0x4f
+        and		#0x4f
         ld      (_joypad_1),a
         ld      a,(0x73ef)
-        and	#0x4f
+        and		#0x4f
         ld      (_joypad_2),a
         ld      a,(0x73f0)
-        and	#0x4f
+        and		#0x4f
         ld      (_keypad_1),a
         ld      a,(0x73f1)
-        and	#0x4f
+        and		#0x4f
         ld      (_keypad_2),a
         call    decode_controllers
         call    _nmi                    ; call C function
@@ -211,7 +220,7 @@ _int_nmi:
         call    0x1ff4                   ; update snd_addr with snd_areas
         
         ld      a,(_vid_freq)           ; if 50Hz, setting redo music for sagaruo
-        sub #0x32
+        sub 	#0x32
         jr nz, $1101
         ld      a,(_vid_frsw)           ; only recall if 1 cycle per 3
         and		#0x03
@@ -234,6 +243,11 @@ $1101:
         xor     a
         ld      (_no_nmi),a
 nmi_exit:
+        ld	a,(_spinner_enabled)
+        or	a
+        jr	z,nmi_end
+        ei
+nmi_end:
         pop     af
         ret
 
@@ -246,8 +260,8 @@ keypad_table::
 ; 1     down
 ; 2     right
 ; 3     up
-; 4     --------
-; 5     --------
+; 4     button 4
+; 5     button 3
 ; 6     button 2
 ; 7     button 1
 ; keypads will hold key pressed (0-11), or 0xff
@@ -270,7 +284,31 @@ decode_controller:
 	ld      c,a
 	and     #0x40
 	or      b
-	ld      0(ix),a
+;;;;;
+;;	ld      0(ix),a
+;;;;;
+	ld      b,a
+	ld      a,c
+	cpl
+	and    #0x0f
+	cp      #8
+	jr      nz,no_button_3
+	ex      af,af'
+	ld      a,b
+	or      #0x20
+	ld      b,a
+	ex      af,af'
+no_button_3:
+	cp      #4
+	jr      nz,no_button_4
+	ex      af,af'
+	ld      a,b
+	or      #0x10
+	ld      b,a
+	ex      af,af'
+no_button_4:
+	ld      0(ix),b
+;;;;
 	ld      a,c
 	cpl
 	and    #0x0f
@@ -282,7 +320,15 @@ decode_controller:
 	ld      1(ix),a
 	ret
 
-
+_int_spinner:
+	push    af
+	push    hl
+	call    0x1f88
+	pop     hl
+	pop     af
+	ei
+	reti
+	
 start_program:
 	im       1                      ; interrupt mode -> rst 38h
 	di

@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------------
 
-	Copyright (C) 2018
+	Copyright (C) 2018-2019
 
 	This software is provided 'as-is', without any express or implied
 	warranty.  In no event will the authors be held liable for any
@@ -43,11 +43,17 @@
  \section video_tms9918 2D engine API
  - \ref video.h "General video"
  
+ \section pad_mngt Generic pad & spinner API
+ - \ref pad.h "General pad & spinner"
+
+ \section sprite_mngt Generic sprites API
+ - \ref sprite.h "General sprites"
+
  \section external_links Useful links
  - <a href="http://atariage.com/forums/forum/55-colecovision-programming/">AtariAge ColecoVision development forum.</a>
  
  \section special_thanks Special Thanks
- - <a href="http://ccjvq.com/newcoleco/indexfr.html">Daniel Bienvenu for cvlib source code, which are parts of PVcollib.</a>
+ - AMy Purple (aka newcoleco) for cvlib source code, which are parts of PVcollib.</a>
  - <a href="https://sourceforge.net/projects/sdcc/files/">Philipp Klaus Krause - SDCC Release Manager. </a>
 */
 
@@ -58,13 +64,20 @@
     <!-- hello world -->
 		\example helloworld/helloworld.c
 
+    <!-- pad management -->
+		\example input/input.c
+
+    <!-- random numbers -->
+		\example random/randvalue.c
 */
 
 #ifndef COL_INCLUDE
 #define COL_INCLUDE
 
 #include "coleco/console.h"
+#include "coleco/pad.h"
 #include "coleco/sound.h"
+#include "coleco/sprite.h"
 #include "coleco/video.h"
 
 #endif // COL_INCLUDE

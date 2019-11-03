@@ -1,6 +1,6 @@
 ;---------------------------------------------------------------------------------
 ;
-;	Copyright (C) 2018
+;	Copyright (C) 2018-2019
 ;		Alekmaul 
 ;
 ;	This software is provided 'as-is', without any express or implied
@@ -21,20 +21,30 @@
 ;		distribution.
 ;
 ;---------------------------------------------------------------------------------
-		.module pvclconsole
+	.module pvclconsole
 
 	; global from external entries / code
 
 	; global from this module
 	.globl  _random
 	.globl  _strlencol
+	.globl _utoa
 
 	.area   _CODE
 
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-
+count_sub:
+    xor     a
+$2:
+    sbc     hl,bc
+    inc     a
+    jr      nc,$2
+    dec     a
+    add     hl,bc
+    ret
+	
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
@@ -58,3 +68,55 @@ $1:		ld	a,(de)
 	inc	hl
 	inc	de
 	jr	$1
+
+;---------------------------------------------------------------------------------
+_utoa:
+    pop     bc
+    pop     hl
+    pop     de
+    ;exx
+    ;pop     bc
+    ;push    bc
+    ;exx
+    push    de
+    push    hl
+    push    bc
+    ld      bc,#10000
+    call    count_sub
+    ;exx
+	;add     a,c
+    ;exx
+    add     a,#0x30
+    ld      (de),a
+    inc     de
+    ld      bc,#1000
+    call    count_sub
+    ;exx
+	;add     a,c
+    ;exx
+    add     a,#0x30
+    ld      (de),a
+    inc     de
+    ld      bc,#100
+    call    count_sub
+    ;exx
+	;add     a,c
+    ;exx
+    add     a,#0x30
+    ld      (de),a
+    inc     de
+    ld      c,#10
+    call    count_sub
+    ;exx
+	;add     a,c
+    ;exx
+    add     a,#0x30
+    ld      (de),a
+    inc     de
+    ld      a,l
+    ;exx
+	;add     a,c
+    ;exx
+    add     a,#0x30
+    ld      (de),a
+    ret

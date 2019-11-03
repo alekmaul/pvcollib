@@ -61,20 +61,20 @@
  *  \brief
  *      PAD 1 and 2 values
  */
-extern volatile joypad_1,joypad_2;
+extern volatile u8 joypad_1,joypad_2;
 
 /**
  *  \brief
  *      SPINNER 1 and 2 values
  *		/!\ spinner 1 value is reversed
  */
-extern volatile spinner_1,spinner_2;
+extern volatile u8 spinner_1,spinner_2;
 
 /**
  *  \brief
  *      KEYBOARD from PAD 1 and 2 values
  */
-extern volatile keypad_1,keypad_2;
+extern volatile u8 keypad_1,keypad_2;
 
 /*! \fn pad_resetspin(void)
 	\brief reset spinners 1 & 2 values

@@ -2,7 +2,7 @@
 
 	Generic video functions
 
-	Copyright (C) 2012-2017
+	Copyright (C) 2018-2019
 		Alekmaul
 
 	This software is provided 'as-is', without any express or implied
@@ -38,6 +38,20 @@
 #define FNTBOLD            2
 #define FNTBOLD_ITALIC     (FNTITALIC | FNTBOLD)
 
+/*! 
+	\brief VDP table addresses 
+	0x0000	Character table
+	0x2000	Color of Character table
+	0x1800	Map table
+	0x3800	Sprite character table
+	0x1b00	Sprite table
+*/
+#define chrgen  0x0000
+#define coltab  0x2000
+#define chrtab  0x1800
+#define sprtab  0x3800
+#define sprgen  0x1b00
+
 /*! \fn  vdp_waitvblank(u16 numtime)
 	\brief Wait for vblank interrupt
 	\param numtime number of vblank to wait
@@ -68,6 +82,18 @@ void vdp_enablevdp(void);
 	Disallows VDP to work (so screen is not active)
 */
 void vdp_disablevdp(void);
+
+/*! \fn  vdp_enablescr(void)
+	\brief Enable VDP and NMI interruption
+	Allows VDP to work and NMI to be catch
+*/
+void vdp_enablescr(void);
+
+/*! \fn  vdp_disablescr(void)
+	\brief Disable VDP and NMI interruption
+	Disallows VDP to work and NMI to occur
+*/
+void vdp_disablescr(void);
 
 /*! \fn  vdp_setmode1txt(void)
 	\brief Activate mode 1 in text mode
@@ -144,5 +170,38 @@ void vdp_fillvram(u16 offset,u8 value,u16 count);
 	Put 1st area of pattern vram to the 2nd and 3rd one
 */
 void vdp_duplicatevram(void);
+
+/*! \fn  vdp_putvram(unsigned offset,void *data,unsigned count)
+	\brief Change VRAM with some data
+	\param data address of data to use
+	\param offset address in VRAM of 1st data to fill
+	\param count number of data
+	Fill the VRAM with some non compressed data 
+*/
+void vdp_putvram (unsigned offset,void *data,unsigned count);
+
+/*! \fn  vdp_rle2vram(void *rledata,unsigned offset)
+	\brief Change VRAM with some RLE compressed data
+	\param rledata address of data to use
+	\param offset address in VRAM of 1st data to fill
+	Fill the VRAM with some RLE compressed data 
+*/
+void *vdp_rle2vram (void *rledata,unsigned offset);
+
+/*! \fn  vdp_ple2vram(void *pledata, unsigned offset)
+	\brief Change VRAM with some PLE compressed data
+	\param pledata address of data to use
+	\param offset address in VRAM of 1st data to fill
+	Fill the VRAM with some PLE compressed data 
+*/
+void vdp_ple2vram(void *pledata, unsigned offset);
+
+/*! \fn  vdp_dan2vram(void *dandata, unsigned offset)
+	\brief Change VRAM with some DAN1 compressed data
+	\param dandata address of data to use
+	\param offset address in VRAM of 1st data to fill
+	Fill the VRAM with some DAN1 compressed data 
+*/
+void vdp_dan2vram(void *dandata, unsigned offset);
 
 #endif

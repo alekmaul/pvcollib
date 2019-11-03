@@ -1,8 +1,8 @@
 /*---------------------------------------------------------------------------------
 
-	Generic console functions.
+	Generic sound functions.
 
-	Copyright (C) 2018
+	Copyright (C) 2018-2019
 		Alekmaul
 
 	This software is provided 'as-is', without any express or implied
@@ -25,8 +25,8 @@
 
 ---------------------------------------------------------------------------------*/
 
-/*! \file console.h
-    \brief coleco generic console support.
+/*! \file sound.h
+    \brief coleco generic sound support.
 */
 
 #ifndef COL_CONSOLE_H

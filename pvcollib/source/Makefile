@@ -15,7 +15,7 @@ C_SRC	:=
 
 CFLAGS	:=	
 
-S_SRC	:=	console.s sound.s video.s 
+S_SRC	:=	console.s pad.s sound.s sprite.s video.s 
 
 ASFLAGS	:=	
 

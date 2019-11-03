@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------
-  Copyright (C) 2018
+  Copyright (C) 2018-2019
    Alekmaul
 
   This software is provided 'as-is', without any express or implied
@@ -21,5 +21,12 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.0.0 (dd, mmm, yyy)
+V1.1.0 (11/01/2019)
+- Update examples
+- Add spinner management
+- Fix some typo & dates of lib
+- Add sprite management
+- Add rle, ple and dan1 decompression routines
+
+V1.0.0 (10/30/2018)
 - Initial release

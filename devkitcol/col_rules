@@ -1,0 +1,49 @@
+#---------------------------------------------------------------------------------
+# path to tools
+#---------------------------------------------------------------------------------
+export PATH	:=	$(DEVKITSDCC)/bin:$(PATH)
+
+CVLIB	:=	$(DEVKITCOL)
+LIBDIRCVL = $(CVLIB)/lib
+INCDIRCVL = $(CVLIB)/include
+LIBOBJS :=	$(LIBDIRCVL)/collib.lib $(LIBDIRCVL)/crtcol.rel
+
+#---------------------------------------------------------------------------------
+# the compiler executables
+#---------------------------------------------------------------------------------
+
+export CC	:=	sdcc
+export AS	:=	sdasz80
+export LD	:=	sdcc
+export LK :=	sdcclib
+
+export GFXCONV	:=	$(DEVKITSDCC)/tools/gfx2col
+
+#---------------------------------------------------------------------------------
+# Add default flag for compiling
+#---------------------------------------------------------------------------------
+#vc Display errors and warnings using MSVC style
+MAX_ALLOCS_PER_NODE=15000
+CFLAGS += -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 -mz80 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
+ASFLAGS += -I$(DEVKITSDCC)/include
+LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000 
+
+#---------------------------------------------------------------------------------
+%.rel: %.c
+	@echo Compiling C to .rel ... $(notdir $<)
+	$(CC) $(CFLAGS) $<
+	@rm $*.lst
+	@rm $*.asm
+
+#---------------------------------------------------------------------------------
+%.rel: %.s
+	@echo Compiling ASM to .rel ... $(notdir $<)
+	$(AS) $(ASFLAGS) -o $*.rel $<
+
+#---------------------------------------------------------------------------------
+%.rom:
+	@echo Linking ... $(notdir $@)
+	$(LD) $(LDFLAGS)  $(LIBOBJS) $(OFILES)
+	sdobjcopy -R .sec5 -I ihex -O binary --pad-to 0xffff --gap-fill 0xff crtcol.ihx $(TARGET).rom
+	mv crtcol.map $(TARGET).map
+	grep "^_" $(TARGET).map

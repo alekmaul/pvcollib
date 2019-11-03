@@ -1,4 +1,4 @@
-Devkitcol 1.00
+Devkitcol 1.10
  
  Programming Compiler and Tools for Colecovision
 

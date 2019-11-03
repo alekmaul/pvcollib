@@ -23,8 +23,8 @@ export GFXCONV	:=	$(DEVKITSDCC)/tools/gfx2col
 # Add default flag for compiling
 #---------------------------------------------------------------------------------
 #vc Display errors and warnings using MSVC style
-MAX_ALLOCS_PER_NODE=15000
-CFLAGS += -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 -mz80 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
+MAX_ALLOCS_PER_NODE=20000
+CFLAGS += -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 --opt-code-speed --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
 ASFLAGS += -I$(DEVKITSDCC)/include
 LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000 
 

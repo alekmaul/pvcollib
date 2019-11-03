@@ -53,7 +53,7 @@
  - <a href="http://atariage.com/forums/forum/55-colecovision-programming/">AtariAge ColecoVision development forum.</a>
  
  \section special_thanks Special Thanks
- - AMy Purple (aka newcoleco) for cvlib source code, which are parts of PVcollib.</a>
+ - Amy Purple (aka newcoleco) for cvlib source code, which are parts of PVcollib.</a>
  - <a href="https://sourceforge.net/projects/sdcc/files/">Philipp Klaus Krause - SDCC Release Manager. </a>
 */
 
@@ -73,6 +73,8 @@
 
 #ifndef COL_INCLUDE
 #define COL_INCLUDE
+
+#include <coleco/coltypes.h>
 
 #include "coleco/console.h"
 #include "coleco/pad.h"

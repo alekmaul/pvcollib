@@ -23,10 +23,8 @@ void main (void) {
 	//  as we are going to write to line 10, it is in the second area
 	vdp_setdefaultchar(FNTNORMAL);
 	vdp_duplicatevram();
+	vdp_fillvram(0x2000,0xf1,128*8); 	// Change color (or we will see nothing)
 	vdp_enablescr();
-	
-	// Change color (or we will see nothing)
-	vdp_fillvram(0x2000,0xf1,128*8);
 	
 	// Print at 10,text as we are not going to do something else
 	vdp_putstring(10,10,"HELLO WORLD!");

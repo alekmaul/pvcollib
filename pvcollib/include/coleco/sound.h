@@ -34,11 +34,59 @@
 
 #include <coleco/coltypes.h>
 
+/*! 
+	\brief definition of sound area
+*/
+typedef struct
+{
+ void *sound_data;
+ unsigned sound_area;
+} sound_t;
+
+/*! 
+	\brief sound areas 1 to 7 available pour channels
+*/
+#define SOUNDAREA1  0x702b
+#define SOUNDAREA2  0x702b+10
+#define SOUNDAREA3  0x702b+20
+#define SOUNDAREA4  0x702b+30
+#define SOUNDAREA5  0x702b+40
+#define SOUNDAREA6  0x702b+50
+#define SOUNDAREA7  0x702b+60
+
+
 /*! \fn snd_settable (void *snd_table)
 	\brief define the sound table used for playing sound
 	\param snd_table address of sound table
 	\return nothing
 */
 void snd_settable (void *snd_table);
+
+/*! \fn snd_startplay (byte sound_number)
+	\brief play a sound specified but sound_number
+	\param sound_number aid of sound in sound table
+	\return nothing
+*/
+void snd_startplay(byte sound_number);
+
+/*! \fn snd_stopplay (byte sound_number)
+	\brief stop a sound specified but sound_number
+	\param sound_number aid of sound in sound table
+	\return nothing
+*/
+void snd_stopplay(byte sound_number);
+
+/*! \fn snd_stopall (void)
+	\brief mute all channels
+	\return nothing
+*/
+void snd_stopall(void);
+
+/*! \fn snd_isplaying (byte sound_number)
+	\brief retrieve if channel is playing or not
+	\param sound_number aid of sound in sound table
+	\return 0xff is sound_number is still playing, 0x00 if not
+*/
+byte snd_isplaying(byte sound_number);
 
 #endif

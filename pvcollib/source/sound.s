@@ -29,7 +29,6 @@
 	.globl snd_areas
 
 	; global from this module
-	.globl _snd_settable,snd_settable
 	.globl _snd_startplay
 	.globl _snd_stopplay
 	.globl _snd_stopall
@@ -44,26 +43,6 @@
 
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
-;---------------------------------------------------------------------------------
-_snd_settable:
-    pop de
-    pop hl
-    push hl
-    push de
-snd_settable:
-	ld	b,#6
-    ld a,h
-    or a
-    jr nz, call_snd_table
-    ld hl,#snd_table_dummy
-call_snd_table:
-    jp 0x1fee
-
-snd_table_dummy:
-    .dw _snd_dummy, #0x702b				; SOUNDAREA1
-_snd_dummy:
-    .db #0xff
-    
 ;---------------------------------------------------------------------------------
 _snd_startplay:
     pop     bc

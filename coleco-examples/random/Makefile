@@ -45,7 +45,7 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
  
 #---------------------------------------------------------------------------------
 export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel) 
- 
+
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
 					-I$(CURDIR)/$(BUILD)

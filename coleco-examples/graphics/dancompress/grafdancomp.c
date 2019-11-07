@@ -8,7 +8,7 @@
 ---------------------------------------------------------------------------------*/
 #include "grafdancomp.h"
 
-#include "zgfxs.h"									// to add definition of graphics
+#include "gfxs.h"									// to add definition of graphics
 
 //---------------------------------------------------------------------------------
 // The NMI routine. Gets called 50 or 60 times per second 

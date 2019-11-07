@@ -64,11 +64,20 @@
     <!-- hello world -->
 		\example helloworld/helloworld.c
 
+    <!-- graphic management -->
+		\example graphics/dancompress/grafdancomp.c
+		\example graphics/notcompress/grafnocomp.c
+		\example graphics/plecompress/grafplecomp.c
+		\example graphics/rlecompress/grafrlecomp.c
+		
     <!-- pad management -->
 		\example input/input.c
 
     <!-- random numbers -->
 		\example random/randvalue.c
+
+    <!-- region detection -->
+		\example palntsc/palntsc.c
 */
 
 #ifndef COL_INCLUDE

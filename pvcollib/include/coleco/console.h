@@ -41,6 +41,12 @@
  */
 extern u8 buffer32[32];
 
+/**
+ *  \brief
+ *      vid_freq is set with video frequency (50 or 660) hz.
+ */
+extern volatile u8 vid_freq;
+
 /*! \fn random(void)
 	\brief return a randomized number
 	\return unsigned short of a randomized number

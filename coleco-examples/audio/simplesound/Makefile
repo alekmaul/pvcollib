@@ -23,7 +23,7 @@ include $(DEVKITSDCC)/col_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	input
+TARGET		:=	ssound
 SOURCES		:=	.
 
 #---------------------------------------------------------------------------------

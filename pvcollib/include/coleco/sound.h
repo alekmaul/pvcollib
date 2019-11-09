@@ -29,8 +29,8 @@
     \brief coleco generic sound support.
 */
 
-#ifndef COL_CONSOLE_H
-#define COL_CONSOLE_H
+#ifndef COL_SOUND_H
+#define COL_SOUND_H
 
 #include <coleco/coltypes.h>
 
@@ -44,7 +44,7 @@ typedef struct
 } sound_t;
 
 /*! 
-	\brief sound areas 1 to 7 available pour channels
+	\brief sound areas 1 to 6 available pour channels
 */
 #define SOUNDAREA1  0x702b
 #define SOUNDAREA2  0x702b+10
@@ -52,8 +52,6 @@ typedef struct
 #define SOUNDAREA4  0x702b+30
 #define SOUNDAREA5  0x702b+40
 #define SOUNDAREA6  0x702b+50
-#define SOUNDAREA7  0x702b+60
-
 
 /*! \fn snd_settable (void *snd_table)
 	\brief define the sound table used for playing sound
@@ -62,19 +60,19 @@ typedef struct
 */
 void snd_settable (void *snd_table);
 
-/*! \fn snd_startplay (byte sound_number)
+/*! \fn snd_startplay (u8 sound_number)
 	\brief play a sound specified but sound_number
 	\param sound_number aid of sound in sound table
 	\return nothing
 */
-void snd_startplay(byte sound_number);
+void snd_startplay(u8 sound_number);
 
-/*! \fn snd_stopplay (byte sound_number)
+/*! \fn snd_stopplay (u8 sound_number)
 	\brief stop a sound specified but sound_number
 	\param sound_number aid of sound in sound table
 	\return nothing
 */
-void snd_stopplay(byte sound_number);
+void snd_stopplay(u8 sound_number);
 
 /*! \fn snd_stopall (void)
 	\brief mute all channels
@@ -82,11 +80,11 @@ void snd_stopplay(byte sound_number);
 */
 void snd_stopall(void);
 
-/*! \fn snd_isplaying (byte sound_number)
+/*! \fn snd_isplaying (u8 sound_number)
 	\brief retrieve if channel is playing or not
 	\param sound_number aid of sound in sound table
 	\return 0xff is sound_number is still playing, 0x00 if not
 */
-byte snd_isplaying(byte sound_number);
+u8 snd_isplaying(u8 sound_number);
 
 #endif

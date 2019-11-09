@@ -21,6 +21,12 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
+V1.2.0 (11/xx/2019)
+- Add new examples (sound, region detection)
+- Add sound management
+- Fix graphic examples regarding main file compilation
+- Add sound examples
+
 V1.1.0 (11/01/2019)
 - Update examples
 - Add spinner management

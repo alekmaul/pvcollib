@@ -17,7 +17,7 @@ endif
 export TOPDIR	:=	$(CURDIR)
 
 export PVCOLLIB_MAJOR	:= 1
-export PVCOLLIB_MINOR	:= 1
+export PVCOLLIB_MINOR	:= 2
 export PVCOLLIB_PATCH	:= 0
 
 

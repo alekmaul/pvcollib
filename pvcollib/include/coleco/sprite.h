@@ -80,4 +80,58 @@ extern void spr_clear(void);
 */
 extern void spr_update(void);
 
+/*! \fn spr_set(id,xp,yp,col,pat) 
+	\brief sets an sprite entry to the supplied values
+    \param id the sprite number to be get [0 - 31]
+    \param xp the x location of the sprite in pixels
+    \param yp the y location of the sprite in pixels
+    \param col the sprite color (0 to 15)
+    \param pat the pattern number of sprite (must be a multiple of 4)
+*/
+#define spr_set(id,  xp, yp, col, pat) \
+	{ \
+	sprites[id].x=xp; \
+	sprites[id].y=yp; \
+	sprites[id].colour=col; \
+	sprites[id].pattern=pat; \
+	}
+
+/*! \fn spr_setxy(id,xp,yp) 
+	\brief sets an sprite coordinate to the supplied values
+    \param id the sprite number to be get [0 - 31]
+    \param xp the x location of the sprite in pixels
+    \param yp the y location of the sprite in pixels
+*/
+#define spr_setxy(id, xp, yp) \
+	{ \
+	sprites[id].x=xp; \
+	sprites[id].y=yp; \
+	}
+
+/*! \fn spr_setx(id) 
+	\brief set the x sprite coordinate 
+    \param id the sprite number to be get [0 - 31]
+    \param xp the x location of the sprite in pixels
+*/
+#define spr_setx(id,xp) { sprites[id].x=xp; }
+
+/*! \fn spr_sety(id,yp) 
+	\brief set the y sprite coordinate 
+    \param id the sprite number to be get [0 - 31]
+    \param yp the y location of the sprite in pixels
+*/
+#define spr_sety(id,yp) { sprites[id].y=yp; }
+
+/*! \fn spr_getx(id) 
+	\brief get the x sprite coordinate 
+    \param id the sprite number to be get [0 - 31]
+*/
+#define spr_getx(id) (sprites[id].x)
+
+/*! \fn spr_gety(id) 
+	\brief get the y sprite coordinate 
+    \param id the sprite number to be get [0 - 31]
+*/
+#define spr_gety(id) (sprites[id].y)
+
 #endif

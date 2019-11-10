@@ -78,6 +78,10 @@
 
     <!-- region detection -->
 		\example palntsc/palntsc.c
+
+    <!-- sound management -->
+		\example audio/music/music.c
+		\example audio/simplesound/ssound.c
 */
 
 #ifndef COL_INCLUDE

@@ -1,0 +1,7 @@
+#ifndef CVMKCART_VERSION_H
+#define CVMKCART_VERSION_H
+
+#define CVMKCARTVERSION "@VERSION@"
+#define CVMKCARTDATE " __DATE__ "
+
+#endif /* CVMKCART_VERSION_H */

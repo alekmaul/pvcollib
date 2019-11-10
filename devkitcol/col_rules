@@ -45,5 +45,5 @@ LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000
 	@echo Linking ... $(notdir $@)
 	$(LD) $(LDFLAGS)  $(LIBOBJS) $(OFILES)
 	sdobjcopy -R .sec5 -I ihex -O binary --pad-to 0xffff --gap-fill 0xff crtcol.ihx $(TARGET).rom
-	mv crtcol.map $(TARGET).map
-	grep "^_" $(TARGET).map
+	@mv crtcol.map $(TARGET).map
+	@grep "^_" $(TARGET).map

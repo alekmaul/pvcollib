@@ -80,6 +80,13 @@ extern void spr_clear(void);
 */
 extern void spr_update(void);
 
+/*! \fn spr_getentry(void)
+	\brief get a sprite id in sprite list 
+	\return sprite entry (0..31)
+	Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b>
+*/
+extern u8 spr_getentry(void);
+
 /*! \fn spr_set(id,xp,yp,col,pat) 
 	\brief sets an sprite entry to the supplied values
     \param id the sprite number to be get [0 - 31]
@@ -121,6 +128,20 @@ extern void spr_update(void);
     \param yp the y location of the sprite in pixels
 */
 #define spr_sety(id,yp) { sprites[id].y=yp; }
+
+/*! \fn spr_setpat(id) 
+	\brief set the sprite pattern
+    \param id the sprite number to be get [0 - 31]
+    \param pat the pattern of the sprite (multiple of 4)
+*/
+#define spr_setpat(id,pat) { sprites[id].pattern=pat; }
+
+/*! \fn spr_setcol(id) 
+	\brief set the sprite color
+    \param id the sprite number to be get [0 - 31]
+    \param col the sprite color (0 to 15)
+*/
+#define spr_setcol(id,col) { sprites[id].colour=col; }
 
 /*! \fn spr_getx(id) 
 	\brief get the x sprite coordinate 

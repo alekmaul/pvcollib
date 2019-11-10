@@ -18,11 +18,13 @@ set(CMAKE_C_STANDARDS 11)
 configure_file(config.h.in config.h)
 
 set(gfx2col_sources
+	comptool.c
     gfx2col.c
     lodepng.c
 )
 
 set(gfx2col_headers
+	comptool.h
     gfx2col.h
     lodepng.h
     config.h

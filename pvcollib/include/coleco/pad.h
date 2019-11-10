@@ -68,7 +68,7 @@ extern volatile u8 joypad_1,joypad_2;
  *      SPINNER 1 and 2 values
  *		/!\ spinner 1 value is reversed
  */
-extern volatile u8 spinner_1,spinner_2;
+extern volatile char spinner_1,spinner_2;
 
 /**
  *  \brief

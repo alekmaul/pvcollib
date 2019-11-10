@@ -11,6 +11,9 @@ where filename is a 256 color PNG, BMP, PCX or TGA file  with only 1st palette u
 ### General options 
 - `-c[no|rle|ple|dan] Compression method [no] 
   
+### Graphique options 
+- `-s` Sprite mode 
+
 ### Map options
 - `-m!` Exclude map from output  
 - `-m` Convert the whole picture  

@@ -37,6 +37,7 @@ enum FILE_TYPE {
 
 int quietmode=0;              // 0 = not quiet, 1 = i can't say anything :P
 int compress=0;               // 0 = not compressed, 1 = rle compression, 2 = ple compression, 3 = dan1 compression
+int sprmode=0;                // 0 = background 1 = sprite
 
 //// F U N C T I O N S //////////////////////////////////////////////////////////
 int PCX_Load(char *filename, pcx_picture_ptr image)
@@ -612,6 +613,9 @@ unsigned char *ArrangeBlocks( unsigned char *img, int width, int height,
 	if ( ((*xsize)*(*ysize))%(new_width/size) != 0 )
 		rows++;
 
+	if (quietmode == 0)
+		printf("\nrows=%d",rows);
+
 	//get memory for the new buffer
 	buffer = (unsigned char *) malloc( rows*size*new_width*sizeof(char) );
 	if(buffer == NULL) {
@@ -738,9 +742,10 @@ void addcomment(FILE *fp, unsigned int ratio,unsigned int size,unsigned int comp
 		fprintf(fp, "// dan1 compression %d bytes (%d%%)\n", size,ratio);
 }
 
-int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, int num_tiles, int savemap)
+int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, int num_tiles, int mapw, int maph, int savemap)
 {
 	char filenamec[256],filenameh[256];
+	unsigned char bufsw1[8];
 	unsigned char value, minv,maxv;
 	unsigned char valtil[8];
 	unsigned char *tiMem,*tiMemEncode,*coMem,*coMemEncode, *maMem, *maMemEncode;
@@ -773,53 +778,69 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
     tiMemEncode = (unsigned char *) malloc(num_tiles*8);
     coMem = (unsigned char *) malloc(num_tiles*8);
     coMemEncode = (unsigned char *) malloc(num_tiles*8);
-    maMem = (unsigned char *) malloc(32*24);
-    maMemEncode = (unsigned char *) malloc(32*24);
+    maMem = (unsigned char *) malloc(mapw*maph);
+    maMemEncode = (unsigned char *) malloc(mapw*maph);
 
-	printf("\ndecode for %d tiles\n",num_tiles);
+	if (quietmode == 0) {
+		printf("\nDecode for %d tiles...\n",num_tiles);
+	}
 
 	for(t=0;t<num_tiles;t++) { //loop through tiles
 		for(y=0;y<8;y++) {
 			value=0; minv=0xFF; maxv=0x00;
 
-            // get the 8 values
-            for (x=0;x<8;x++) {
-                valtil[x]=buffer[t*64 + y*8 + x];
-                // get min and max value
-                if (valtil[x]<minv)
-                    minv=valtil[x];
-                if (valtil[x]>maxv)
-                    maxv=valtil[x];
-            }
-            // put 1 if max color
-            if (maxv <= 0x01) maxv=0xF;
-            if (minv == 0xff) minv=1;
-            for (x=0;x<8;x++) {
-                if (valtil[x]==maxv)
-                    value=value | (1<<(7-x));
-            }
-            *(tiMem+y+t*8)=value;
-            *(coMem+y+t*8)=(maxv<<4) | (minv);    // FG color | BG color 
+			// get the 8 values
+			for (x=0;x<8;x++) {
+				valtil[x]=buffer[t*64 + y*8 + x];
+				// get min and max value
+				if (valtil[x]<minv)
+					minv=valtil[x];
+				if (valtil[x]>maxv)
+					maxv=valtil[x];
+			}
+			// put 1 if max color
+			if (maxv <= 0x01) maxv=0xF;
+			if (minv == 0xff) minv=1;
+			for (x=0;x<8;x++) {
+				if (valtil[x]==maxv)
+					value=value | (1<<(7-x));
+			}
+			*(tiMem+y+t*8)=value;
+			*(coMem+y+t*8)=(maxv<<4) | (minv);    // FG color | BG color 
 		}
 	}
-    // Get map
-    for (t=0;t<32*24;t++) {
-        // if bitmap mode, adapt it
-		/*
-        if (ckTiBitmapMap->Checked) {
-            if (mgTil->MapData[i]>=256*2)
-                *(maMem+i)=mgTil->MapData[i]-256*2;
-            else if (mgTil->MapData[i]>=256)
-                *(maMem+i)=mgTil->MapData[i]-256;
-            else
-                *(maMem+i)=mgTil->MapData[i];
-        }
-        else*/
-            *(maMem+t)=tilemap[t];
+
+	// sprites are 16x16 but we need to swap tile 2<>3  
+	if (sprmode)
+	{
+		for(t=0;t<num_tiles;t+=4) { //loop through tiles
+			memcpy(bufsw1,(tiMem+(t+1)*8),8);
+			memcpy((tiMem+(t+1)*8),(tiMem+(t+2)*8),8);
+			memcpy((tiMem+(t+2)*8),bufsw1,8);
+		}
+	}
+
+    // Get map if possible (so not in sprite mode)
+	if (tilemap!=NULL)
+	{
+		for (t=0;t<mapw*maph;t++) {
+			// if bitmap mode, adapt it
+			/*
+			if (ckTiBitmapMap->Checked) {
+				if (mgTil->MapData[i]>=256*2)
+					*(maMem+i)=mgTil->MapData[i]-256*2;
+				else if (mgTil->MapData[i]>=256)
+					*(maMem+i)=mgTil->MapData[i]-256;
+				else
+					*(maMem+i)=mgTil->MapData[i];
+			}
+			else*/
+				*(maMem+t)=tilemap[t];
+		}
     }
 	
 	// write files regarding compression type
-	lenencode=num_tiles*8;lenencode1=num_tiles*8;lenencode2=32*24;
+	lenencode=num_tiles*8;lenencode1=num_tiles*8;lenencode2=mapw*maph;
 	if (compress==0) { // no compression
 		memcpy(tiMemEncode,tiMem,lenencode);
 		memcpy(coMemEncode,coMem,lenencode1);
@@ -829,7 +850,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
         lenencode=rleCompress( tiMem,tiMemEncode,num_tiles*8);
         lenencode1=rleCompress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
-            lenencode2=rleCompress(maMem,maMemEncode,32*24);
+            lenencode2=rleCompress(maMem,maMemEncode,mapw*maph);
         else
             memcpy(maMemEncode,maMem,lenencode2);
 	}
@@ -837,7 +858,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
         lenencode=pletterCompress( tiMem,tiMemEncode,num_tiles*8);
         lenencode1=pletterCompress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
-            lenencode2=pletterCompress(maMem,maMemEncode,32*24);
+            lenencode2=pletterCompress(maMem,maMemEncode,mapw*maph);
         else
             memcpy(maMemEncode,maMem,lenencode2);
 	}
@@ -845,7 +866,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
         lenencode=dan1Compress( tiMem,tiMemEncode,num_tiles*8);
         lenencode1=dan1Compress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
-            lenencode2=dan1Compress(maMem,maMemEncode,32*24);
+            lenencode2=dan1Compress(maMem,maMemEncode,mapw*maph);
         else
             memcpy(maMemEncode,maMem,lenencode2);
     }		
@@ -866,48 +887,62 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
 		fprintf(fpc, "0x%02X", *(tiMemEncode+t));
 	}
 	fprintf(fpc, "\n};\n\n");
-	addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
-	fprintf(fpc, "const unsigned char COL%s[%d]={\n", filebase,lenencode1);
-	for (t = 0; t < lenencode1; t++) {
-		if(t) {
-			if((t & 31) == 0)
-				fprintf(fpc, ",\n");
-			else
-				fprintf(fpc, ", ");
-		}
-		fprintf(fpc, "0x%02X", *(coMemEncode+t));
-	}
-	fprintf(fpc, "\n};\n\n");
-		
-	// write map if needed
-	if (savemap) {
-		addcomment(fpc, ((32*24-lenencode1)*100)/(32*24),lenencode2,compress);
-		fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filebase,lenencode2);
-		for (t = 0; t < lenencode2; t++) {
+	
+	// do that only if it is not a sprite
+	if (sprmode==0) 
+	{
+		addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
+		fprintf(fpc, "const unsigned char COL%s[%d]={\n", filebase,lenencode1);
+		for (t = 0; t < lenencode1; t++) {
 			if(t) {
 				if((t & 31) == 0)
 					fprintf(fpc, ",\n");
 				else
 					fprintf(fpc, ", ");
 			}
-			fprintf(fpc, "0x%02X", *(maMemEncode+t));
+			fprintf(fpc, "0x%02X", *(coMemEncode+t));
 		}
 		fprintf(fpc, "\n};\n\n");
+			
+		// write map if needed
+		if (savemap) {
+			addcomment(fpc, ((mapw*maph-lenencode1)*100)/(mapw*maph),lenencode2,compress);
+			fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filebase,lenencode2);
+			for (t = 0; t < lenencode2; t++) {
+				if(t) {
+					if((t & 31) == 0)
+						fprintf(fpc, ",\n");
+					else
+						fprintf(fpc, ", ");
+				}
+				fprintf(fpc, "0x%02X", *(maMemEncode+t));
+			}
+			fprintf(fpc, "\n};\n\n");
+		}
 	}
-	
+
 	// write hearder file
 	fprintf(fph, "#ifndef %s_INC_\n", filebase);
 	fprintf(fph, "#define %s_INC_\n\n", filebase);
 	fprintf(fph, "#define SZTIL%s %d\n", filebase,lenencode);
-	fprintf(fph, "#define SZCOL%s %d\n", filebase,lenencode1);
-	if (savemap)
-		fprintf(fph, "#define SZMAP%s %d\n", filebase,lenencode2);
-	fprintf(fph,"\n");
-	fprintf(fph, "extern const unsigned char TIL%s[];\n", filebase);
-	fprintf(fph, "extern const unsigned char COL%s[];\n", filebase);
-	if (savemap)
-		fprintf(fph, "extern const unsigned char MAP%s[];\n", filebase);
+	// do that only if it is not a sprite
+	if (sprmode==0) 
+	{
 
+		fprintf(fph, "#define SZCOL%s %d\n", filebase,lenencode1);
+		if (savemap)
+			fprintf(fph, "#define SZMAP%s %d\n", filebase,lenencode2);
+		fprintf(fph,"\n");
+	}
+	fprintf(fph, "extern const unsigned char TIL%s[];\n", filebase);
+	// do that only if it is not a sprite
+	if (sprmode==0) 
+	{
+		fprintf(fph, "extern const unsigned char COL%s[];\n", filebase);
+		if (savemap)
+			fprintf(fph, "extern const unsigned char MAP%s[];\n", filebase);
+	}
+	
 	fprintf(fph, "\n\n");
 	fprintf(fph, "#endif\n");
 		
@@ -937,6 +972,8 @@ void PrintOptions(char *str) {
 	printf("\n\nOptions are:");
 	printf("\n\n--- General options ---");
 	printf("\n-c[no|rle|ple|dan]    Compression method [no]");
+	printf("\n\n--- Graphic options ---");
+	printf("\n-s                    Generate sprite graphics");
 	printf("\n\n--- Map options ---");
 	printf("\n-m!                   Exclude map from output");
 	printf("\n-m                    Convert the whole picture");
@@ -989,17 +1026,18 @@ int main(int argc, char **arg) {
 			{
 				quietmode=1;
 			}
+			else if(arg[i][1]=='s') // sprite mode
+			{
+				sprmode=1;
+				tile_reduction=0;
+			}
 			else if(arg[i][1]=='m') //map options
 			{
 				if( strcmp(&arg[i][1],"m") == 0)
 				{
-					//screen=1;
-					//border=0;
 				}
 				else if( strcmp(&arg[i][1],"m!") == 0)
 				{
-					//screen=1;
-					//border=0;
 					savemap=0;
 				}
 				else if( strcmp(&arg[i][1],"mR!") == 0)
@@ -1106,19 +1144,19 @@ int main(int argc, char **arg) {
 	width = image.header.width;
 	xsize = width>>3; ysize = height>>3;
 	
-	if ((height != 192) && (width != 256))
-	{
-		printf("\nERROR : Image must be 256x192 pixel size.\n");
-		return 1;
-	}
-
 	//Print what the user has selected
 	if (quietmode == 0) {
 		printf("\n****** O P T I O N S ***************");
-		if (tile_reduction)
-			printf("\nOptimize tilemap=ON");
-		else
-			printf("\nOptimize tilemap=OFF");
+		if (sprmode)
+			printf("\nSprite mode=ON");
+		else {
+			printf("\nSprite mode=OFF");
+
+			if (tile_reduction)
+				printf("\nOptimize tilemap=ON");
+			else
+				printf("\nOptimize tilemap=OFF");
+		}
 
 		if (file_type == 2)
 			printf("\nPCX file: %dx%d pixels",width,height);
@@ -1143,10 +1181,8 @@ int main(int argc, char **arg) {
 	}
 	fflush(stdout);
 
-	//first arrange into a list of 8x8 blocks
 	buffer=ArrangeBlocks( image.buffer, width, height, 8, &xsize, &ysize, 8);
 	free(image.buffer);
-
 	if(buffer==NULL)
 	{
 		printf("\nERROR:Not enough memory to do image operations...\n");
@@ -1161,7 +1197,7 @@ int main(int argc, char **arg) {
 		printf("\nERROR:Not enough memory to do tile map optimizations..\n");
 		return 1;
 	}
-	
+
 	if (ysize>0) {
 		if (quietmode == 0) {
 			if (tile_reduction)
@@ -1177,7 +1213,7 @@ int main(int argc, char **arg) {
 		}
 		
 		//convert pictures and save to file
-		if(!Convert2Pic(filebase, buffer, tilemap, ysize, savemap))
+		if(!Convert2Pic(filebase, buffer, tilemap, ysize, width/8, height/8,savemap))
 		{
 			//free up image & tilemap memory
 			free(tilemap);

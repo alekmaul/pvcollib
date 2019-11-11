@@ -21,8 +21,8 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.2.0 (11/xx/2019)
-- Put all funcitons in different files, to avoid wasting memory when linking rom ...
+V1.2.0 (11/11/2019)
+- Put all functions in different files, to avoid wasting memory when linking rom ...
 - Add new examples (sound, region detection, sprites, megacart)
 - Add game diamond from Amy Purple (2004 mini game compo)
 - Add sound management

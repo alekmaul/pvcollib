@@ -2,6 +2,8 @@
 
 
 	small game from coder Amy Purple : Diamond Dash
+		made by her during 2004 MiniGame Competition 
+		https://web.archive.org/web/20050204071935/http://www.ffd2.com/minigame/
 	-- alekmaul
 
 

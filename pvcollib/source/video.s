@@ -31,27 +31,29 @@
 	.globl _spr_clear
 	
 	; global from this module
-	.globl  _vdp_waitvblank
-	.globl  _vdp_enablenmi
-	.globl  _vdp_disablenmi
-	.globl  _vdp_enablevdp
-	.globl  _vdp_disablevdp
-	.globl  _vdp_setmode1txt
-	.globl  _vdp_setmode2txt
-	.globl  _vdp_setmode2bmp
-	.globl  _vdp_putstring
-	.globl  _vdp_setchar	
-	.globl  _vdp_setdefaultchar
-	.globl  _vdp_fillvram
-	.globl  _vdp_duplicatevram
-	.globl  _vdp_enablescr
-	.globl  _vdp_disablescr
-	.globl  _vdp_putvram
-	.globl  _vdp_rle2vram
-	.globl  _vdp_ple2vram
-	.globl  _vdp_dan2vram
+	.globl _vdp_setreg
+	.globl _vdp_waitvblank
+	.globl _vdp_enablenmi
+	.globl _vdp_disablenmi
+	.globl _vdp_enablevdp
+	.globl _vdp_disablevdp
+	.globl _vdp_setmode1txt
+	.globl _vdp_setmode2txt
+	.globl _vdp_setmode2bmp
+	.globl _vdp_putstring
+	.globl _vdp_setchar	
+	.globl _vdp_getchar
+	.globl _vdp_setdefaultchar
+	.globl _vdp_fillvram
+	.globl _vdp_duplicatevram
+	.globl _vdp_enablescr
+	.globl _vdp_disablescr
+	.globl _vdp_putvram
+	.globl _vdp_rle2vram
+	.globl _vdp_ple2vram
+	.globl _vdp_dan2vram
 	
-	.area   _CODE
+	.area  _CODE
 		
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
@@ -102,6 +104,15 @@ vdpwrite:
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
+_vdp_setreg:
+    pop     hl
+    pop     de
+    push    de
+    push    hl
+    ld b,e
+    ld c,d
+    jp      0x1fd9
+	
 _vdp_waitvblank:
 	pop     hl
 	pop     de
@@ -248,7 +259,7 @@ vsm2b2:
   jp      default_setmode2
 
 ;---------------------------------------------------------------------------------
-_vdp_setchar:
+_vdp_setcharex:
 	pop     de
 	pop     hl
 	exx
@@ -379,6 +390,34 @@ upload_procs:
 	.dw    italic
   	.dw    bold
 	.dw    bold_italic
+
+
+_vdp_putchar:
+	pop     hl
+	pop     de
+	push    de
+	push    hl
+	ld      hl, #4
+	add     hl, sp
+	call    calcoffset
+	ld      bc, #0x0001
+	ld      a,#1
+	jp      0x1fdf
+
+_vdp_getchar:
+	pop     hl
+	pop     de
+	push    de
+	push    hl
+	ld      hl, #0x0000
+	push    hl
+	add     hl, sp
+	call    calcoffset
+	ld      bc, #0x0001
+	ld      a,#1
+	call    0x1fe2
+	pop     hl
+	ret
 
 ;---------------------------------------------------------------------------------
 _vdp_setdefaultchar:

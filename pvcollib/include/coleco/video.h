@@ -52,6 +52,14 @@
 #define sprtab  0x3800
 #define sprgen  0x1b00
 
+/*! \fn  vdp_setreg(u8 reg,u8 val)
+	\brief Set a VDP register
+	\param reg register number
+	\param val value to assign
+	Set a value to a TMS9918 register
+*/
+void vdp_setreg(u8 reg,u8 val);
+
 /*! \fn  vdp_waitvblank(u16 numtime)
 	\brief Wait for vblank interrupt
 	\param numtime number of vblank to wait
@@ -110,25 +118,38 @@ void vdp_setmode1txt(void);
 */
 void vdp_setmode2txt(void);
 
-/*! \fn  vdp_setchar(u8 first,u8 count, unsigned offset,u8 flags)
-	\brief 
-			Put some chars of default font
-	\param first
-			1st char to put
-	\param count	
-			number of chars
-	\param offset 
-			address location in video memory for the chararter patterns
-	\param flags	
-			type of font
+/*! \fn  vdp_setcharex(u8 first,u8 count, unsigned offset,u8 flags)
+	\brief  Put some chars of default font
+	\param first 1st char to put
+	\param count number of chars
+	\param offset address location in video memory for the chararter patterns
+	\param flags type of font
 	Put some chars of default font in VRAM with the flags :
 		FNTNORMAL for the normal font
 		FNTITALIC for the italic font
 		FNTBOLD for the bold font
 		FNTBOLD_ITALIC fot both italic and bold font
 */
-void vdp_setchar(u8 first,u8 count, unsigned offset,u8 flags);
-	
+void vdp_setcharex(u8 first,u8 count, unsigned offset,u8 flags);
+
+/*! \fn  vdp_putchar (u8 x, u8 y, char value)
+	\brief  Put a single char on screen
+	\param x colum to print
+	\param y line to print
+	\param value ascii value of char to print
+	Print a char on screen
+*/
+void vdp_putchar (u8 x, u8 y, char value);
+
+/*! \fn  vdp_getchar (u8 x, u8 y)
+	\brief  Get a single char from screen
+	\param x column of the char
+	\param y line of the char
+	\return char value from screen
+	Get a char from screen
+*/
+u8  vdp_getchar (u8 x, u8 y);
+
 /*! \fn  vdp_setdefaultchar (u8 flags)
 	\brief Put default font
 	\param flags	character format

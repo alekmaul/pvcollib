@@ -64,6 +64,12 @@ u16 sys_random(void);
 u8 sys_randbyte(u8 A, u8 B);
 
 
+/*! \fn sys_pause(void)
+	\brief Do a pause
+	Wait until a fire button is pressed
+*/
+void sys_pause(void);
+
 /*! \fn sys_strlen(char *text)
 	\brief return the length of a string
 	\param text text to analyze

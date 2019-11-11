@@ -19,6 +19,7 @@ CHANGE LOG
 ----------------------
 VERSION 1.10 (November, 2019)
 - Added doxygen, gfx2col
+- Added cvmkcart
 
 VERSION 1.00 (November, 2018)
 - Initial release 

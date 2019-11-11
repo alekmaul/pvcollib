@@ -29,9 +29,6 @@
 	; global from this module
 	.globl _spr_enable
 	.globl _spr_clear
-	.globl _spr_getentry
-	.globl _spr_update
-	.globl _spr_mode8x8
 	
 	.area	_DATA
 _spr_enable::
@@ -51,11 +48,7 @@ _sprites::
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-set_reg_1:
-	ld      c,a
-	ld      b,#1
-	jp      0x1fd9
-		
+ 
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
@@ -91,143 +84,3 @@ spcv0:
 	
 	ret               
 
-;---------------------------------------------------------------------------------
-_spr_getentry:
-	ld		iy,#_spr_odd  
-	ld		a,0(iy) 
-	add		a,#0x02      
-	ld		0(iy),a 
-	ld		a,0(iy) 
-	sub		#0x20        
-	jr		c,spfrv0    
-	ld		0(iy),#0x00 
-
-spfrv0:
-	ld		hl,#_spr_odd  
-	ld		c,(hl)     
-	ld		e,c        
-
-spfrv3:
-	ld		a,e        
-	sub		#0x20        
-	jr		nc,spfrv4
-	ld		l,e        
-	ld		h,#0x00      
-	add		hl,hl      
-	add		hl,hl      
-	push	de         
-	ld		de,#_sprites 
-	add		hl,de      
-	pop		de         
-	ld		a,(hl)     
-	sub		#0xcf        
-	jr		nz,spfrv2
-
-	ld		l,c        
-	ret               
-
-spfrv2:
-	inc		e          
-	ld		c,e        
-	jr		spfrv3
-    
-spfrv4:
-	ld     bc,#0 							; _HEADER0 
-spfrv7:
-	ld		hl,#_spr_odd  
-	ld		a,b        
-	sub		(hl)       
-	jr		nc,spfrv5
-	ld		l,b        
-	ld		h,#0x00      
-	add		hl,hl      
-	add		hl,hl      
-	ld		de,#_sprites 
-	add		hl,de      
-	ld		a,(hl)     
-	sub		#0xcf        
-	jr		nz,spfrv6
-	ld		l,c        
-	ret            
-   
-spfrv6:
-	inc		b          
-	ld		c,b        
-	jr		spfrv7
-
-spfrv5:
-	ld		l,#0xff      
-
-	ret       
-
-;---------------------------------------------------------------------------------
-_spr_update:
-	ld		a,(_spr_order)  
-	bit		0,a        
-	jr		nz,spwv0
-	set		0,a        
-	ld		(_spr_order),a  
-	di                
-	xor		a          
-	out		(#0xbf),a    
-	ld		a,#0x5b      
-	out		(#0xbf),a    
-	ei                
-	ld		hl,#_sprites 
-	ld		bc,#0x80be   
-	di                
-	otir              
-	ei                
-	ret               
-	
-spwv0:   
-	res		0,a        
-	ld		(_spr_order),a  
-	di                
-	xor		a          
-	out		(#0xbf),a    
-	ld		a,#0x5b      
-	out		(#0xbf),a    
-	ei                
-	ld		hl,#_sprites+124
-	ld		c,#32      
-spwv1:
-	di                
-	ld		a,(hl)     
-	out		(#0xbe),a    
-	inc		hl         
-	ld		a,(hl)     
-	out		(#0xbe),a    
-	inc		hl         
-	ld		a,(hl)     
-	out		(#0xbe),a    
-	inc    hl         
-	ld		a,(hl)     
-	out		(#0xbe),a    
-	ei                
-	dec    hl         
-	dec    hl         
-	dec    hl  
-       
-	dec    hl         
-	dec    hl         
-	dec    hl         
-	dec    hl         
-	dec    c          
-	xor    a          
-	cp     c          
-	jr     nz,spwv1
-	
-	ret    
-
-;---------------------------------------------------------------------------------
-_spr_mode8x8:
-	ld   a,(0x73c4)							; _get_reg_1
-	and  #0xfd
-	jp   set_reg_1
-	
-	
-_spr_mode16x16:
-	ld   a,(0x73c4)	; _get_reg_1
-	or  #2
-	jp   set_reg_1

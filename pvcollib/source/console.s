@@ -27,9 +27,7 @@
 
 	; global from this module
 	.globl _sys_random
-	.globl _sys_strlen
-	.globl _sys_utoa
-	.globl _sys_str
+	.globl _sys_randbyte
 
     .area _DATA
 string_data:
@@ -40,26 +38,12 @@ string_data:
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-count_sub1:
-    xor     a
-csp1:  
-    sbc     hl,bc
-    inc     a
-    jr      nc,csp1
-    dec     a
-    add     hl,bc
-    add     a,#48 								; = ascii for number 0
-    ld      (de),a
-    inc     de
-    ret
-
-
 count_sub:
     xor     a
-csp2:
+_scsp2:
     sbc     hl,bc
     inc     a
-    jr      nc,csp2
+    jr      nc,_scsp2
     dec     a
     add     hl,bc
     ret
@@ -144,59 +128,4 @@ _sys_randbyte:
 	ld	d,a										; HL = B, DE = A
 	call	absdiff_max_min
 	jp	rnd1									; continue in rnd function and RET
-		
-;---------------------------------------------------------------------------------
-_sys_strlen:
-	pop	hl
-	pop	de
-	push	de
-	push	hl
-	ld	hl,#0x0000
-$1:		ld	a,(de)
-	or	a
-	ret	z
-	inc	hl
-	inc	de
-	jr	$1
 
-;---------------------------------------------------------------------------------
-_sys_utoa:
-    pop     bc
-    pop     hl
-    pop     de
-    push    de
-    push    hl
-    push    bc
-    ld      bc,#10000
-    call    count_sub1
-    ld      bc,#1000
-    call    count_sub1
-    ld      bc,#100
-    call    count_sub1
-    ld      c,#10
-    call    count_sub1
-    ld      a,l
-    add     a,#48 ;; = ascii for number 0
-    ld      (de),a
-    ret
-	
-;---------------------------------------------------------------------------------
-_sys_str:
-	pop	hl
-	pop	bc
-	push	bc
-	push	hl
-
-	ld	hl,#string_data
-	push	hl
-		
-	call	_sys_utoa
-
-	pop	bc
-	pop	bc
-
-	xor	a
-	ld	(string_data+5),a
-	ld	hl,#string_data
-
-	ret

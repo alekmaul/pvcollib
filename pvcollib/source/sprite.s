@@ -31,6 +31,7 @@
 	.globl _spr_clear
 	.globl _spr_getentry
 	.globl _spr_update
+	.globl _spr_mode8x8
 	
 	.area	_DATA
 _spr_enable::
@@ -50,7 +51,11 @@ _sprites::
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-
+set_reg_1:
+	ld      c,a
+	ld      b,#1
+	jp      0x1fd9
+		
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
@@ -214,3 +219,15 @@ spwv1:
 	jr     nz,spwv1
 	
 	ret    
+
+;---------------------------------------------------------------------------------
+_spr_mode8x8:
+	ld   a,(0x73c4)							; _get_reg_1
+	and  #0xfd
+	jp   set_reg_1
+	
+	
+_spr_mode16x16:
+	ld   a,(0x73c4)	; _get_reg_1
+	or  #2
+	jp   set_reg_1

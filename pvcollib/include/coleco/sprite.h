@@ -87,6 +87,18 @@ extern void spr_update(void);
 */
 extern u8 spr_getentry(void);
 
+/*! \fn spr_mode8x8(void)
+	\brief put sprite in 8x8 pix mode
+	Put all 32 sprites on screen in 8x8 pixels depth.
+*/
+extern void spr_mode8x8(void);
+
+/*! \fn spr_mode16x16(void)
+	\brief put sprite in 16x16 pix mode
+	Put all 32 sprites on screen in 16x16 pixels depth.
+*/
+extern void spr_mode16x16(void);
+
 /*! \fn spr_set(id,xp,yp,col,pat) 
 	\brief sets an sprite entry to the supplied values
     \param id the sprite number to be get [0 - 31]

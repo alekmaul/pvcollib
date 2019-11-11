@@ -47,27 +47,46 @@ extern u8 buffer32[32];
  */
 extern volatile u8 vid_freq;
 
-/*! \fn random(void)
+/*! \fn sys_random(void)
 	\brief return a randomized number
 	\return unsigned short of a randomized number
 	Generate a 16 bit number 
 */
-u16 random(void);
+u16 sys_random(void);
 
-/*! \fn strlencol(char *text)
+/*! \fn sys_randbyte(u8 A, u8 B)
+	\brief return a randomized number between A and B
+	\param A minimum value of random number
+	\param B maximum value of random number
+	\return unsigned char of a randomized number
+	Generate a 8 bit number between two numbers
+*/
+u8 sys_randbyte(u8 A, u8 B);
+
+
+/*! \fn sys_strlen(char *text)
 	\brief return the length of a string
 	\param text text to analyze
 	\return unsigned short of string length
 	Return the length of the string
 */
-u16 strlencol(char *text);
+u16 sys_strlen(char *text);
 
-/*! \fn utoa(char *text)
-	\brief return the length of a string
+/*! \fn sys_utoa(unsigned value,char *buffer)
+	\brief put a unsigned value into a buffer
 	\param value value to convert to text
 	\param buffer text that will receive vvalue converted
-	Convert an unsigned value to ascii text
+	Convert an unsigned value to ascii text.
+	Leading zeros _are_ put in buffer
 */
-void utoa(unsigned value,char *buffer);
+void sys_utoa(unsigned value,char *buffer);
+
+/*! \fn *sys_str(unsigned value)
+	\brief return a converted value in string
+	\param value number to convert
+	\return pointer to converted string
+	Return a converted value to a string
+*/
+char *sys_str(unsigned value);
 
 #endif

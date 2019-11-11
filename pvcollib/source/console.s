@@ -26,37 +26,127 @@
 	; global from external entries / code
 
 	; global from this module
-	.globl  _random
-	.globl  _strlencol
-	.globl _utoa
+	.globl _sys_random
+	.globl _sys_strlen
+	.globl _sys_utoa
+	.globl _sys_str
 
+    .area _DATA
+string_data:
+.ds    6
+	
 	.area   _CODE
 
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-count_sub:
+count_sub1:
     xor     a
-$2:
+csp1:  
     sbc     hl,bc
     inc     a
-    jr      nc,$2
+    jr      nc,csp1
+    dec     a
+    add     hl,bc
+    add     a,#48 								; = ascii for number 0
+    ld      (de),a
+    inc     de
+    ret
+
+
+count_sub:
+    xor     a
+csp2:
+    sbc     hl,bc
+    inc     a
+    jr      nc,csp2
     dec     a
     add     hl,bc
     ret
 	
+absdiff_max_min:								; HL = B, DE = A
+	push	hl
+	pop	bc
+	sbc	hl,de
+	jr	nc,amm1									; if B<A then swap HL=A-B, else HL=B-A
+	push	bc
+	pop	hl
+	ex	de,hl
+	sbc	hl,de
+amm1:
+	ret
+
+rnd1:
+	ld	bc,#0xffff								; to build AND_MASK in BC
+	ld	a,h
+	or  a
+	jr	nz,rnd3
+	ld	b,a
+	ld	a,l
+	jp	rnd3
+rnd2:
+	srl	b
+	rr	c
+rnd3:
+	or	a
+	rla
+	jr	nc,rnd2									; HL = MAX-MIN, DE = MIN, BC = AND_MASK
+	
+	push	de
+	ex	de,hl									; DE = MAX-MIN, BC = AND_MASK, MIN saved in stack
+rnd4:
+	push	de									; save MAX-MIN in stack
+	push	bc									; save AND_MASK in stack
+		
+	call	_sys_random   						; Coleco Random Function
+		
+	pop	bc										; get back AND_MASK from stack
+	pop	de										; get back MAX-MIN from stack
+
+	ld	a,h										; apply AND_MASK
+	and	b
+	ld	h,a
+	ld	a,l
+	and	c
+	ld	l,a
+
+	or	a
+	push	de
+	ex	de,hl
+	sbc	hl,de
+	ex	de,hl
+	pop	de
+	jr	c,rnd4									; if random number > MAX-MIN then retry
+
+	pop	de
+	add	hl,de									; HL = random_number between [MIN,MAX]
+	ret
+
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
-_random:
+_sys_random:
 	call    #0x1ffd
 	ld      a,r
 	xor     l
 	ld      l,a
 	ret
 
+_sys_randbyte:
+	pop	hl
+	pop	de
+	push	de
+	push	hl
+		
+	ld	l,d
+	xor	a
+	ld	h,a
+	ld	d,a										; HL = B, DE = A
+	call	absdiff_max_min
+	jp	rnd1									; continue in rnd function and RET
+		
 ;---------------------------------------------------------------------------------
-_strlencol:
+_sys_strlen:
 	pop	hl
 	pop	de
 	push	de
@@ -70,53 +160,43 @@ $1:		ld	a,(de)
 	jr	$1
 
 ;---------------------------------------------------------------------------------
-_utoa:
+_sys_utoa:
     pop     bc
     pop     hl
     pop     de
-    ;exx
-    ;pop     bc
-    ;push    bc
-    ;exx
     push    de
     push    hl
     push    bc
     ld      bc,#10000
-    call    count_sub
-    ;exx
-	;add     a,c
-    ;exx
-    add     a,#0x30
-    ld      (de),a
-    inc     de
+    call    count_sub1
     ld      bc,#1000
-    call    count_sub
-    ;exx
-	;add     a,c
-    ;exx
-    add     a,#0x30
-    ld      (de),a
-    inc     de
+    call    count_sub1
     ld      bc,#100
-    call    count_sub
-    ;exx
-	;add     a,c
-    ;exx
-    add     a,#0x30
-    ld      (de),a
-    inc     de
+    call    count_sub1
     ld      c,#10
-    call    count_sub
-    ;exx
-	;add     a,c
-    ;exx
-    add     a,#0x30
-    ld      (de),a
-    inc     de
+    call    count_sub1
     ld      a,l
-    ;exx
-	;add     a,c
-    ;exx
-    add     a,#0x30
+    add     a,#48 ;; = ascii for number 0
     ld      (de),a
     ret
+	
+;---------------------------------------------------------------------------------
+_sys_str:
+	pop	hl
+	pop	bc
+	push	bc
+	push	hl
+
+	ld	hl,#string_data
+	push	hl
+		
+	call	_sys_utoa
+
+	pop	bc
+	pop	bc
+
+	xor	a
+	ld	(string_data+5),a
+	ld	hl,#string_data
+
+	ret

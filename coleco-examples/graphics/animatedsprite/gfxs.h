@@ -1,5 +1,5 @@
-#ifndef _GRAFNOCMP_GFXS_
-#define _GRAFNOCMP_GFXS_
+#ifndef _ANIMATEDSPR_GFXS_
+#define _ANIMATEDSPR_GFXS_
 
 #include <coleco.h>
 

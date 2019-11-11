@@ -1,5 +1,5 @@
-#ifndef _GRAFNOCMP_MAIN_
-#define _GRAFNOCMP_MAIN_
+#ifndef _ANIMATEDSPR__MAIN_
+#define _ANIMATEDSPR__MAIN_
 
 #include <coleco.h>
 

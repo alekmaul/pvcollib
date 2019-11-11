@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------
 
 
-	bitmap demo with less than 256 tiles
+	simple sprite demo
 	-- alekmaul
 
 

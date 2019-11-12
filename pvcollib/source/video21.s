@@ -68,8 +68,8 @@ vsm2b2:
 	out     (0XBE),a
   nop
   inc     a
-  jp      nz,vsm2b2
+  jr      nz,vsm2b2
   dec     d
-  jp      nz,vsm2b1
+  jr      nz,vsm2b1
   jp      default_setmode2
 

@@ -129,7 +129,7 @@ vscp2:
 	outi
 	nop
 	nop
-	jp      nz,vscp2
+	jr      nz,vscp2
 	exx
 	ret
 
@@ -148,7 +148,7 @@ vscp4:
 	outi
 	nop
 	nop
-	jp      nz,vscp4
+	jr      nz,vscp4
 	exx
 	ret
 

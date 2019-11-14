@@ -13,6 +13,7 @@ where filename is a 256 color PNG, BMP, PCX or TGA file  with only 1st palette u
   
 ### Graphique options 
 - `-s` Sprite mode 
+- `-b` Bitmap mode (no more 256 tiles limits)
 
 ### Map options
 - `-m!` Exclude map from output  
@@ -30,3 +31,8 @@ where filename is a 256 color PNG, BMP, PCX or TGA file  with only 1st palette u
 gfx2col -crle -fpng -m myimage.png
 ```
  This will will convert a myimage png file to a inc file with 8x8 tiles, rle compressed.
+
+## History
+V1.1.0 : add bitmap mode
+
+V1.0.0 : initial release

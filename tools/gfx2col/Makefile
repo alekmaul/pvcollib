@@ -1,7 +1,7 @@
 #export PATH	:=	/c/msys/bin:$(PATH)
 export PATH := /c/MinGW32/bin/:/c/msys/bin:$(PATH)
 
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 
 #---------------------------------------------------------------------------------
 # options for code generation

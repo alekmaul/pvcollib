@@ -38,6 +38,7 @@ enum FILE_TYPE {
 int quietmode=0;              // 0 = not quiet, 1 = i can't say anything :P
 int compress=0;               // 0 = not compressed, 1 = rle compression, 2 = ple compression, 3 = dan1 compression
 int sprmode=0;                // 0 = background 1 = sprite
+int bmpmode=0;				  // 0 = normal tile mode, 1=bitmap mode
 
 //// F U N C T I O N S //////////////////////////////////////////////////////////
 int PCX_Load(char *filename, pcx_picture_ptr image)
@@ -974,6 +975,7 @@ void PrintOptions(char *str) {
 	printf("\n-c[no|rle|ple|dan]    Compression method [no]");
 	printf("\n\n--- Graphic options ---");
 	printf("\n-s                    Generate sprite graphics");
+	printf("\n-b                    Bitmap mode (no more 256 iltes limit)");
 	printf("\n\n--- Map options ---");
 	printf("\n-m!                   Exclude map from output");
 	printf("\n-m                    Convert the whole picture");
@@ -1031,6 +1033,10 @@ int main(int argc, char **arg) {
 				sprmode=1;
 				tile_reduction=0;
 			}
+			else if(arg[i][1]=='b') // bitmap mode
+			{
+				bmpmode=1;
+			}			
 			else if(arg[i][1]=='m') //map options
 			{
 				if( strcmp(&arg[i][1],"m") == 0)
@@ -1152,6 +1158,11 @@ int main(int argc, char **arg) {
 		else {
 			printf("\nSprite mode=OFF");
 
+			if (bmpmode)
+				printf("\nBitmap mode=ON");
+			else {
+				printf("\nnBitmap mode=OFF");
+
 			if (tile_reduction)
 				printf("\nOptimize tilemap=ON");
 			else
@@ -1181,6 +1192,12 @@ int main(int argc, char **arg) {
 	}
 	fflush(stdout);
 
+	if ( (bmpmode==1) && (width != 256) && (height != 192) )
+	{
+		printf("\nERROR : Image must have 256x192 pixel size in bitmap mode (%d,%d here).\n",width, height);
+		return 1;
+	}
+		
 	buffer=ArrangeBlocks( image.buffer, width, height, 8, &xsize, &ysize, 8);
 	free(image.buffer);
 	if(buffer==NULL)
@@ -1206,7 +1223,7 @@ int main(int argc, char **arg) {
 				printf("\nComputed screen with %d tiles.",ysize);
 		}
 		
-		if (ysize>255)
+		if ( (ysize>255) && (bmpmode==0))
 		{
 			printf("\nERROR : Image must have less than 256 tiles (%d here).\n",ysize);
 			return 1;

@@ -169,36 +169,16 @@ void lzss(byte *data_src)
 	optimals[0].len = 1;
 	for (i = 1;i < index_src;i++)
 	{
-//		if (bVerbose) printf("\rScan : %d bytes", (i + 1));
 		// TRY LITERALS
 		optimals[i].bits = optimals[i-1].bits + 1 + 8;
 		optimals[i].offset = 0;
 		optimals[i].len = 1;
 
-		// STRING OF LITERALS
-		//if (bRLE && i >= 27)
-        /*if (i >= 27)
-		{
-			j = 256 + 27;
-			if (j > i) j = i;
-			for (k = j ; k > 26 ; k--)
-			{
-				temp_bits = optimals[i-k].bits + 1 + 16 + 1 + 8 + k * 8;
-				if (optimals[i].bits > temp_bits)
-				{
-					optimals[i].bits = temp_bits;
-					optimals[i].len = k;
-				}
-			}
-		} */
-
 		// LZ MATCH OF ONE
 		j = MAX_OFFSET2;
 		if (j > i) j = i;
-		/* temp_bits = optimals[i-1].bits + 1+1+1+2; */
 		for (k = 1; k <= j; k++)
 		{
-			/* if (k==5) temp_bits += 3; */
 			if (data_src[i] == data_src[i-k])
 			{
 				temp_bits = optimals[i-1].bits + count_bits(k, 1);
@@ -267,16 +247,8 @@ void lzss(byte *data_src)
 		}
 		insert_match(&matches[match_index], i);
 	}
-	//printf("\nscan done.\n\n");
 	len = (optimals[index_src-1].bits + 18 + 7) / 8;
 	cleanup_optimals();
-	/*if (bVerbose)
-	{
-		printf("\nPrint LZ listing first lines? (for educational purpose): ");
-		if (yesno()) print_lz(200);
-		printf("\nSave.\n");
-	}
-	write_lz();*/
 }
 
 // WRITE DATA -
@@ -446,8 +418,8 @@ int dan1Compress(byte *src,byte *dst,int n)
     write_lz(src, dst);
 
     // compute ratio
-	//count = optimals[n-1].bits += 1 + 16 + 1 + 7;
-	//count /= 8;
+	//index_dest = optimals[n-1].bits += 1 + 16 + 1 + 7;
+	//index_dest /= 8;
     count=index_dest;
 
     return count;
@@ -841,20 +813,10 @@ int  save(struct pakdata *p, unsigned int mode,byte *dstcomp)
 		}
 		addevent();
 	}
-	printf("i'm here");
 	fflush(stdout);
 	memcpy(dstcomp,s.buf,s.dp);
 	
     return s.dp;
-
-/*
-  if (!(file = fopen(destfilename, "wb"))) {
-    printf("Error writing file!\n");
-    exit(1);
-  }
-  fwrite(s.buf, 1, s.dp, file);
-  fclose(file);
-  */
 }
 
 int pletterCompress(byte *src,byte *dst,int n)

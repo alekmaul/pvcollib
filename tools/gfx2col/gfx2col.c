@@ -782,6 +782,13 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
     maMem = (unsigned char *) malloc(mapw*maph);
     maMemEncode = (unsigned char *) malloc(mapw*maph);
 
+	if ( (tiMem==NULL) || (coMem==NULL) || (maMem==NULL) || 
+		 (tiMemEncode==NULL) || (coMemEncode==NULL) || (maMemEncode==NULL) )
+	{
+		printf("\nERROR: Could not allocate enough memory\n");
+		return 0;
+	}
+	
 	if (quietmode == 0) {
 		printf("\nDecode for %d tiles...\n",num_tiles);
 	}
@@ -839,7 +846,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
 				*(maMem+t)=tilemap[t];
 		}
     }
-	
+
 	// write files regarding compression type
 	lenencode=num_tiles*8;lenencode1=num_tiles*8;lenencode2=mapw*maph;
 	if (compress==0) { // no compression
@@ -907,7 +914,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
 			
 		// write map if needed
 		if (savemap) {
-			addcomment(fpc, ((mapw*maph-lenencode1)*100)/(mapw*maph),lenencode2,compress);
+			addcomment(fpc, ((mapw*maph-lenencode2)*100)/(mapw*maph),lenencode2,compress);
 			fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filebase,lenencode2);
 			for (t = 0; t < lenencode2; t++) {
 				if(t) {
@@ -956,7 +963,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
     free(coMem);
     free(tiMemEncode);
     free(tiMem);
-	
+
 	return -1;
 } //end of Convert2Pic
 

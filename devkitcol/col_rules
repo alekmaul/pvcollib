@@ -18,13 +18,14 @@ export LD	:=	sdcc
 export LK :=	sdcclib
 
 export GFXCONV	:=	$(DEVKITSDCC)/tools/gfx2col
+export LDMEGA	:=	$(DEVKITSDCC)/tools/cvmkcart
 
 #---------------------------------------------------------------------------------
 # Add default flag for compiling
 #---------------------------------------------------------------------------------
 #vc Display errors and warnings using MSVC style
 MAX_ALLOCS_PER_NODE=20000
-CFLAGS += -O2 -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
+CFLAGS += -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
 ASFLAGS += -I$(DEVKITSDCC)/include
 LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000 
 

@@ -1022,8 +1022,10 @@ int main(int argc, char **arg) {
 	}
 
 	//parse the arguments
-	for(i=1;i<argc;i++)	{
-		if(arg[i][0]=='-') {
+	for(i=1;i<argc;i++)	
+	{
+		if(arg[i][0]=='-') 
+		{
 			if(arg[i][1]=='q') //quiet mode
 			{
 				quietmode=1;
@@ -1160,7 +1162,7 @@ int main(int argc, char **arg) {
 
 			if (bmpmode)
 				printf("\nBitmap mode=ON");
-			else {
+			else 
 				printf("\nnBitmap mode=OFF");
 
 			if (tile_reduction)
@@ -1208,29 +1210,31 @@ int main(int argc, char **arg) {
 
 	//make the tile map now
 	tilemap=MakeMap(buffer, &ysize, xsize, ysize, xsize, ysize, tile_reduction );
-	if(tilemap==NULL)
+	if(tilemap==NULL) 
 	{
 		free(buffer);
 		printf("\nERROR:Not enough memory to do tile map optimizations..\n");
 		return 1;
 	}
 
-	if (ysize>0) {
-		if (quietmode == 0) {
+	if (ysize>0) 
+	{
+		if (quietmode == 0) 
+		{
 			if (tile_reduction)
 				printf("\nReduced screen to %d tiles.",ysize);
 			else
 				printf("\nComputed screen with %d tiles.",ysize);
 		}
 		
-		if ( (ysize>255) && (bmpmode==0))
+		if ( (ysize>255) && (bmpmode==0)) 
 		{
 			printf("\nERROR : Image must have less than 256 tiles (%d here).\n",ysize);
 			return 1;
 		}
 		
 		//convert pictures and save to file
-		if(!Convert2Pic(filebase, buffer, tilemap, ysize, width/8, height/8,savemap))
+		if(!Convert2Pic(filebase, buffer, tilemap, ysize, width/8, height/8,savemap)) 
 		{
 			//free up image & tilemap memory
 			free(tilemap);

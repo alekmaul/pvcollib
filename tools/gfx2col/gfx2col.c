@@ -774,7 +774,8 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
 		printf("\nERROR: Can't open file [%s] for writing\n",filenameh);
 		return 0;
 	}
-
+	if (bmpmode) num_tiles=768;
+	
     tiMem = (unsigned char *) malloc(num_tiles*8);
     tiMemEncode = (unsigned char *) malloc(num_tiles*8);
     coMem = (unsigned char *) malloc(num_tiles*8);
@@ -833,16 +834,16 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, in
 	{
 		for (t=0;t<mapw*maph;t++) {
 			// if bitmap mode, adapt it
-			/*
-			if (ckTiBitmapMap->Checked) {
-				if (mgTil->MapData[i]>=256*2)
-					*(maMem+i)=mgTil->MapData[i]-256*2;
-				else if (mgTil->MapData[i]>=256)
-					*(maMem+i)=mgTil->MapData[i]-256;
+			if (bmpmode)
+			{
+				if (tilemap[t]>=256*2)
+					*(maMem+t)=tilemap[t]-256*2;
+				else if (tilemap[t]>=256)
+					*(maMem+t)=tilemap[t]-256;
 				else
-					*(maMem+i)=mgTil->MapData[i];
+					*(maMem+t)=tilemap[t];
 			}
-			else*/
+			else
 				*(maMem+t)=tilemap[t];
 		}
     }
@@ -1003,17 +1004,17 @@ void PrintOptions(char *str) {
 // M A I N 
 int main(int argc, char **arg) {
 	int height, width;
-	int xsize, ysize;
+	int xsize, ysize,xsize1, ysize1;
 	pcx_picture image;
 
-	unsigned char *buffer;
-	unsigned int *tilemap;
+	unsigned char *buffer, *buff=NULL;
+	unsigned int *tilemap,*timap=NULL;
 
 	//FILE *fp;
 	char filebase[256]="";
 	char filename[256];
 
-	int i; //, j;
+	int i, x,y; 
 
     int file_type=BMP_FILE;
     int tile_reduction=1;         // 0 = no tile reduction (warning !)
@@ -1207,21 +1208,68 @@ int main(int argc, char **arg) {
 		return 1;
 	}
 		
-	buffer=ArrangeBlocks( image.buffer, width, height, 8, &xsize, &ysize, 8);
-	free(image.buffer);
-	if(buffer==NULL)
+	if (bmpmode) 
 	{
-		printf("\nERROR:Not enough memory to do image operations...\n");
-		return 1;
-	}
+		// prepare global map & tiles
+		tilemap=(unsigned int *) malloc(32*24*sizeof(int));
+		buffer = (unsigned char *) malloc( 768*8*8*sizeof(char) );
+		ysize=0;
 
-	//make the tile map now
-	tilemap=MakeMap(buffer, &ysize, xsize, ysize, xsize, ysize, tile_reduction );
-	if(tilemap==NULL) 
-	{
-		free(buffer);
-		printf("\nERROR:Not enough memory to do tile map optimizations..\n");
-		return 1;
+		// 3 parts for tiles in bitmap mode
+        for (i=0;i<3;i++) {
+			ysize1=8;xsize1=32;
+
+			// Get tiles
+            if (buff) free(buff);
+            buff=ArrangeBlocks(image.buffer+i*256*64,256,64,8,&xsize1,&ysize1,8);
+			if(buff==NULL)
+			{
+				printf("\nERROR:Not enough memory to do image operations...\n");
+				return 1;
+			
+			}
+			// Optimize map with current tile set
+            if (timap) free (timap);
+            timap=MakeMap(buff, &ysize1, xsize1, ysize1, xsize1, ysize1, tile_reduction );
+			if(timap==NULL) 
+			{
+				free(buff);
+				printf("\nERROR:Not enough memory to do tile map optimizations..\n");
+				return 1;
+			}
+
+			// load tiles
+			ysize+=ysize1;
+			if ( (ysize1>0)) {
+				memcpy(buffer+i*256*8*8,buff,256*8*8);
+							
+				// change map at the end
+                for (y=0;y<8;y++)
+					for (x=0;x<32;x++)
+						tilemap[x+y*32+i*256]=timap[x+y*32]+i*256;
+			} // if ( (ysize>0))
+		} // for (i=0;i<3;i++) {
+		free(image.buffer);
+		free(buff);
+		free(timap);
+	}
+	else {
+		buffer=ArrangeBlocks( image.buffer, width, height, 8, &xsize, &ysize, 8);
+		free(image.buffer);
+		if(buffer==NULL)
+		{
+			printf("\nERROR:Not enough memory to do image operations...\n");
+			return 1;
+		}
+
+		//make the tile map now
+		tilemap=MakeMap(buffer, &ysize, xsize, ysize, xsize, ysize, tile_reduction );
+		if(tilemap==NULL) 
+		{
+			free(buffer);
+			printf("\nERROR:Not enough memory to do tile map optimizations..\n");
+			return 1;
+		}
 	}
 
 	if (ysize>0) 

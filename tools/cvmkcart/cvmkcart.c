@@ -230,7 +230,7 @@ int main(int argc, char **arg)
 		printf("\n****** O P T I O N S ***************");
 		printf("\nReading file     %s ...",ihxfile);
 		printf("\nWriting rom file %s...",romfile);
-		printf("\nRom size         %dk",maxlength/1024);
+		printf("\nRom size         %dk",(maxlength-0x4000)/1024);
 		printf("\nNumber of banks  %d",nobanks);
 		printf("\nPadding byte     %02x\n",padbyte);
 	}

@@ -46,11 +46,66 @@
 	0x3800	Sprite character table
 	0x1b00	Sprite table
 */
-#define chrgen  0x0000
-#define coltab  0x2000
-#define chrtab  0x1800
-#define sprtab  0x3800
-#define sprgen  0x1b00
+#define chrgen  			0x0000
+#define coltab  			0x2000
+#define chrtab 				0x1800
+#define sprtab  			0x3800
+#define sprgen  			0x1b00
+
+/*! 
+	\brief VDP F18a table addresses 
+	0x2800	Sprite location f18a
+	0x3000	Sprite location f18a
+	0x3800	Sprite location f18a
+	0x1f00	256 bytes for extra ram
+*/
+#define sprtab_f18a  		0x2800 //f18a colour only requires 1/3 the colour data? til 0x2800
+#define sprtab_f18a_2  		0x3000
+#define sprtab_f18a_3	 	0x3800
+#define mapvram 			0x1f00  
+
+/*! 
+	\brief VDP colors definition (0..15)
+	0 		Transparent
+	1 		Black
+	2 		Medium green
+	3 		Light green
+	4 		Dark blue
+	5 		Light blue
+	6 		Dark red
+	7 		Cyan
+	8 		Medium red
+	9 		Light red
+	10 		Dark 	yellow
+	11		Light yellow 
+	12		Dark green
+	13		Magenta
+	14		Gray
+	15		White
+*/
+#define COLTRANSP			0
+#define COLBLACK			1
+#define COLMEDGREEN			2
+#define COLLITGREEN			3
+#define COLDRKBLUE			4
+#define COLLITBLUE			5
+#define COLDRKRED			6
+#define COLCYAN				7
+#define COLMEDRED			8
+#define COLLITRED			9
+#define COLDRKYELLOW		10
+#define COLLITYELLOW		11
+#define COLDRKGREEN			12
+#define COLMAGENTA			13
+#define COLGREY				14
+#define COLWHITE			15
+
+/**
+ *  \brief
+ *      vdp_f18aok is set if f18a module is present
+ *		 when calling vdp_setmodef18a function.
+ */
+extern volatile u8 vdp_f18aok;
 
 /*! \fn  vdp_setreg(u8 reg,u8 val)
 	\brief Set a VDP register
@@ -149,6 +204,17 @@ void vdp_putchar (u8 x, u8 y, char value);
 	Get a char from screen
 */
 u8  vdp_getchar (u8 x, u8 y);
+
+/*! \fn  vdp_getarea (void *table, u8 x, u8 y, u8 width, u8 height)
+	\brief  Get an area of chars from screen
+	\param table area in ram to save chars
+	\param x column of the char
+	\param y line of the char
+	\param width length of x char to get
+	\param height length of y char to get
+	Get an area of chars from screen
+*/
+void vdp_getarea (void *table, u8 x, u8 y, u8 width, u8 height);
 
 /*! \fn  vdp_setdefaultchar (u8 flags)
 	\brief Put default font

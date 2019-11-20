@@ -36,14 +36,14 @@
 
 /**
  *  \brief
- *      buffer42 used for some functions.
+ *      buffer32 used for some functions.
  *      can be used by program too.
  */
 extern u8 buffer32[32];
 
 /**
  *  \brief
- *      vid_freq is set with video frequency (50 or 660) hz.
+ *      vid_freq is set with video frequency (50 or 60) hz.
  */
 extern volatile u8 vid_freq;
 

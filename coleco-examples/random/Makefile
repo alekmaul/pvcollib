@@ -4,7 +4,7 @@ export DEVKITCOL := /c/colecodev/
 # path to devkitcol root directory for compiler
 export DEVKITSDCC := /c/colecodev/devkitcol
 
-# change global path with SGDK
+# change global path with PVcollib
 export PATH	:=	$(DEVKITSDCC):$(PATH)
 
 #---------------------------------------------------------------------------------

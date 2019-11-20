@@ -47,6 +47,8 @@ typedef unsigned char bool;
 #define true 0xff
 
 // stdio definitions
+#ifndef NULL
 #define NULL 0
+#endif
 
 #endif

@@ -21,6 +21,10 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
+V1.3.0 (11/11/2019)
+- Add megacart support (tools and example)
+- Add some video defines (like color palette), thanks Mr Lete for the tip ;)
+
 V1.2.0 (11/11/2019)
 - Put all functions in different files, to avoid wasting memory when linking rom ...
 - Add new examples (sound, region detection, sprites, megacart)

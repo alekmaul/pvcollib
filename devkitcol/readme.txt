@@ -1,4 +1,4 @@
-Devkitcol 1.10
+Devkitcol 1.11
  
  Programming Compiler and Tools for Colecovision
 
@@ -17,6 +17,11 @@ SPECIAL THANKS
                
 CHANGE LOG
 ----------------------
+VERSION 1.11 (November, 2019)
+- Fix bitmap mode issues in gfx2col
+- Remove O2 compiler option
+- Add cvmkart alias in col_rules
+
 VERSION 1.10 (November, 2019)
 - Added doxygen, gfx2col
 - Added cvmkcart

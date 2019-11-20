@@ -31,7 +31,7 @@
 
 	; global from this code
 	.globl snd_areas
-	.globl  _buffer32
+	.globl _buffer32
 	.globl _no_nmi
 	.globl _vdp_status
 	.globl _nmi_flag
@@ -334,22 +334,22 @@ start_program:
 	di
 
 	xor     a                       ; clear carry
-	ld      bc,#0x3b8		; ram size left
-	ld      hl,#0x7000		; starting from 7000
+	ld      bc,#0x3b8				; ram size left
+	ld      hl,#0x7000				; starting from 7000
 	ld      de,#0x7001
 	ld      (hl),a
 	ldir                            ; zero-fill bss
 
-	call gsinit					; Initialize global variables.
+	call gsinit						; Initialize global variables.
 
-	ld	h,#0 ; set dummy sound table
+	ld	h,#0 						; set dummy sound table
 	call snd_settable
 
-	ld      hl,#0x0033                ; initialise random generator
+	ld      hl,#0x0033              ; initialise random generator
 	ld      (0x73c8),hl
                                     ; set screen mode 2 text
-	call    0x1f85                   ; set default VDP regs 16K
-	ld      de,#0x4000                ; clear VRAM
+	call    0x1f85                  ; set default VDP regs 16K
+	ld      de,#0x4000              ; clear VRAM
 	xor     a
 	ld      l,a
 	ld      h,a
@@ -358,8 +358,7 @@ start_program:
 	ld 		a, (0x0069)				; initialise video frequency
 	ld      (_vid_freq),a
 	
-	; call main rountine
-	jp      _main
+	jp      _main					; call main rountine
 	
 	.area _GSINIT
 gsinit::

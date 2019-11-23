@@ -24,9 +24,15 @@
 
 
 ---------------------------------------------------------------------------------*/
-
-/*! \file pad.h
-    \brief coleco generic pad & spinner support.
+/**
+ * \file pad.h
+ * \brief coleco generic pad & spinner support.
+ *
+ * This unit provides methods to read controller state.<br>
+ *<br>
+ * Here is the list of supported controller devices:<br>
+ * - coleco default pad <br>
+ * - coleco spinner<br>
 */
 
 #ifndef COL_PAD_H
@@ -58,39 +64,51 @@
 #define	PAD_KEYNONE		15
 
 /**
- *  \brief
- *      PAD 1 and 2 values
+ * \brief PAD 1 value
  */
-extern volatile u8 joypad_1,joypad_2;
+extern volatile u8 joypad_1;
 
 /**
- *  \brief
- *      SPINNER 1 and 2 values
- *		/!\ spinner 1 value is reversed
+ * \brief PAD 2 value
  */
-extern volatile char spinner_1,spinner_2;
+extern volatile u8 joypad_2;
 
 /**
- *  \brief
- *      KEYBOARD from PAD 1 and 2 values
+ * \brief SPINNER 1 value<br>
+ * <b>/!\ spinner 1 value is reversed</b>
  */
-extern volatile u8 keypad_1,keypad_2;
+extern volatile char spinner_1;
 
-/*! \fn pad_resetspin(void)
-	\brief reset spinners 1 & 2 values
-	\return nothing
+/**
+ * \brief SPINNER 2 value
+ */
+extern volatile char spinner_2;
+
+/**
+ * \brief KEYBOARD from PAD 1 values
+*/
+extern volatile u8 keypad_1;
+
+/**
+ * \brief KEYBOARD from PAD 2 values
+*/
+extern volatile u8 keypad_2;
+ 
+/**
+ * \fn void pad_resetspin(void)
+ * \brief reset spinners 1 & 2 values
 */
 void pad_resetspin(void);
 
-/*! \fn pad_disablespin(void)
-	\brief enable spinners functions 
-	\return nothing
+/**
+ * \fn void pad_disablespin(void)
+ * \brief enable spinners functions 
 */
 void pad_disablespin(void);
 
-/*! \fn pad_enablespin(void)
-	\brief enable spinners functions to get their values
-	\return nothing
+/**
+ * \fn void pad_enablespin(void)
+ * \brief enable spinners functions to get their values
 */
 void pad_enablespin(void);
 

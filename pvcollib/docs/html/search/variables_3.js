@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['spinner_5f1',['spinner_1',['../a00242.html#ad5d3d08f69e089611a17fb22dc5160da',1,'pad.h']]],
-  ['spr_5fenable',['spr_enable',['../a00248.html#ac8c4f13a1f085d8360594bbb3b91166b',1,'sprite.h']]],
-  ['sprites',['sprites',['../a00248.html#abfd93341c4cd2fdcc89ce8246d6621cc',1,'sprite.h']]]
+  ['keypad_5f1',['keypad_1',['../a00242.html#adb051c00ecc80901633e8bf97c771ee3',1,'pad.h']]],
+  ['keypad_5f2',['keypad_2',['../a00242.html#af7f59d7af79140adc96867fde3a92e97',1,'pad.h']]]
 ];

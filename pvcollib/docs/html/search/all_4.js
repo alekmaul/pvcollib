@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['pvcollib_20documentation',['PVcollib Documentation',['../index.html',1,'']]],
-  ['pad_2eh',['pad.h',['../a00242.html',1,'']]],
-  ['pad_5fdisablespin',['pad_disablespin',['../a00242.html#a470353548bdc9305c5f25a58a69e8cda',1,'pad.h']]],
-  ['pad_5fenablespin',['pad_enablespin',['../a00242.html#ade7ad2ae2da206c7160058547429a952',1,'pad.h']]],
-  ['pad_5fresetspin',['pad_resetspin',['../a00242.html#a25cbd98a10752cd5a1a24831f25006c3',1,'pad.h']]]
+  ['keypad_5f1',['keypad_1',['../a00242.html#adb051c00ecc80901633e8bf97c771ee3',1,'pad.h']]],
+  ['keypad_5f2',['keypad_2',['../a00242.html#af7f59d7af79140adc96867fde3a92e97',1,'pad.h']]]
 ];

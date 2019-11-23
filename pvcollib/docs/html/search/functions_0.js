@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['pad_5fdisablespin',['pad_disablespin',['../a00242.html#a470353548bdc9305c5f25a58a69e8cda',1,'pad.h']]],
-  ['pad_5fenablespin',['pad_enablespin',['../a00242.html#ade7ad2ae2da206c7160058547429a952',1,'pad.h']]],
-  ['pad_5fresetspin',['pad_resetspin',['../a00242.html#a25cbd98a10752cd5a1a24831f25006c3',1,'pad.h']]]
+  ['pad_5fdisablespin',['pad_disablespin',['../a00242.html#ab522bfc8571c48fbf11bff58871b3ff5',1,'pad.h']]],
+  ['pad_5fenablespin',['pad_enablespin',['../a00242.html#a339b5a1941e12730b7dc1e8bccba9be3',1,'pad.h']]],
+  ['pad_5fresetspin',['pad_resetspin',['../a00242.html#a5496672262d1b3b1370fc755657be854',1,'pad.h']]]
 ];

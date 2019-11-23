@@ -47,7 +47,8 @@
  *			y,x     : coordinates (y,x) with y 0..191 and x 0..255
  *          pattern : pattern number of sprite
  *          colour  : colour between 0..15
- */typedef struct
+ */
+typedef struct
 {
 	u8 y;
 	u8 x;

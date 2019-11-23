@@ -68,7 +68,8 @@ install: dist-bin
 #---------------------------------------------------------------------------------
 docs:
 #---------------------------------------------------------------------------------
-	$(DEVKITSDCC)/tools/doxygen pvcollib.dox
+	$(DEVKITSDCC)/tools/doxygen docs/pvcollib.dox
+	@rm -f docs/*.tmp
 
 #---------------------------------------------------------------------------------
 include/coleco/libversion.h : Makefile

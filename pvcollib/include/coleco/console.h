@@ -24,9 +24,16 @@
 
 
 ---------------------------------------------------------------------------------*/
-
-/*! \file console.h
-    \brief coleco generic console support.
+/**
+ * \file console.h
+ * \brief coleco generic console support.
+ *
+ * This unit provides generic features related to the console.<br>
+ *<br>
+ * Here is the list of features:<br>
+ * - variable with 32 bytes long in RAM<br>
+ * - video frequency<br>
+ * - string management<br>
 */
 
 #ifndef COL_CONSOLE_H
@@ -35,63 +42,67 @@
 #include <coleco/coltypes.h>
 
 /**
- *  \brief
- *      buffer32 used for some functions.
- *      can be used by program too.
+ * \brief
+ * buffer32 used for some functions.<br>
+ * can be used by program too.
  */
 extern u8 buffer32[32];
 
 /**
- *  \brief
- *      vid_freq is set with video frequency (50 or 60) hz.
+ * \brief
+ * vid_freq is set with video frequency (50 or 60) hz.
  */
 extern volatile u8 vid_freq;
 
-/*! \fn sys_random(void)
-	\brief return a randomized number
-	\return unsigned short of a randomized number
-	Generate a 16 bit number 
+/**
+ * \fn u16 sys_random(void)
+ * \brief Generate and return a randomized 16 bit number 
+ *
+ * \return unsigned short of a randomized number
 */
 u16 sys_random(void);
 
-/*! \fn sys_randbyte(u8 A, u8 B)
-	\brief return a randomized number between A and B
-	\param A minimum value of random number
-	\param B maximum value of random number
-	\return unsigned char of a randomized number
-	Generate a 8 bit number between two numbers
+/**
+ * \fn u8 sys_randbyte(u8 A, u8 B)
+ * \brief Generate and return a randomized a 8 bit number between two numbers named A and B
+ *
+ * \param A minimum value of random number
+ * \param B maximum value of random number
+ * \return unsigned char of a randomized number
 */
 u8 sys_randbyte(u8 A, u8 B);
 
 
-/*! \fn sys_pause(void)
-	\brief Do a pause
-	Wait until a fire button is pressed
+/**
+ * \fn void sys_pause(void)
+ * \brief Wait until a fire button is pressed (do a pause)
 */
 void sys_pause(void);
 
-/*! \fn sys_strlen(char *text)
-	\brief return the length of a string
-	\param text text to analyze
-	\return unsigned short of string length
-	Return the length of the string
+/**
+ * \fn u16 sys_strlen(char *text)
+ * \brief return the length of a string
+ * 
+ * \param text text to analyze
+ * \return unsigned short of string length
 */
 u16 sys_strlen(char *text);
 
-/*! \fn sys_utoa(unsigned value,char *buffer)
-	\brief put a unsigned value into a buffer
-	\param value value to convert to text
-	\param buffer text that will receive vvalue converted
-	Convert an unsigned value to ascii text.
-	Leading zeros _are_ put in buffer
+/**
+ * \fn void sys_utoa(unsigned value,char *buffer)
+ * \brief Convert an unsigned value to ascii text. Leading zeros are put in buffer
+ *
+ * \param value value to convert to text
+ * \param buffer text that will receive vvalue converted
 */
 void sys_utoa(unsigned value,char *buffer);
 
-/*! \fn *sys_str(unsigned value)
-	\brief return a converted value in string
-	\param value number to convert
-	\return pointer to converted string
-	Return a converted value to a string
+/**
+ * \fn char *sys_str(unsigned value)
+ * \brief return a converted value in string
+ *
+ * \param value number to convert
+ * \return pointer to converted string
 */
 char *sys_str(unsigned value);
 

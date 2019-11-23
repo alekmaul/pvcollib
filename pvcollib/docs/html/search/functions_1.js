@@ -10,15 +10,15 @@ var searchData=
   ['spr_5fmode16x16',['spr_mode16x16',['../a00251.html#a53757dd0ee1bbfff02c776096e958689',1,'sprite.h']]],
   ['spr_5fmode8x8',['spr_mode8x8',['../a00251.html#a5bd5a14bdd8a80c8f4e341d33162a124',1,'sprite.h']]],
   ['spr_5fupdate',['spr_update',['../a00251.html#ae669d00fa95aa9fd5476d035c9f77ab8',1,'sprite.h']]],
-  ['sys_5fpause',['sys_pause',['../a00236.html#a915348222fa0b4bc1e497b8360b2350b',1,'console.h']]],
-  ['sys_5frandbyte',['sys_randbyte',['../a00236.html#aa61d19f96e4be47f5ed5c5f8b945d6c4',1,'console.h']]],
-  ['sys_5frandom',['sys_random',['../a00236.html#aa405167648f2457b4f49e0ee5dd6ba4a',1,'console.h']]],
+  ['sys_5fpause',['sys_pause',['../a00236.html#abf19ef1f84fb54321a10b501aab19cdc',1,'console.h']]],
+  ['sys_5frandbyte',['sys_randbyte',['../a00236.html#a9e041a4d153b3774ed21fa4630026fc4',1,'console.h']]],
+  ['sys_5frandom',['sys_random',['../a00236.html#aa9aabe5f00e8ff35a3440e0fbd44fed4',1,'console.h']]],
   ['sys_5fscoadd',['sys_scoadd',['../a00245.html#ac187e61fd10548ef3c82f4829c30c2ce',1,'score.h']]],
   ['sys_5fscoclear',['sys_scoclear',['../a00245.html#ab188b83ea161545b30b5d5ef700b89af',1,'score.h']]],
   ['sys_5fscocmp',['sys_scocmp',['../a00245.html#afcb579e4c0f0f2ea14ed9e72afc0e532',1,'score.h']]],
   ['sys_5fscocpy',['sys_scocpy',['../a00245.html#a32d84a86e6d83b856acc8ab9deaaab91',1,'score.h']]],
   ['sys_5fscostr',['sys_scostr',['../a00245.html#a942dfae247e5cd789ca5a2106d028f50',1,'score.h']]],
-  ['sys_5fstr',['sys_str',['../a00236.html#abb8285c9632f31c446039f67165151a5',1,'console.h']]],
-  ['sys_5fstrlen',['sys_strlen',['../a00236.html#a0a80a044e4985cc0d9a32142689d105b',1,'console.h']]],
-  ['sys_5futoa',['sys_utoa',['../a00236.html#aa1f7667cefdb3f445e227d6555e897f5',1,'console.h']]]
+  ['sys_5fstr',['sys_str',['../a00236.html#af542a03344e9ef82c556717a82fc6a0a',1,'console.h']]],
+  ['sys_5fstrlen',['sys_strlen',['../a00236.html#a73fe2ed032d9d01aa14f63b1cf76fd6a',1,'console.h']]],
+  ['sys_5futoa',['sys_utoa',['../a00236.html#aa6d25725161c2c658d2bcf667aef3a62',1,'console.h']]]
 ];

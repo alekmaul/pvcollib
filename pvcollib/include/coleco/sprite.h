@@ -72,33 +72,33 @@ extern volatile u8 spr_enable;
 	\brief remove all sprite 
 	Remove all sprite from screen and init their positions
 */
-extern void spr_clear(void);
+void spr_clear(void);
 
 /*! \fn spr_update(void)
 	\brief put sprite on screen
 	Put all 32 sprites on screen.
 	<b>Must be call in NMI routine.</b>
 */
-extern void spr_update(void);
+void spr_update(void);
 
 /*! \fn spr_getentry(void)
 	\brief get a sprite id in sprite list 
 	\return sprite entry (0..31)
 	Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b>
 */
-extern u8 spr_getentry(void);
+u8 spr_getentry(void);
 
 /*! \fn spr_mode8x8(void)
 	\brief put sprite in 8x8 pix mode
 	Put all 32 sprites on screen in 8x8 pixels depth.
 */
-extern void spr_mode8x8(void);
+void spr_mode8x8(void);
 
 /*! \fn spr_mode16x16(void)
 	\brief put sprite in 16x16 pix mode
 	Put all 32 sprites on screen in 16x16 pixels depth.
 */
-extern void spr_mode16x16(void);
+void spr_mode16x16(void);
 
 /*! \fn spr_set(id,xp,yp,col,pat) 
 	\brief sets an sprite entry to the supplied values

@@ -25,7 +25,7 @@
 
 ---------------------------------------------------------------------------------*/
 
-/*! \file pad.h
+/*! \file sprite.h
     \brief coleco generic sprites support.
 */
 

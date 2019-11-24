@@ -32,7 +32,7 @@ void main (void) {
 	// Wait for nothing :P
 	while(1) {
 		// Update display with random number and wait pad 1
-		utoa(random(),buffer32);
+		sys_utoa(sys_random(),buffer32);
 		vdp_putstring(18,10,buffer32);
 		
 		// Wait Fire and then Vblank

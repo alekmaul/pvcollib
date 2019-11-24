@@ -1,5 +1,5 @@
-#ifndef _INPUT_MAIN_
-#define _INPUT_MAIN_
+#ifndef _RANDOM_MAIN_
+#define _RANDOM_MAIN_
 
 #include <coleco.h>
 

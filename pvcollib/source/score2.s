@@ -90,7 +90,11 @@ _sys_scocmp:
 	sbc hl,bc
 	
 	jr c,_sclow1
-
+	jr nz,_sclow1
+	
+	ld hl,#0x00FF
+	jr _sclow3
+	
 _sclow2:
 	ld hl,#0x0000
 	jr _sclow3

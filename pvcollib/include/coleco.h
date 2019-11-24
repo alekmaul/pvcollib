@@ -88,6 +88,9 @@
     <!-- region detection -->
 		\example palntsc/palntsc.c
 
+    <!-- score management -->
+		\example scoring/scoring.c
+
     <!-- sound management -->
 		\example audio/music/music.c
 		\example audio/simplesound/ssound.c
@@ -100,6 +103,7 @@
 
 #include "coleco/console.h"
 #include "coleco/pad.h"
+#include "coleco/score.h"
 #include "coleco/sound.h"
 #include "coleco/sprite.h"
 #include "coleco/video.h"

@@ -1,7 +1,7 @@
 <SDCCLIB>
 
 <INDEX>
-      2580
+      2879
 <MODULE>
 console 11
 .__.ABS.
@@ -102,142 +102,172 @@ _spr_getentry
 </MODULE>
 
 <MODULE>
-video 8617
+score 8617
+.__.ABS.
+_sys_scoclear
+</MODULE>
+
+<MODULE>
+score1 8882
+.__.ABS.
+_sys_scoadd
+</MODULE>
+
+<MODULE>
+score2 9322
+.__.ABS.
+_sys_scocmp
+</MODULE>
+
+<MODULE>
+score3 9948
+.__.ABS.
+_sys_scocpy
+</MODULE>
+
+<MODULE>
+score4 10210
+.__.ABS.
+_sys_scostr
+</MODULE>
+
+<MODULE>
+video 10834
 .__.ABS.
 _vdp_setmode1txt
 </MODULE>
 
 <MODULE>
-video1 9155
+video1 11372
 .__.ABS.
 _vdp_dan2vram
 </MODULE>
 
 <MODULE>
-video2 11085
+video2 13302
 .__.ABS.
 _vdp_ple2vram
 </MODULE>
 
 <MODULE>
-video3 13309
+video3 15526
 .__.ABS.
 _vdp_rle2vram
 </MODULE>
 
 <MODULE>
-video4 13982
+video4 16199
 .__.ABS.
 _vdp_setreg
 </MODULE>
 
 <MODULE>
-video5 14235
+video5 16452
 .__.ABS.
 _vdp_waitvblank
 </MODULE>
 
 <MODULE>
-video6 14877
+video6 17094
 .__.ABS.
 _vdp_enablenmi
 </MODULE>
 
 <MODULE>
-video7 15218
+video7 17435
 .__.ABS.
 _vdp_disablenmi
 </MODULE>
 
 <MODULE>
-video8 15481
+video8 17698
 .__.ABS.
 _vdp_enablevdp
 </MODULE>
 
 <MODULE>
-video9 15743
+video9 17960
 .__.ABS.
 _vdp_disablevdp
 </MODULE>
 
 <MODULE>
-video10 16006
+video10 18223
 .__.ABS.
 _vdp_disablescr
 _vdp_enablescr
 </MODULE>
 
 <MODULE>
-video11 16716
+video11 18933
 .__.ABS.
 _vdp_putvram
 </MODULE>
 
 <MODULE>
-video12 17033
+video12 19250
 .__.ABS.
 _vdp_duplicatevram
 </MODULE>
 
 <MODULE>
-video13 17656
+video13 19873
 .__.ABS.
 _vdp_getarea
 </MODULE>
 
 <MODULE>
-video14 17982
+video14 20199
 .__.ABS.
 _vdp_fillvram
 </MODULE>
 
 <MODULE>
-video15 18291
+video15 20508
 .__.ABS.
 _vdp_setcharex
 _vdp_setdefaultchar
 </MODULE>
 
 <MODULE>
-video16 20030
+video16 22247
 .__.ABS.
 _vdp_putchar
 </MODULE>
 
 <MODULE>
-video17 20375
+video17 22592
 .__.ABS.
 _vdp_getchar
 </MODULE>
 
 <MODULE>
-video18 20729
+video18 22946
 .__.ABS.
 calcoffset
 </MODULE>
 
 <MODULE>
-video19 20989
+video19 23206
 .__.ABS.
 _vdp_putstring
 </MODULE>
 
 <MODULE>
-video20 21383
+video20 23600
 .__.ABS.
 default_vdpreg
 default_setmode2
 </MODULE>
 
 <MODULE>
-video21 21784
+video21 24001
 .__.ABS.
 _vdp_setmode2bmp
 </MODULE>
 
 <MODULE>
-video22 22397
+video22 24614
 .__.ABS.
 _vdp_setmode2txt
 </MODULE>
@@ -732,6 +762,134 @@ T 55 00
 R 00 00 00 00
 T 55 00 2E FF C9
 R 00 00 00 00
+</REL>
+<ADB>
+</ADB>
+</FILE>
+
+<FILE>
+score
+<REL>
+XL2
+H 1 areas 2 global symbols
+M pvclscore
+S .__.ABS. Def0000
+A _CODE size D flags 0 addr 0
+S _sys_scoclear Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 C1 E1 E5 C5 AF 77 23 77 23 77 23 77 C9
+R 00 00 00 00
+</REL>
+<ADB>
+</ADB>
+</FILE>
+
+<FILE>
+score1
+<REL>
+XL2
+H 1 areas 2 global symbols
+M pvclscore1
+S .__.ABS. Def0000
+A _CODE size 27 flags 0 addr 0
+S _sys_scoadd Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 D1 E1 C1 C5 E5 D5 E5 5E 23 56 23 EB 09 EB
+R 00 00 00 00
+T 0E 00 4E 23 46 EB B7 11 10 27
+R 00 00 00 00
+T 16 00
+R 00 00 00 00
+T 16 00 ED 52 03 30 FB 0B 19 EB E1 73 23 72 23 71
+R 00 00 00 00
+T 24 00 23 70 C9
+R 00 00 00 00
+</REL>
+<ADB>
+</ADB>
+</FILE>
+
+<FILE>
+score2
+<REL>
+XL2
+H 1 areas 2 global symbols
+M pvclscore2
+S .__.ABS. Def0000
+A _CODE size 3D flags 0 addr 0
+S _sys_scocmp Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 C1 D1 E1 E5 D5 C5 E5 D5 23 23 4E 23 46 EB
+R 00 00 00 00
+T 0E 00 23 23 7E 23 66 6F B7 ED 42 38 1E 20 17 D1
+R 00 00 00 00
+T 1C 00 E1 E5 D5 4E 23 46 EB 7E 23 66 6F ED 42 38
+R 00 00 00 00
+T 2A 00 0C 20 0A 21 FF 00 18 08
+R 00 00 00 00
+T 32 00
+R 00 00 00 00
+T 32 00 21 00 00 18 03
+R 00 00 00 00
+T 37 00
+R 00 00 00 00
+T 37 00 21 01 00
+R 00 00 00 00
+T 3A 00
+R 00 00 00 00
+T 3A 00 C1 C1 C9
+R 00 00 00 00
+</REL>
+<ADB>
+</ADB>
+</FILE>
+
+<FILE>
+score3
+<REL>
+XL2
+H 1 areas 2 global symbols
+M pvclscore3
+S .__.ABS. Def0000
+A _CODE size C flags 0 addr 0
+S _sys_scocpy Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 C1 E1 D1 D5 E5 C5 01 04 00 ED B0 C9
+R 00 00 00 00
+</REL>
+<ADB>
+</ADB>
+</FILE>
+
+<FILE>
+score4
+<REL>
+XL2
+H 2 areas 3 global symbols
+M pvclscore3
+S _sys_utoa Ref0000
+S .__.ABS. Def0000
+A _CODE size 33 flags 0 addr 0
+S _sys_scostr Def0000
+A _DATA size A flags 0 addr 0
+T 00 00
+R 00 00 01 00
+T 00 00
+R 00 00 01 00
+T 00 00
+R 00 00 00 00
+T 00 00 D1 E1 C1 C5 E5 D5 C5 5E 23 56 23 E5 01
+R 00 00 00 00
+T 0D 00 04 00 C5 D5 CD 00 00 C1 C1 E1 5E 23 56 01
+R 00 00 00 00 00 02 01 00 02 07 00 00
+T 1B 00 00 00 C5 D5 CD 00 00 C1 C1 AF 32 09 00 C1
+R 00 00 00 00 00 02 01 00 02 07 00 00 00 0D 01 00
+T 29 00 21 09 00 ED 42 11 00 00 19 C9
+R 00 00 00 00 00 08 01 00
 </REL>
 <ADB>
 </ADB>

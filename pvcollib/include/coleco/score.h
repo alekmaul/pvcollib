@@ -74,7 +74,7 @@ void sys_scoadd(score_t *sco, unsigned value);
  *
  * \param sco1 score variable 
  * \param sco2 score variable 
- * \return 1 if sco1 is lower than sco2, 0 if not
+ * \return 1 if sco1 is lower than sco2, 0 if not, 0xFF if equals
 */
 u16 sys_scocmp(score_t *sco1,score_t *sco2);
 

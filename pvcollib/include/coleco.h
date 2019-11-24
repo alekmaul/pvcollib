@@ -49,6 +49,9 @@
  \section sprite_mngt Generic sprites API
  - \ref sprite.h "General sprites"
 
+ \section score_mngt Generic score API
+ - \ref score.h "General scores"
+
  \section external_links Useful links
  - <a href="http://atariage.com/forums/forum/55-colecovision-programming/">AtariAge ColecoVision development forum.</a>
  
@@ -64,6 +67,9 @@
     <!-- hello world -->
 		\example helloworld/helloworld.c
 
+    <!-- diamond game -->
+		\example games/diamond/diamond.c
+
     <!-- graphic management -->
 		\example graphics/dancompress/grafdancomp.c
 		\example graphics/notcompress/grafnocomp.c
@@ -76,6 +82,9 @@
     <!-- random numbers -->
 		\example random/randvalue.c
 
+    <!-- megacart management -->
+		\example megacart/megacart.c
+		
     <!-- region detection -->
 		\example palntsc/palntsc.c
 

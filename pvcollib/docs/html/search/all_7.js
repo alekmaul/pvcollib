@@ -27,7 +27,6 @@ var searchData=
   ['sprite_2eh',['sprite.h',['../a00251.html',1,'']]],
   ['sprite_5ft',['sprite_t',['../a00271.html',1,'']]],
   ['sprites',['sprites',['../a00251.html#abfd93341c4cd2fdcc89ce8246d6621cc',1,'sprite.h']]],
-  ['sprtab_5ff18a',['sprtab_f18a',['../a00254.html#a2e9edff137748440be0cb3138c234ecb',1,'video.h']]],
   ['sys_5fpause',['sys_pause',['../a00236.html#abf19ef1f84fb54321a10b501aab19cdc',1,'console.h']]],
   ['sys_5frandbyte',['sys_randbyte',['../a00236.html#a9e041a4d153b3774ed21fa4630026fc4',1,'console.h']]],
   ['sys_5frandom',['sys_random',['../a00236.html#aa9aabe5f00e8ff35a3440e0fbd44fed4',1,'console.h']]],

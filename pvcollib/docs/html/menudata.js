@@ -11,7 +11,6 @@ var menudata={children:[
 {text:"Globals",url:"globals.html",children:[
 {text:"All",url:"globals.html",children:[
 {text:"b",url:"globals.html#index_b"},
-{text:"c",url:"globals.html#index_c"},
 {text:"j",url:"globals.html#index_j"},
 {text:"k",url:"globals.html#index_k"},
 {text:"p",url:"globals.html#index_p"},

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: games/diamond/diamond.c</title>
+<title>PVcollib: pad.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,6 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -59,12 +58,81 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">games/diamond/diamond.c</div>  </div>
+<div class="title">pad.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><span class="comment">/*---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    small game from coder Amy Purple : Diamond Dash</span></div><div class="line"><span class="comment">        made by her during 2004 MiniGame Competition </span></div><div class="line"><span class="comment">        https://web.archive.org/web/20050204071935/http://www.ffd2.com/minigame/</span></div><div class="line"><span class="comment">    -- alekmaul</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">---------------------------------------------------------------------------------*/</span></div><div class="line"><span class="preprocessor">#include &quot;diamond.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;dash.h&quot;</span>                                           <span class="comment">// main file for game</span></div><div class="line"><span class="preprocessor">#include &quot;snds.h&quot;</span>                                           <span class="comment">// to add definition of sounds</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> u8 game_title[] = {40,41,42,43,44,45,46,47,0};        <span class="comment">// Char array for &quot;DIAMOND DASH!!&quot;</span></div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment">// The NMI routine. Gets called 50 or 60 times per second </span></div><div class="line"><span class="comment">// nothing to update for game example</span></div><div class="line"><span class="keywordtype">void</span> nmi (<span class="keywordtype">void</span>) {</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="keywordtype">void</span> main (<span class="keywordtype">void</span>) {</div><div class="line">    <span class="comment">// Put sound table and mute all channel</span></div><div class="line">    <a name="a0"></a><a class="code" href="a00281.html#ac43e05b7403367c936679ea6ef180b47">snd_settable</a>(snd_table);</div><div class="line">    <a name="a1"></a><a class="code" href="a00281.html#a87479438785b503827702d069b0fa238">snd_stopall</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Put screen in text mode 2 and sprite in 8x8 pixels size</span></div><div class="line">    <a name="a2"></a><a class="code" href="a00287.html#aed12735f2bac4b311261f93f887b8e32">vdp_disablescr</a>();</div><div class="line">    </div><div class="line">    <a name="a3"></a><a class="code" href="a00287.html#ab7b789325ecccea7c6037dbe35acfaeb">vdp_setmode2txt</a>();</div><div class="line">    <a name="a4"></a><a class="code" href="a00284.html#a5bd5a14bdd8a80c8f4e341d33162a124">spr_mode8x8</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Initialise graphics and sounds </span></div><div class="line">    init_graphics();</div><div class="line">    </div><div class="line">    <span class="comment">// Set a &quot;stop point&quot; to let the Video Chip knows that there is only 1 sprite to show</span></div><div class="line">    <a name="a5"></a><a class="code" href="a00284.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[1].<a name="a6"></a>y=208;</div><div class="line">    </div><div class="line">    <span class="comment">// Show a new mountain &amp; Show &quot;DIAMOND DASH!!&quot; in center screen </span></div><div class="line">    new_mountain(); </div><div class="line">    show_score();</div><div class="line">    <a name="a7"></a><a class="code" href="a00287.html#a25772c7921c9b4a9e38259587049491a">vdp_putstring</a>(12,11,game_title);</div><div class="line">    <a name="a8"></a><a class="code" href="a00287.html#a5493708fc4555c113a2adf1b0184fe64">vdp_enablescr</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Wait until player press fire</span></div><div class="line">    <a name="a9"></a><a class="code" href="a00287.html#af6fbd4baed0caa08f6dfc5e6492249b2">vdp_enablenmi</a>(); <a name="a10"></a><a class="code" href="a00269.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a>(); <a name="a11"></a><a class="code" href="a00287.html#a94e7f27f9cb30375b9bef6768f5bf7ba">vdp_disablenmi</a>();</div><div class="line"></div><div class="line">    <span class="comment">// Play game</span></div><div class="line">    game();</div><div class="line">    <span class="comment">// END</span></div><div class="line">    <span class="comment">// startup module will issue a soft reboot if it comes here </span></div><div class="line">}</div></div><!-- fragment --> </div><!-- contents -->
+
+<p>coleco generic pad &amp; spinner support.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00299_source.html">coleco/coltypes.h</a>&gt;</code><br />
+</div>
+<p><a href="a00308_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab522bfc8571c48fbf11bff58871b3ff5"><td class="memItemLeft" align="right" valign="top"><a id="ab522bfc8571c48fbf11bff58871b3ff5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#ab522bfc8571c48fbf11bff58871b3ff5">pad_disablespin</a> (void)</td></tr>
+<tr class="memdesc:ab522bfc8571c48fbf11bff58871b3ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable spinners functions <br /></td></tr>
+<tr class="separator:ab522bfc8571c48fbf11bff58871b3ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a339b5a1941e12730b7dc1e8bccba9be3"><td class="memItemLeft" align="right" valign="top"><a id="a339b5a1941e12730b7dc1e8bccba9be3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#a339b5a1941e12730b7dc1e8bccba9be3">pad_enablespin</a> (void)</td></tr>
+<tr class="memdesc:a339b5a1941e12730b7dc1e8bccba9be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable spinners functions to get their values <br /></td></tr>
+<tr class="separator:a339b5a1941e12730b7dc1e8bccba9be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5496672262d1b3b1370fc755657be854"><td class="memItemLeft" align="right" valign="top"><a id="a5496672262d1b3b1370fc755657be854"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#a5496672262d1b3b1370fc755657be854">pad_resetspin</a> (void)</td></tr>
+<tr class="memdesc:a5496672262d1b3b1370fc755657be854"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset spinners 1 &amp; 2 values <br /></td></tr>
+<tr class="separator:a5496672262d1b3b1370fc755657be854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aab27e2fb6abb3d432d535e3ad00e868c"><td class="memItemLeft" align="right" valign="top"><a id="aab27e2fb6abb3d432d535e3ad00e868c"></a>
+volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#aab27e2fb6abb3d432d535e3ad00e868c">joypad_1</a></td></tr>
+<tr class="memdesc:aab27e2fb6abb3d432d535e3ad00e868c"><td class="mdescLeft">&#160;</td><td class="mdescRight">PAD 1 value. <br /></td></tr>
+<tr class="separator:aab27e2fb6abb3d432d535e3ad00e868c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b46ac10c27e7e4248eeb4c86a351bf8"><td class="memItemLeft" align="right" valign="top"><a id="a9b46ac10c27e7e4248eeb4c86a351bf8"></a>
+volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#a9b46ac10c27e7e4248eeb4c86a351bf8">joypad_2</a></td></tr>
+<tr class="memdesc:a9b46ac10c27e7e4248eeb4c86a351bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">PAD 2 value. <br /></td></tr>
+<tr class="separator:a9b46ac10c27e7e4248eeb4c86a351bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb051c00ecc80901633e8bf97c771ee3"><td class="memItemLeft" align="right" valign="top"><a id="adb051c00ecc80901633e8bf97c771ee3"></a>
+volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#adb051c00ecc80901633e8bf97c771ee3">keypad_1</a></td></tr>
+<tr class="memdesc:adb051c00ecc80901633e8bf97c771ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">KEYBOARD from PAD 1 values. <br /></td></tr>
+<tr class="separator:adb051c00ecc80901633e8bf97c771ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f59d7af79140adc96867fde3a92e97"><td class="memItemLeft" align="right" valign="top"><a id="af7f59d7af79140adc96867fde3a92e97"></a>
+volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#af7f59d7af79140adc96867fde3a92e97">keypad_2</a></td></tr>
+<tr class="memdesc:af7f59d7af79140adc96867fde3a92e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">KEYBOARD from PAD 2 values. <br /></td></tr>
+<tr class="separator:af7f59d7af79140adc96867fde3a92e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d3d08f69e089611a17fb22dc5160da"><td class="memItemLeft" align="right" valign="top"><a id="ad5d3d08f69e089611a17fb22dc5160da"></a>
+volatile char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#ad5d3d08f69e089611a17fb22dc5160da">spinner_1</a></td></tr>
+<tr class="memdesc:ad5d3d08f69e089611a17fb22dc5160da"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPINNER 1 value<br />
+ <b>/!\ spinner 1 value is reversed</b> <br /></td></tr>
+<tr class="separator:ad5d3d08f69e089611a17fb22dc5160da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbbf16d70edce2a173676a9a0453f335"><td class="memItemLeft" align="right" valign="top"><a id="acbbf16d70edce2a173676a9a0453f335"></a>
+volatile char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html#acbbf16d70edce2a173676a9a0453f335">spinner_2</a></td></tr>
+<tr class="memdesc:acbbf16d70edce2a173676a9a0453f335"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPINNER 2 value. <br /></td></tr>
+<tr class="separator:acbbf16d70edce2a173676a9a0453f335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>coleco generic pad &amp; spinner support. </p>
+<p>This unit provides methods to read controller state.<br />
+ <br />
+ Here is the list of supported controller devices:<br />
+</p><ul>
+<li>coleco default pad <br />
+</li>
+<li>coleco spinner<br />
+ </li>
+</ul>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

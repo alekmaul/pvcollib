@@ -11,11 +11,11 @@
 #include "gfxs.h"											// to add definition of graphics
 #include "snds.h"											// to add definition of sounds
 
-const char holes1_dx[]={-1,0,1,-2,-1,0,1,2,-2,-1,0,1,0};	// holes type #1
-const char holes1_dy[]={-2,-2,-2,-1,-1,-1,-1,-1,0,0,0,0,1};
+const signed char holes1_dx[]={-1,0,1,-2,-1,0,1,2,-2,-1,0,1,0};	// holes type #1
+const signed char holes1_dy[]={-2,-2,-2,-1,-1,-1,-1,-1,0,0,0,0,1};
 
-const char holes2_dx[]={-2,-1,0,-2,-1,0,1,-2,-1,0,1,0,1};	// holes type #2
-const char holes2_dy[]={-2,-2,-2,-1,-1,-1,-1,0,0,0,0,1,1};
+const signed char holes2_dx[]={-2,-1,0,-2,-1,0,1,-2,-1,0,1,0,1};	// holes type #2
+const signed char holes2_dy[]={-2,-2,-2,-1,-1,-1,-1,0,0,0,0,1,1};
 
 const char *const holes_dx[]={holes1_dx,holes2_dx};			// holes type table
 const char *const holes_dy[]={holes1_dy,holes2_dy};
@@ -37,8 +37,8 @@ const u8 minimum_diamants[]={85,75,60,45,35};
 typedef struct {											// Classic coordinate structure
 	char x;
 	char y;
-	char dx;
-	char dy;
+	signed char dx;
+	signed char dy;
 } coorxy;
 
 coorxy player; 												// Player : coordinate
@@ -69,7 +69,7 @@ void show_score(void) {
 // Add diamonds function
 void add_diamond(u8 nombre, u8 diamond_type) {
 	char x,y,k;
-	char dx,dy;
+	signed char dx,dy;
 loop2:
 	x = sys_randbyte(1,30);
 	y = sys_randbyte(4,21);

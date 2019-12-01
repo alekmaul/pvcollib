@@ -52,11 +52,6 @@
 #define sprtab  			0x3800
 #define sprgen  			0x1b00
 
-#define sprtab_f18a  		0x2800 //f18a colour only requires 1/3 the colour data? til 0x2800
-#define sprtab_f18a_2  		0x3000
-#define sprtab_f18a_3	 	0x3800
-#define mapvram 			0x1f00  
-
 #define COLTRANSP			0
 #define COLBLACK			1
 #define COLMEDGREEN			2
@@ -73,12 +68,6 @@
 #define COLMAGENTA			13
 #define COLGREY				14
 #define COLWHITE			15
-
-/**
- *  \brief vdp_f18aok is set if f18a module is present<br>
- *	when calling vdp_initf18a function<br>
- */
-extern volatile u8 vdp_f18aok;
 
 /**
  *  \fn void vdp_setreg(u8 reg,u8 val)

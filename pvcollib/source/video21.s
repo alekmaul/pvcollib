@@ -41,35 +41,35 @@
 ;WARNING : IT DOES USE DIRECT IO PORT VALUE
 _vdp_setmode2bmp:
 	push    af
-  push    bc
-  push    de
-  push    hl
-  push    ix
-  push    iy
-  ld	a,(0x73C4)
-  and	#0xA7             		   ; blank screen, reset M1 & M3
-  or	#0x82             		   ; 16K, sprites 16x16
-  ld      c,a
-  ld      b,#1
-  call    0x1FD9
-  ld      bc,#0x03FF         		; vdp_out(3,ffh)
-  call    0x1FD9
-  ld      bc,#0x0403         		; vdp_out(4,3)
-  call    0x1FD9
-  xor     a
-  out	(0xBF),a
-  ld      a,#0x18
-  set     6,a
-  out	(0xBF),a
-  ld      d,#3
+	push    bc
+	push    de
+	push    hl
+	push    ix
+	push    iy
+	ld		a,(0x73C4)
+	and		#0xA7             	 	    ; blank screen, reset M1 & M3
+	or		#0x82             		    ; 16K, sprites 16x16
+	ld      c,a
+	ld      b,#1
+	call    0x1FD9
+	ld      bc,#0x03FF       	  		; vdp_out(3,ffh)
+	call    0x1FD9
+	ld      bc,#0x0403        	 		; vdp_out(4,3)
+	call    0x1FD9
+	xor     a
+	out		(0xBF),a
+	ld      a,#0x18
+	set     6,a
+	out		(0xBF),a
+	ld      d,#3
 vsm2b1:
 	xor     a
 vsm2b2:
 	out     (0XBE),a
-  nop
-  inc     a
-  jr      nz,vsm2b2
-  dec     d
-  jr      nz,vsm2b1
-  jp      default_setmode2
+	nop
+	inc     a
+	jr      nz,vsm2b2
+	dec     d
+	jr      nz,vsm2b1
+	jp      default_setmode2
 

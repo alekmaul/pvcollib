@@ -21,10 +21,16 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.3.0 (11/11/2019)
+V1.4.0 (12/xx/2019)
+- Add a specific file for f18a support
+- Add a specific file for Phoenix support
+
+V1.3.0 (11/24/2019)
 - Add megacart support (tools and example)
 - Add some video defines (like color palette), thanks Mr Lete for the tip ;)
 - Add vdp_getarea function
+- Add scoring management and example
+- Fix documentation issues and typo
 
 V1.2.0 (11/11/2019)
 - Put all functions in different files, to avoid wasting memory when linking rom ...

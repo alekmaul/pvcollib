@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------------
 
-	Generic f18a video functions
+	Generic phoenix functions
 
 	Copyright (C) 2018-2019
 		Alekmaul
@@ -24,37 +24,33 @@
 
 ---------------------------------------------------------------------------------*/
 /**
- * \file f18a.h
- * \brief contains the basic definitions for controlling the f18a video device.
+ * \file phoenix.h
+ * \brief contains the basic definitions for controlling the Phoenix console.
  *
- * This unit provides generic features related to f18a device.<br>
+ * This unit provides generic features related to Phoenix console.<br>
  *<br>
  * Here is the list of features:<br>
- * - enable and disable f18a<br>
- * - update palette<br>
+ * - Test phoenix console<br>
 */
 
 #ifndef COL_F18A_INCLUDE
 #define COL_F18A_INCLUDE
 
 #include <coleco/coltypes.h>
-
-#define sprtab_f18a  		0x2800 //f18a colour only requires 1/3 the colour data? til 0x2800
-#define sprtab_f18a_2  		0x3000
-#define sprtab_f18a_3	 	0x3800
-#define mapvram 			0x1f00  
+#include <coleco/f18a.h>
 
 /**
  *  \brief vdp_f18aok is set if f18a module is present<br>
  *	when calling vdp_f18ainit function<br>
  */
-extern volatile u8 vdp_f18aok;
+#define sys_phoenixok vdp_f18aok;
 
 /**
- * \fn void vdp_f18ainit(void)
- * \brief Activate f18a device<br>
- * Activate f18a and init vdp_f18aok variable with 1 if it is ok<br>
+ * \fn void sys_phoenixinit(void)
+ * \brief Test Phoenix console<br>
+ * Activate f18a and init vdp_f18aok/sys_phoenixok variable with 1 if it is ok<br>
+ * Testing sys_phoenixok variable to know if on Phoenix console<br>
 */
-void vdp_f18ainit(void);
+#define sys_phoenixinit vdp_f18ainit;
 
 #endif

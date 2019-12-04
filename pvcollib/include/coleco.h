@@ -42,6 +42,9 @@
 
  \section video_tms9918 2D engine API
  - \ref video.h "General video"
+
+ \section video_f18a F18A video device API
+ - \ref video.h "F18A specific video"
  
  \section pad_mngt Generic pad & spinner API
  - \ref pad.h "General pad & spinner"
@@ -107,5 +110,6 @@
 #include "coleco/sound.h"
 #include "coleco/sprite.h"
 #include "coleco/video.h"
+#include "coleco/f18a.h"
 
 #endif // COL_INCLUDE

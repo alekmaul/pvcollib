@@ -51,23 +51,15 @@ _vdp_read2:
 	pop		bc
 	push	bc
 	ld		a, c								; send LSB of address (no delay needed)
-	out		(0x00bf), a
+	out		(0xbf), a
 
 	ld		a, b								; send MSB of address (delay needed before read)
-	out		(0x00bf), a
-	nop											; (maybe overkill here, but this function doesn't need to be fast)
-	nop
-	nop
-	nop
-	nop
+	out		(0xbf), a
 
-	in		a, (0x00be)							; get the MSB (delay needed before next read)
+	in		a, (0xbe)							; get the MSB (delay needed before next read)
 	ld		b, a
 	ld		c, #0x00							; shift up to MSB (could be optimized to a move, 1uS)
 	nop											; (maybe overkill here, but this function doesn't need to be fast)
-	nop
-	nop
-	nop
 	nop
 
 	in		a, (0x00be)							; ret |= 0x00be; get the LSB
@@ -85,8 +77,6 @@ _vdp_read2:
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
 _vdp_f18ainit:
-	push	af
-
 	call	_vdp_disablenmi
 	ld		bc, #0x8032							; reset and lock F18A (or corrupt VDPR2 if 9928A)
 	call    0x1FD9								; vdp_out(50,0x80)
@@ -149,5 +139,4 @@ _vs182:
 _vs184:
 	call	_vdp_enablenmi
 
-	pop	af
 	ret

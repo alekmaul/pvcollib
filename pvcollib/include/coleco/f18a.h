@@ -57,4 +57,21 @@ extern volatile u8 vdp_f18aok;
 */
 void vdp_f18ainit(void);
 
+/**
+ * \fn void vdp_f18asetpalette(void *data,unsigned count)
+ * \brief Send a palette RGB 12bits color entries to f18a device<br>
+ *
+ * \param data address of data to use
+ * \param count number of data <b>in byte (so must be x2)</b>
+*/
+void vdp_f18asetpalette(void *data,unsigned count);
+
+/**
+ * \fn void vdp_f18asetmode2bmp(void)
+ * \brief Activate mode 2 in bitmap mode for f&_a ONLY<br>
+ * Activate Mode 2 of TMS in bitmap mode, 16K of VRAM, sprites 16x16<br>
+ * 1 VRAM area (complete screen of 30 lines) that can be populate<br>
+*/
+void vdp_f18asetmode2bmp(void);
+
 #endif

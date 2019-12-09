@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: score_t Struct Reference</title>
+<title>PVcollib: games/diamond/diamond.c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,6 +44,7 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,67 +59,12 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">score_t Struct Reference</div>  </div>
+<div class="title">games/diamond/diamond.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>score value Can manage score with more than 65536 values (max of an unsigned)  
- <a href="a00332.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00314_source.html">score.h</a>&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a47a478b0b6c3d6c442dc708ad768c5d1"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a47a478b0b6c3d6c442dc708ad768c5d1">hi</a></td></tr>
-<tr class="separator:a47a478b0b6c3d6c442dc708ad768c5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a4c1aa7f0af4a13e5f2fd3229a2e054"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a2a4c1aa7f0af4a13e5f2fd3229a2e054">lo</a></td></tr>
-<tr class="separator:a2a4c1aa7f0af4a13e5f2fd3229a2e054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>score value Can manage score with more than 65536 values (max of an unsigned) </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00362.html#_a0">scoring/scoring.c</a>.</dd>
-</dl></div><h2 class="groupheader">Field Documentation</h2>
-<a id="a47a478b0b6c3d6c442dc708ad768c5d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47a478b0b6c3d6c442dc708ad768c5d1">&#9670;&nbsp;</a></span>hi</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned score_t::hi</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>high value of the score </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00362.html#a6">scoring/scoring.c</a>.</dd>
-</dl>
-</div>
-</div>
-<a id="a2a4c1aa7f0af4a13e5f2fd3229a2e054"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a4c1aa7f0af4a13e5f2fd3229a2e054">&#9670;&nbsp;</a></span>lo</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned score_t::lo</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>low value of the score </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00362.html#a7">scoring/scoring.c</a>.</dd>
-</dl>
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="a00314_source.html">score.h</a></li>
-</ul>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><span class="comment">/*---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    small game from coder Amy Purple : Diamond Dash</span></div><div class="line"><span class="comment">        made by her during 2004 MiniGame Competition </span></div><div class="line"><span class="comment">        https://web.archive.org/web/20050204071935/http://www.ffd2.com/minigame/</span></div><div class="line"><span class="comment">    -- alekmaul</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">---------------------------------------------------------------------------------*/</span></div><div class="line"><span class="preprocessor">#include &quot;diamond.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;dash.h&quot;</span>                                           <span class="comment">// main file for game</span></div><div class="line"><span class="preprocessor">#include &quot;snds.h&quot;</span>                                           <span class="comment">// to add definition of sounds</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> u8 game_title[] = {40,41,42,43,44,45,46,47,0};        <span class="comment">// Char array for &quot;DIAMOND DASH!!&quot;</span></div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment">// The NMI routine. Gets called 50 or 60 times per second </span></div><div class="line"><span class="comment">// nothing to update for game example</span></div><div class="line"><span class="keywordtype">void</span> nmi (<span class="keywordtype">void</span>) {</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="keywordtype">void</span> main (<span class="keywordtype">void</span>) {</div><div class="line">    <span class="comment">// Put sound table and mute all channel</span></div><div class="line">    <a name="a0"></a><a class="code" href="a00305.html#ac43e05b7403367c936679ea6ef180b47">snd_settable</a>(snd_table);</div><div class="line">    <a name="a1"></a><a class="code" href="a00305.html#a87479438785b503827702d069b0fa238">snd_stopall</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Put screen in text mode 2 and sprite in 8x8 pixels size</span></div><div class="line">    <a name="a2"></a><a class="code" href="a00311.html#aed12735f2bac4b311261f93f887b8e32">vdp_disablescr</a>();</div><div class="line">    </div><div class="line">    <a name="a3"></a><a class="code" href="a00311.html#ab7b789325ecccea7c6037dbe35acfaeb">vdp_setmode2txt</a>();</div><div class="line">    <a name="a4"></a><a class="code" href="a00308.html#a5bd5a14bdd8a80c8f4e341d33162a124">spr_mode8x8</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Initialise graphics and sounds </span></div><div class="line">    init_graphics();</div><div class="line">    </div><div class="line">    <span class="comment">// Set a &quot;stop point&quot; to let the Video Chip knows that there is only 1 sprite to show</span></div><div class="line">    <a name="a5"></a><a class="code" href="a00308.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[1].<a name="a6"></a>y=208;</div><div class="line">    </div><div class="line">    <span class="comment">// Show a new mountain &amp; Show &quot;DIAMOND DASH!!&quot; in center screen </span></div><div class="line">    new_mountain(); </div><div class="line">    show_score();</div><div class="line">    <a name="a7"></a><a class="code" href="a00311.html#a25772c7921c9b4a9e38259587049491a">vdp_putstring</a>(12,11,game_title);</div><div class="line">    <a name="a8"></a><a class="code" href="a00311.html#a5493708fc4555c113a2adf1b0184fe64">vdp_enablescr</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Wait until player press fire</span></div><div class="line">    <a name="a9"></a><a class="code" href="a00311.html#af6fbd4baed0caa08f6dfc5e6492249b2">vdp_enablenmi</a>(); <a name="a10"></a><a class="code" href="a00287.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a>(); <a name="a11"></a><a class="code" href="a00311.html#a94e7f27f9cb30375b9bef6768f5bf7ba">vdp_disablenmi</a>();</div><div class="line"></div><div class="line">    <span class="comment">// Play game</span></div><div class="line">    game();</div><div class="line">    <span class="comment">// END</span></div><div class="line">    <span class="comment">// startup module will issue a soft reboot if it comes here </span></div><div class="line">}</div></div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

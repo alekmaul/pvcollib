@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: sound.h File Reference</title>
+<title>PVcollib: coleco.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,192 +60,30 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">sound.h File Reference</div>  </div>
+<div class="title">coleco.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>coleco generic sound support.  
+<p>the master include file for colecovision applications.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00302_source.html">coleco/coltypes.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00287_source.html">coleco/coltypes.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00290_source.html">coleco/console.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00299_source.html">coleco/pad.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00305_source.html">coleco/score.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00308_source.html">coleco/sound.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00311_source.html">coleco/sprite.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00314_source.html">coleco/video.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00293_source.html">coleco/f18a.h</a>&quot;</code><br />
 </div>
 <p><a href="a00317_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00336.html">sound_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition of sound area  <a href="a00336.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a6cd1d70ab664062e40afa9275a00b1e2"><td class="memItemLeft" align="right" valign="top"><a id="a6cd1d70ab664062e40afa9275a00b1e2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a6cd1d70ab664062e40afa9275a00b1e2">SOUNDAREA1</a>&#160;&#160;&#160;0x702b</td></tr>
-<tr class="memdesc:a6cd1d70ab664062e40afa9275a00b1e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">sound areas 1 to 6 available pour channels <br /></td></tr>
-<tr class="separator:a6cd1d70ab664062e40afa9275a00b1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a0d25ddc5bd874ca0ba9efe67f3234d4f">snd_isplaying</a> (u8 sound_number)</td></tr>
-<tr class="memdesc:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">retrieve if channel is playing or not  <a href="#a0d25ddc5bd874ca0ba9efe67f3234d4f">More...</a><br /></td></tr>
-<tr class="separator:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac43e05b7403367c936679ea6ef180b47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ac43e05b7403367c936679ea6ef180b47">snd_settable</a> (void *snd_table)</td></tr>
-<tr class="memdesc:ac43e05b7403367c936679ea6ef180b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the sound table used for playing sound  <a href="#ac43e05b7403367c936679ea6ef180b47">More...</a><br /></td></tr>
-<tr class="separator:ac43e05b7403367c936679ea6ef180b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a0a1e7fae088aeacbbdd4f914ca4c1b86">snd_startplay</a> (u8 sound_number)</td></tr>
-<tr class="memdesc:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">play a sound specified but sound_number  <a href="#a0a1e7fae088aeacbbdd4f914ca4c1b86">More...</a><br /></td></tr>
-<tr class="separator:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87479438785b503827702d069b0fa238"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a87479438785b503827702d069b0fa238">snd_stopall</a> (void)</td></tr>
-<tr class="memdesc:a87479438785b503827702d069b0fa238"><td class="mdescLeft">&#160;</td><td class="mdescRight">mute all channels  <a href="#a87479438785b503827702d069b0fa238">More...</a><br /></td></tr>
-<tr class="separator:a87479438785b503827702d069b0fa238"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a925ea17298465a710547ed1fd6d17e07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a925ea17298465a710547ed1fd6d17e07">snd_stopplay</a> (u8 sound_number)</td></tr>
-<tr class="memdesc:a925ea17298465a710547ed1fd6d17e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop a sound specified but sound_number  <a href="#a925ea17298465a710547ed1fd6d17e07">More...</a><br /></td></tr>
-<tr class="separator:a925ea17298465a710547ed1fd6d17e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>coleco generic sound support. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a0d25ddc5bd874ca0ba9efe67f3234d4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d25ddc5bd874ca0ba9efe67f3234d4f">&#9670;&nbsp;</a></span>snd_isplaying()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">snd_isplaying </td>
-          <td>(</td>
-          <td class="paramtype">u8&#160;</td>
-          <td class="paramname"><em>sound_number</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>retrieve if channel is playing or not </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0xff is sound_number is still playing, 0x00 if not </dd></dl>
-
-</div>
-</div>
-<a id="ac43e05b7403367c936679ea6ef180b47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac43e05b7403367c936679ea6ef180b47">&#9670;&nbsp;</a></span>snd_settable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">snd_settable </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>snd_table</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>define the sound table used for playing sound </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">snd_table</td><td>address of sound table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00364.html#a2">audio/music/music.c</a>, <a class="el" href="a00366.html#a2">audio/simplesound/ssound.c</a>, and <a class="el" href="a00344.html#a0">games/diamond/diamond.c</a>.</dd>
-</dl>
-</div>
-</div>
-<a id="a0a1e7fae088aeacbbdd4f914ca4c1b86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a1e7fae088aeacbbdd4f914ca4c1b86">&#9670;&nbsp;</a></span>snd_startplay()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">snd_startplay </td>
-          <td>(</td>
-          <td class="paramtype">u8&#160;</td>
-          <td class="paramname"><em>sound_number</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>play a sound specified but sound_number </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00364.html#a11">audio/music/music.c</a>, and <a class="el" href="a00366.html#a11">audio/simplesound/ssound.c</a>.</dd>
-</dl>
-</div>
-</div>
-<a id="a87479438785b503827702d069b0fa238"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87479438785b503827702d069b0fa238">&#9670;&nbsp;</a></span>snd_stopall()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">snd_stopall </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>mute all channels </p>
-<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00364.html#a3">audio/music/music.c</a>, <a class="el" href="a00366.html#a3">audio/simplesound/ssound.c</a>, and <a class="el" href="a00344.html#a1">games/diamond/diamond.c</a>.</dd>
-</dl>
-</div>
-</div>
-<a id="a925ea17298465a710547ed1fd6d17e07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a925ea17298465a710547ed1fd6d17e07">&#9670;&nbsp;</a></span>snd_stopplay()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">snd_stopplay </td>
-          <td>(</td>
-          <td class="paramtype">u8&#160;</td>
-          <td class="paramname"><em>sound_number</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>stop a sound specified but sound_number </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>the master include file for colecovision applications. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

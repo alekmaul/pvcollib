@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['keypad_5f1',['keypad_1',['../a00311.html#adb051c00ecc80901633e8bf97c771ee3',1,'pad.h']]],
-  ['keypad_5f2',['keypad_2',['../a00311.html#af7f59d7af79140adc96867fde3a92e97',1,'pad.h']]]
+  ['joypad_5f1',['joypad_1',['../a00266.html#aab27e2fb6abb3d432d535e3ad00e868c',1,'pad.h']]],
+  ['joypad_5f2',['joypad_2',['../a00266.html#a9b46ac10c27e7e4248eeb4c86a351bf8',1,'pad.h']]]
 ];

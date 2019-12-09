@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: games/diamond/diamond.c</title>
+<title>PVcollib: coltypes.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,6 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -59,12 +58,46 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">games/diamond/diamond.c</div>  </div>
+<div class="title">coltypes.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><span class="comment">/*---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    small game from coder Amy Purple : Diamond Dash</span></div><div class="line"><span class="comment">        made by her during 2004 MiniGame Competition </span></div><div class="line"><span class="comment">        https://web.archive.org/web/20050204071935/http://www.ffd2.com/minigame/</span></div><div class="line"><span class="comment">    -- alekmaul</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">---------------------------------------------------------------------------------*/</span></div><div class="line"><span class="preprocessor">#include &quot;diamond.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;dash.h&quot;</span>                                           <span class="comment">// main file for game</span></div><div class="line"><span class="preprocessor">#include &quot;snds.h&quot;</span>                                           <span class="comment">// to add definition of sounds</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> u8 game_title[] = {40,41,42,43,44,45,46,47,0};        <span class="comment">// Char array for &quot;DIAMOND DASH!!&quot;</span></div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment">// The NMI routine. Gets called 50 or 60 times per second </span></div><div class="line"><span class="comment">// nothing to update for game example</span></div><div class="line"><span class="keywordtype">void</span> nmi (<span class="keywordtype">void</span>) {</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="keywordtype">void</span> main (<span class="keywordtype">void</span>) {</div><div class="line">    <span class="comment">// Put sound table and mute all channel</span></div><div class="line">    <a name="a0"></a><a class="code" href="a00260.html#ac43e05b7403367c936679ea6ef180b47">snd_settable</a>(snd_table);</div><div class="line">    <a name="a1"></a><a class="code" href="a00260.html#a87479438785b503827702d069b0fa238">snd_stopall</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Put screen in text mode 2 and sprite in 8x8 pixels size</span></div><div class="line">    <a name="a2"></a><a class="code" href="a00266.html#aed12735f2bac4b311261f93f887b8e32">vdp_disablescr</a>();</div><div class="line">    </div><div class="line">    <a name="a3"></a><a class="code" href="a00266.html#ab7b789325ecccea7c6037dbe35acfaeb">vdp_setmode2txt</a>();</div><div class="line">    <a name="a4"></a><a class="code" href="a00263.html#a5bd5a14bdd8a80c8f4e341d33162a124">spr_mode8x8</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Initialise graphics and sounds </span></div><div class="line">    init_graphics();</div><div class="line">    </div><div class="line">    <span class="comment">// Set a &quot;stop point&quot; to let the Video Chip knows that there is only 1 sprite to show</span></div><div class="line">    <a name="a5"></a><a class="code" href="a00263.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[1].<a name="a6"></a>y=208;</div><div class="line">    </div><div class="line">    <span class="comment">// Show a new mountain &amp; Show &quot;DIAMOND DASH!!&quot; in center screen </span></div><div class="line">    new_mountain(); </div><div class="line">    show_score();</div><div class="line">    <a name="a7"></a><a class="code" href="a00266.html#a25772c7921c9b4a9e38259587049491a">vdp_putstring</a>(12,11,game_title);</div><div class="line">    <a name="a8"></a><a class="code" href="a00266.html#a5493708fc4555c113a2adf1b0184fe64">vdp_enablescr</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Wait until player press fire</span></div><div class="line">    <a name="a9"></a><a class="code" href="a00266.html#af6fbd4baed0caa08f6dfc5e6492249b2">vdp_enablenmi</a>(); <a name="a10"></a><a class="code" href="a00248.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a>(); <a name="a11"></a><a class="code" href="a00266.html#a94e7f27f9cb30375b9bef6768f5bf7ba">vdp_disablenmi</a>();</div><div class="line"></div><div class="line">    <span class="comment">// Play game</span></div><div class="line">    game();</div><div class="line">    <span class="comment">// END</span></div><div class="line">    <span class="comment">// startup module will issue a soft reboot if it comes here </span></div><div class="line">}</div></div><!-- fragment --> </div><!-- contents -->
+
+<p>Custom types used by pvcollib.  
+<a href="#details">More...</a></p>
+
+<p><a href="a00287_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3a8ea58898cb58fc96013383d39f482c"><td class="memItemLeft" align="right" valign="top"><a id="a3a8ea58898cb58fc96013383d39f482c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00287.html#a3a8ea58898cb58fc96013383d39f482c">BIT</a>(n)&#160;&#160;&#160;(1&lt;&lt;n)</td></tr>
+<tr class="memdesc:a3a8ea58898cb58fc96013383d39f482c"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit field <br /></td></tr>
+<tr class="separator:a3a8ea58898cb58fc96013383d39f482c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a97a80ca1602ebf2303258971a2c938e2"><td class="memItemLeft" align="right" valign="top"><a id="a97a80ca1602ebf2303258971a2c938e2"></a>
+typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00287.html#a97a80ca1602ebf2303258971a2c938e2">bool</a></td></tr>
+<tr class="memdesc:a97a80ca1602ebf2303258971a2c938e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">boolean definitions <br /></td></tr>
+<tr class="separator:a97a80ca1602ebf2303258971a2c938e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a151f780fb455885061d3b77ec1c90c03"><td class="memItemLeft" align="right" valign="top"><a id="a151f780fb455885061d3b77ec1c90c03"></a>
+typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00287.html#a151f780fb455885061d3b77ec1c90c03">s8</a></td></tr>
+<tr class="memdesc:a151f780fb455885061d3b77ec1c90c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bit and 16 bit signed and unsigned. <br /></td></tr>
+<tr class="separator:a151f780fb455885061d3b77ec1c90c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Custom types used by pvcollib. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

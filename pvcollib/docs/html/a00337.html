@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: sprite_t Struct Reference</title>
+<title>PVcollib: graphics/dancompress/grafdancomp.c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,6 +44,7 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,30 +59,12 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">sprite_t Struct Reference</div>  </div>
+<div class="title">graphics/dancompress/grafdancomp.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><pre class="fragment">sprite entry :
-    y,x     : coordinates (y,x) with y 0..191 and x 0..255
-    pattern : pattern number of sprite
-    colour  : colour between 0..15
-</pre>  
- <a href="a00337.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00317_source.html">sprite.h</a>&gt;</code></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">sprite entry :
-    y,x     : coordinates (y,x) with y 0..191 and x 0..255
-    pattern : pattern number of sprite
-    colour  : colour between 0..15
-</pre> </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="a00317_source.html">sprite.h</a></li>
-</ul>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><span class="comment">/*---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    bitmap demo with dan1 compression</span></div><div class="line"><span class="comment">    -- alekmaul</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">---------------------------------------------------------------------------------*/</span></div><div class="line"><span class="preprocessor">#include &quot;grafdancomp.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;gfxs.h&quot;</span>                                   <span class="comment">// to add definition of graphics</span></div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="comment">// The NMI routine. Gets called 50 or 60 times per second </span></div><div class="line"><span class="comment">// nothing to update for bitmap example</span></div><div class="line"><span class="keywordtype">void</span> nmi (<span class="keywordtype">void</span>) {</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//---------------------------------------------------------------------------------</span></div><div class="line"><span class="keywordtype">void</span> main (<span class="keywordtype">void</span>) {</div><div class="line">    <span class="comment">// Put screen in text mode 2</span></div><div class="line">    <a name="a0"></a><a class="code" href="a00314.html#aed12735f2bac4b311261f93f887b8e32">vdp_disablescr</a>();</div><div class="line">    </div><div class="line">    <a name="a1"></a><a class="code" href="a00314.html#ab7b789325ecccea7c6037dbe35acfaeb">vdp_setmode2txt</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Put image in vram  and duplicate to the 2nd &amp; 3rd zone</span></div><div class="line">    <a name="a2"></a><a class="code" href="a00314.html#a4591f51fe8e99d414e4fcca41afd182e">vdp_dan2vram</a> (TILourvision, chrgen); <span class="comment">// characters</span></div><div class="line">    <a class="code" href="a00314.html#a4591f51fe8e99d414e4fcca41afd182e">vdp_dan2vram</a> (COLourvision, coltab); <span class="comment">// colors</span></div><div class="line">    <a class="code" href="a00314.html#a4591f51fe8e99d414e4fcca41afd182e">vdp_dan2vram</a> (MAPourvision, chrtab); <span class="comment">// map</span></div><div class="line"></div><div class="line">    <a name="a3"></a><a class="code" href="a00314.html#a74b39d6a798afdcea471a64d0b9eea49">vdp_duplicatevram</a>();</div><div class="line">    <a name="a4"></a><a class="code" href="a00314.html#a5493708fc4555c113a2adf1b0184fe64">vdp_enablescr</a>();</div><div class="line">    </div><div class="line">    <span class="comment">// Wait for nothing :P</span></div><div class="line">    <span class="keywordflow">while</span>(1) {</div><div class="line">        <span class="comment">// Wait Vblank</span></div><div class="line">        <a name="a5"></a><a class="code" href="a00314.html#ad76f787a2444b8f4afa6bb70b0042a03">vdp_waitvblank</a>(1);</div><div class="line">    }</div><div class="line">    <span class="comment">// startup module will issue a soft reboot if it comes here </span></div><div class="line">}</div></div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

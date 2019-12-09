@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lo',['lo',['../a00332.html#a2a4c1aa7f0af4a13e5f2fd3229a2e054',1,'score_t']]]
+  ['keypad_5f1',['keypad_1',['../a00266.html#adb051c00ecc80901633e8bf97c771ee3',1,'pad.h']]],
+  ['keypad_5f2',['keypad_2',['../a00266.html#af7f59d7af79140adc96867fde3a92e97',1,'pad.h']]]
 ];

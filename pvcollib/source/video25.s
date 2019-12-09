@@ -41,6 +41,11 @@
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
 _vdp_f18asetmode2bmp:
+	call	 _vdp_disablenmi
+
+	ld      bc,#0x0000            		; vdp_out(0,0) ; set mode 2
+	call    0x1FD9
+
 	ld		a,(0x73C4)
 	and		#0xA7             	 	    ; blank screen, reset M1 & M3
 	or		#0x82             		    ; 16K, sprites 16x16
@@ -66,8 +71,7 @@ _vdp_f18asetmode2bmp:
 	ld      bc,#0x0b9c       	  		; vdp_out(11,0x9C); set colour table2 to 0x2700
 	call    0x1FD9
   
-	ld      bc,#0x0002            		; vdp_out(0,2) ; set mode 2
-	call    0x1FD9
-
+	call 	_vdp_enablenmi
+	
 	ret
 	

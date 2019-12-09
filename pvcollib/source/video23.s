@@ -31,10 +31,11 @@
 	.globl _vdp_fillvram
 	
 	; global from this module
+	.globl _vdp_f18aok
 	.globl _vdp_f18ainit
 
     .area _DATA
-_f18apresent::
+_vdp_f18aok::
 	.ds    1
 		
 	.area  _CODE
@@ -46,23 +47,28 @@ _GPUTEST::
 	.db 0x02, 0x00, 0x12, 0x34     				; LI R0,>1234    get the test value into register 0
 	.db 0xC8, 0x00, 0x1C, 0x10	     			; MOV R0,@>1C10 <-- this is the target test adr in VDP RAM
 	.db 0x03, 0x40           					; IDLE       This puts the GPU back to sleep
+	.db 0x00, 0x00           					; DATA 0x0000					
 
 _vdp_read2:
-	pop		bc
-	push	bc
-	ld		a, c								; send LSB of address (no delay needed)
+	ld		a, l								; send LSB of address (no delay needed)
 	out		(0xbf), a
 
-	ld		a, b								; send MSB of address (delay needed before read)
+	ld		a, h								; send MSB of address (delay needed before read)
 	out		(0xbf), a
+	nop											; (maybe overkill here, but this function doesn't need to be fast)
+	nop
+	nop
+	nop
 
 	in		a, (0xbe)							; get the MSB (delay needed before next read)
 	ld		b, a
 	ld		c, #0x00							; shift up to MSB (could be optimized to a move, 1uS)
 	nop											; (maybe overkill here, but this function doesn't need to be fast)
 	nop
+	nop
+	nop
 
-	in		a, (0x00be)							; ret |= 0x00be; get the LSB
+	in		a, (0xbe)							; ret |= 0x00be; get the LSB
 	ld		e, a
 	ld		d, #0x00
 	ld		a, c
@@ -77,17 +83,19 @@ _vdp_read2:
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
 _vdp_f18ainit:
+	push	af
+	
 	call	_vdp_disablenmi
-	ld		bc, #0x8032							; reset and lock F18A (or corrupt VDPR2 if 9928A)
+	ld		bc, #0x3280							; reset and lock F18A (or corrupt VDPR2 if 9928A)
 	call    0x1FD9								; vdp_out(50,0x80)
 
-	ld		bc, #0x1c39							; write unlock value to register 57 (or corrupt VDPR1)
+	ld		bc, #0x391c							; write unlock value to register 57 (or corrupt VDPR1)
 	call    0x1FD9								; vdp_out(57,0x1c)
 
-	ld		bc, #0x1c39							; repeat to unlock. This is the sequence that mustn't be interrupted
+	ld		bc, #0x391c							; repeat to unlock. This is the sequence that mustn't be interrupted
 	call    0x1FD9								; vdp_out(57,0x1c)
 
-	ld		hl, #0x000A							; we copy a little GPU program (9900 Asm) to the VDP and try to execute it. 
+	ld		hl, #0x000C							; we copy a little GPU program (9900 Asm) to the VDP and try to execute it. 
 	push 	hl									; if it's a TMS9928A, nothing will happen. Otherwise it will change a byte of
 	ld		hl, #_GPUTEST						; VDP RAM for us
 	push	hl
@@ -98,30 +106,21 @@ _vdp_f18ainit:
 	pop		af
 	pop		af
 
-	ld		hl,#0x0002
-	push	hl
-	xor		a
-	push	af
-	ld		hl,#0x1c10
-	push 	hl
-	call	_vdp_fillvram						; fill_vram(0x1c10, 0x00, 2);
-	pop		af
-	pop		af
-	pop		af
-
-	ld		bc, #0x1c36							; MSB in register 54
+	ld		bc, #0x361c							; MSB in register 54
 	call    0x1FD9								; vdp_out(54, VDPRAM_TEST_ADR>>8)
 
-	ld		bc, #0x0037							; LSB in register 55 - GPU starts!
+	ld		bc, #0x3700							; LSB in register 55 - GPU starts!
 	call    0x1FD9								; vdp_out(55, VDPRAM_TEST_ADR&0xff)
 
+	nop
+	nop
+	nop
+	nop
+	
 	ld		hl, #0x1c10
 	push	hl
 	call	_vdp_read2
 	pop		af
-	inc		sp
-	inc		sp
-	push	hl
 
 	ld		a, l								; check if we have 0x1234
 	sub		a, #0x34
@@ -130,13 +129,14 @@ _vdp_f18ainit:
 	sub		a, #0x12
 	jr		NZ,_vs182
 
-	ld		hl,#_f18apresent
+	ld		hl,#_vdp_f18aok
 	ld		(hl), #0x01
 	jr		_vs184
 _vs182:	
-	ld		hl,#_f18apresent
+	ld		hl,#_vdp_f18aok
 	ld		(hl), #0x00
 _vs184:
 	call	_vdp_enablenmi
 
+	pop		af
 	ret

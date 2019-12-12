@@ -67,11 +67,13 @@ void vdp_f18ainit(void);
 void vdp_f18asetpalette(void *data,unsigned count);
 
 /**
- * \fn void vdp_f18asetmode2bmp(void)
- * \brief Activate mode 2 in bitmap mode for f&_a ONLY<br>
- * Activate Mode 2 of TMS in bitmap mode, 16K of VRAM, sprites 16x16<br>
- * 1 VRAM area (complete screen of 30 lines) that can be populate<br>
+ * \fn void vdp_f18asetmode1ecm3(void)
+ * \brief Activate mode 1 in bitmap mode for f18a ONLY<br>
+ * Activate Mode 1 of TMS in bitmap mode, 16K of VRAM, sprites 16x16<br>
+ * 1 VRAM area  that can be populate<br>
+ * name table 2 in 2400 and color table 2 in 2700<br>
+ * Enhanced Color mode 3 (3 bits color mode) activated for sprites and tiles<br>
 */
-void vdp_f18asetmode2bmp(void);
+void vdp_f18asetmode1ecm3(void);
 
 #endif

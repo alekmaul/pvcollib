@@ -53,20 +53,13 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 .PHONY: all
  
 #---------------------------------------------------------------------------------
-all	: bitmaps $(OUTPUT).rom
+all	: $(OUTPUT).rom
 	@echo Generate rom ... $(notdir $@)
 	
 clean:
 	@echo clean ...
 	@rm -f $(OFILES) $(TARGET).rom *.rel *.map *.lst *.lk *.ihx *.noi *.sym *.asm  \
 		ourvisiongfx.inc ourvisiongfx.h
-
-#---------------------------------------------------------------------------------
-ourvisiongfx.inc: ourvision.png
-	@echo convert graphic ... $(notdir $@)
-	$(GFXCONV) -fpng -m $<
-	
-bitmaps: ourvisiongfx.inc
 
 #---------------------------------------------------------------------------------
 $(OUTPUT).rom	: $(OFILES)

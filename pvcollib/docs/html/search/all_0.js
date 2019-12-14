@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bit',['BIT',['../a00287.html#a3a8ea58898cb58fc96013383d39f482c',1,'coltypes.h']]],
-  ['bool',['bool',['../a00287.html#a97a80ca1602ebf2303258971a2c938e2',1,'coltypes.h']]],
-  ['buffer32',['buffer32',['../a00290.html#aa757ae09831c155d9ac9306c2118beab',1,'console.h']]]
+  ['bit',['BIT',['../a00290.html#a3a8ea58898cb58fc96013383d39f482c',1,'coltypes.h']]],
+  ['bool',['bool',['../a00290.html#a97a80ca1602ebf2303258971a2c938e2',1,'coltypes.h']]],
+  ['buffer32',['buffer32',['../a00293.html#aa757ae09831c155d9ac9306c2118beab',1,'console.h']]]
 ];

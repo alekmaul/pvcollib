@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: sprite.h File Reference</title>
+<title>PVcollib: sound.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,285 +67,143 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">sprite.h File Reference</div>  </div>
+<div class="title">sound.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>coleco generic sprites support.  
+<p>coleco generic sound support.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00287_source.html">coleco/coltypes.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00290_source.html">coleco/coltypes.h</a>&gt;</code><br />
 </div>
 <p><a href="a00311_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html">sprite_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">sprite entry :
-    y,x     : coordinates (y,x) with y 0..191 and x 0..255
-    pattern : pattern number of sprite
-    colour  : colour between 0..15
-</pre>  <a href="a00331.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00330.html">sound_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition of sound area  <a href="a00330.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aeea60b775064110893e9ae7d84d3c1f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#aeea60b775064110893e9ae7d84d3c1f5">spr_getx</a>(id)&#160;&#160;&#160;(<a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].x)</td></tr>
-<tr class="memdesc:aeea60b775064110893e9ae7d84d3c1f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the x sprite coordinate  <a href="#aeea60b775064110893e9ae7d84d3c1f5">More...</a><br /></td></tr>
-<tr class="separator:aeea60b775064110893e9ae7d84d3c1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ef546eeabf62ce3d868d2450f587d95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a6ef546eeabf62ce3d868d2450f587d95">spr_gety</a>(id)&#160;&#160;&#160;(<a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].y)</td></tr>
-<tr class="memdesc:a6ef546eeabf62ce3d868d2450f587d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the y sprite coordinate  <a href="#a6ef546eeabf62ce3d868d2450f587d95">More...</a><br /></td></tr>
-<tr class="separator:a6ef546eeabf62ce3d868d2450f587d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadfd6e3971cead76fb3622fa59c44b6a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#aadfd6e3971cead76fb3622fa59c44b6a">spr_set</a>(id,  xp,  yp,  col,  pat)</td></tr>
-<tr class="memdesc:aadfd6e3971cead76fb3622fa59c44b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets an sprite entry to the supplied values  <a href="#aadfd6e3971cead76fb3622fa59c44b6a">More...</a><br /></td></tr>
-<tr class="separator:aadfd6e3971cead76fb3622fa59c44b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11bfa0d6fcd6546165d7d2682e073a21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a11bfa0d6fcd6546165d7d2682e073a21">spr_setxy</a>(id,  xp,  yp)</td></tr>
-<tr class="memdesc:a11bfa0d6fcd6546165d7d2682e073a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets an sprite coordinate to the supplied values  <a href="#a11bfa0d6fcd6546165d7d2682e073a21">More...</a><br /></td></tr>
-<tr class="separator:a11bfa0d6fcd6546165d7d2682e073a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72d1860d0d0c3864264c84f75e3abfa4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a72d1860d0d0c3864264c84f75e3abfa4">spr_sety</a>(id,  yp)&#160;&#160;&#160;{ <a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].y=yp; }</td></tr>
-<tr class="memdesc:a72d1860d0d0c3864264c84f75e3abfa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the y sprite coordinate  <a href="#a72d1860d0d0c3864264c84f75e3abfa4">More...</a><br /></td></tr>
-<tr class="separator:a72d1860d0d0c3864264c84f75e3abfa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cd1d70ab664062e40afa9275a00b1e2"><td class="memItemLeft" align="right" valign="top"><a id="a6cd1d70ab664062e40afa9275a00b1e2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a6cd1d70ab664062e40afa9275a00b1e2">SOUNDAREA1</a>&#160;&#160;&#160;0x702b</td></tr>
+<tr class="memdesc:a6cd1d70ab664062e40afa9275a00b1e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">sound areas 1 to 6 available pour channels <br /></td></tr>
+<tr class="separator:a6cd1d70ab664062e40afa9275a00b1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac89d4a2532faa0c18ee4303bff1a409f"><td class="memItemLeft" align="right" valign="top"><a id="ac89d4a2532faa0c18ee4303bff1a409f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#ac89d4a2532faa0c18ee4303bff1a409f">spr_clear</a> (void)</td></tr>
-<tr class="memdesc:ac89d4a2532faa0c18ee4303bff1a409f"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove all sprite Remove all sprite from screen and init their positions <br /></td></tr>
-<tr class="separator:ac89d4a2532faa0c18ee4303bff1a409f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f8e5f391b079c03eb723f2ddcc7b55f"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a3f8e5f391b079c03eb723f2ddcc7b55f">spr_getentry</a> (void)</td></tr>
-<tr class="memdesc:a3f8e5f391b079c03eb723f2ddcc7b55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a sprite id in sprite list  <a href="#a3f8e5f391b079c03eb723f2ddcc7b55f">More...</a><br /></td></tr>
-<tr class="separator:a3f8e5f391b079c03eb723f2ddcc7b55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53757dd0ee1bbfff02c776096e958689"><td class="memItemLeft" align="right" valign="top"><a id="a53757dd0ee1bbfff02c776096e958689"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a53757dd0ee1bbfff02c776096e958689">spr_mode16x16</a> (void)</td></tr>
-<tr class="memdesc:a53757dd0ee1bbfff02c776096e958689"><td class="mdescLeft">&#160;</td><td class="mdescRight">put sprite in 16x16 pix mode Put all 32 sprites on screen in 16x16 pixels depth. <br /></td></tr>
-<tr class="separator:a53757dd0ee1bbfff02c776096e958689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bd5a14bdd8a80c8f4e341d33162a124"><td class="memItemLeft" align="right" valign="top"><a id="a5bd5a14bdd8a80c8f4e341d33162a124"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a5bd5a14bdd8a80c8f4e341d33162a124">spr_mode8x8</a> (void)</td></tr>
-<tr class="memdesc:a5bd5a14bdd8a80c8f4e341d33162a124"><td class="mdescLeft">&#160;</td><td class="mdescRight">put sprite in 8x8 pix mode Put all 32 sprites on screen in 8x8 pixels depth. <br /></td></tr>
-<tr class="separator:a5bd5a14bdd8a80c8f4e341d33162a124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae669d00fa95aa9fd5476d035c9f77ab8"><td class="memItemLeft" align="right" valign="top"><a id="ae669d00fa95aa9fd5476d035c9f77ab8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#ae669d00fa95aa9fd5476d035c9f77ab8">spr_update</a> (void)</td></tr>
-<tr class="memdesc:ae669d00fa95aa9fd5476d035c9f77ab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">put sprite on screen Put all 32 sprites on screen. <b>Must be call in NMI routine.</b> <br /></td></tr>
-<tr class="separator:ae669d00fa95aa9fd5476d035c9f77ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ac8c4f13a1f085d8360594bbb3b91166b"><td class="memItemLeft" align="right" valign="top"><a id="ac8c4f13a1f085d8360594bbb3b91166b"></a>
-volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#ac8c4f13a1f085d8360594bbb3b91166b">spr_enable</a></td></tr>
-<tr class="memdesc:ac8c4f13a1f085d8360594bbb3b91166b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">0 or 1 if sprites can be displayed or not
-</pre> <br /></td></tr>
-<tr class="separator:ac8c4f13a1f085d8360594bbb3b91166b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfd93341c4cd2fdcc89ce8246d6621cc"><td class="memItemLeft" align="right" valign="top"><a id="abfd93341c4cd2fdcc89ce8246d6621cc"></a>
-volatile <a class="el" href="a00331.html">sprite_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a> [MAXSPRITE]</td></tr>
-<tr class="memdesc:abfd93341c4cd2fdcc89ce8246d6621cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">32 sprites entries
-</pre> <br /></td></tr>
-<tr class="separator:abfd93341c4cd2fdcc89ce8246d6621cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a0d25ddc5bd874ca0ba9efe67f3234d4f">snd_isplaying</a> (u8 sound_number)</td></tr>
+<tr class="memdesc:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">retrieve if channel is playing or not  <a href="#a0d25ddc5bd874ca0ba9efe67f3234d4f">More...</a><br /></td></tr>
+<tr class="separator:a0d25ddc5bd874ca0ba9efe67f3234d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac43e05b7403367c936679ea6ef180b47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#ac43e05b7403367c936679ea6ef180b47">snd_settable</a> (void *snd_table)</td></tr>
+<tr class="memdesc:ac43e05b7403367c936679ea6ef180b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">define the sound table used for playing sound  <a href="#ac43e05b7403367c936679ea6ef180b47">More...</a><br /></td></tr>
+<tr class="separator:ac43e05b7403367c936679ea6ef180b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a0a1e7fae088aeacbbdd4f914ca4c1b86">snd_startplay</a> (u8 sound_number)</td></tr>
+<tr class="memdesc:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">play a sound specified but sound_number  <a href="#a0a1e7fae088aeacbbdd4f914ca4c1b86">More...</a><br /></td></tr>
+<tr class="separator:a0a1e7fae088aeacbbdd4f914ca4c1b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87479438785b503827702d069b0fa238"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a87479438785b503827702d069b0fa238">snd_stopall</a> (void)</td></tr>
+<tr class="memdesc:a87479438785b503827702d069b0fa238"><td class="mdescLeft">&#160;</td><td class="mdescRight">mute all channels  <a href="#a87479438785b503827702d069b0fa238">More...</a><br /></td></tr>
+<tr class="separator:a87479438785b503827702d069b0fa238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a925ea17298465a710547ed1fd6d17e07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html#a925ea17298465a710547ed1fd6d17e07">snd_stopplay</a> (u8 sound_number)</td></tr>
+<tr class="memdesc:a925ea17298465a710547ed1fd6d17e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop a sound specified but sound_number  <a href="#a925ea17298465a710547ed1fd6d17e07">More...</a><br /></td></tr>
+<tr class="separator:a925ea17298465a710547ed1fd6d17e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>coleco generic sprites support. </p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aeea60b775064110893e9ae7d84d3c1f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeea60b775064110893e9ae7d84d3c1f5">&#9670;&nbsp;</a></span>spr_getx</h2>
+<div class="textblock"><p>coleco generic sound support. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a0d25ddc5bd874ca0ba9efe67f3234d4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d25ddc5bd874ca0ba9efe67f3234d4f">&#9670;&nbsp;</a></span>snd_isplaying()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">spr_getx</td>
+          <td class="memname">snd_isplaying </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].x)</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>sound_number</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>get the x sprite coordinate </p>
+<p>retrieve if channel is playing or not </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>the sprite number to be get [0 - 31] </td></tr>
+    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0xff is sound_number is still playing, 0x00 if not </dd></dl>
 
 </div>
 </div>
-<a id="a6ef546eeabf62ce3d868d2450f587d95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ef546eeabf62ce3d868d2450f587d95">&#9670;&nbsp;</a></span>spr_gety</h2>
+<a id="ac43e05b7403367c936679ea6ef180b47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac43e05b7403367c936679ea6ef180b47">&#9670;&nbsp;</a></span>snd_settable()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">spr_gety</td>
+          <td class="memname">snd_settable </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].y)</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>snd_table</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>get the y sprite coordinate </p>
+<p>define the sound table used for playing sound </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>the sprite number to be get [0 - 31] </td></tr>
+    <tr><td class="paramname">snd_table</td><td>address of sound table </td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00358.html#a2">audio/music/music.c</a>, <a class="el" href="a00360.html#a2">audio/simplesound/ssound.c</a>, and <a class="el" href="a00338.html#a0">games/diamond/diamond.c</a>.</dd>
+</dl>
 </div>
 </div>
-<a id="aadfd6e3971cead76fb3622fa59c44b6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadfd6e3971cead76fb3622fa59c44b6a">&#9670;&nbsp;</a></span>spr_set</h2>
+<a id="a0a1e7fae088aeacbbdd4f914ca4c1b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a1e7fae088aeacbbdd4f914ca4c1b86">&#9670;&nbsp;</a></span>snd_startplay()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">spr_set</td>
+          <td class="memname">snd_startplay </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>sound_number</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">xp, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">yp, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">col, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">pat&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ \</div><div class="line">    sprites[id].x=xp; \</div><div class="line">    sprites[id].y=yp; \</div><div class="line">    sprites[id].colour=col; \</div><div class="line">    sprites[id].pattern=pat; \</div><div class="line">    }</div></div><!-- fragment -->
-<p>sets an sprite entry to the supplied values </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>the sprite number to be get [0 - 31] </td></tr>
-    <tr><td class="paramname">xp</td><td>the x location of the sprite in pixels </td></tr>
-    <tr><td class="paramname">yp</td><td>the y location of the sprite in pixels </td></tr>
-    <tr><td class="paramname">col</td><td>the sprite color (0 to 15) </td></tr>
-    <tr><td class="paramname">pat</td><td>the pattern number of sprite (must be a multiple of 4) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a11bfa0d6fcd6546165d7d2682e073a21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11bfa0d6fcd6546165d7d2682e073a21">&#9670;&nbsp;</a></span>spr_setxy</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">spr_setxy</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">xp, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">yp&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ \</div><div class="line">    sprites[id].x=xp; \</div><div class="line">    sprites[id].y=yp; \</div><div class="line">    }</div></div><!-- fragment -->
-<p>sets an sprite coordinate to the supplied values </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>the sprite number to be get [0 - 31] </td></tr>
-    <tr><td class="paramname">xp</td><td>the x location of the sprite in pixels </td></tr>
-    <tr><td class="paramname">yp</td><td>the y location of the sprite in pixels </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a72d1860d0d0c3864264c84f75e3abfa4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72d1860d0d0c3864264c84f75e3abfa4">&#9670;&nbsp;</a></span>spr_sety</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">spr_sety</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">yp&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;{ <a class="el" href="a00311.html#abfd93341c4cd2fdcc89ce8246d6621cc">sprites</a>[id].y=yp; }</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>set the y sprite coordinate </p>
+<p>play a sound specified but sound_number </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>the sprite number to be get [0 - 31] </td></tr>
-    <tr><td class="paramname">yp</td><td>the y location of the sprite in pixels </td></tr>
+    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00358.html#a11">audio/music/music.c</a>, and <a class="el" href="a00360.html#a11">audio/simplesound/ssound.c</a>.</dd>
+</dl>
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a3f8e5f391b079c03eb723f2ddcc7b55f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f8e5f391b079c03eb723f2ddcc7b55f">&#9670;&nbsp;</a></span>spr_getentry()</h2>
+<a id="a87479438785b503827702d069b0fa238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87479438785b503827702d069b0fa238">&#9670;&nbsp;</a></span>snd_stopall()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">spr_getentry </td>
+          <td class="memname">snd_stopall </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -354,8 +212,36 @@ volatile <a class="el" href="a00331.html">sprite_t</a>&#160;</td><td class="memI
       </table>
 </div><div class="memdoc">
 
-<p>get a sprite id in sprite list </p>
-<dl class="section return"><dt>Returns</dt><dd>sprite entry (0..31) Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b> </dd></dl>
+<p>mute all channels </p>
+<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00358.html#a3">audio/music/music.c</a>, <a class="el" href="a00360.html#a3">audio/simplesound/ssound.c</a>, and <a class="el" href="a00338.html#a1">games/diamond/diamond.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a id="a925ea17298465a710547ed1fd6d17e07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a925ea17298465a710547ed1fd6d17e07">&#9670;&nbsp;</a></span>snd_stopplay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">snd_stopplay </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>sound_number</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>stop a sound specified but sound_number </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sound_number</td><td>aid of sound in sound table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>nothing </dd></dl>
 
 </div>
 </div>

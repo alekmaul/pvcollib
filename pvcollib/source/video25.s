@@ -69,8 +69,7 @@ _vdp_f18asetmode1:
 	
 	pop		hl
 	ld		b,#0x31
-	ld		c,l
-	;ld      bc,#0x3133       	  		; vdp_out(49,33h) tiles ecm3/sprites ecm 3 1 bit color mode
+	ld		c,l							; vdp_out(49,xxh) regarding parameters flags
 	call    0x1FD9
 	ld      bc,#0x0A09       	  		; vdp_out(10,0x09) set name table2  tiles ecm3/sprites ecm 3    0x2400 hidden screen
 	call    0x1FD9

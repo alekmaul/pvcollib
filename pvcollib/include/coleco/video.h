@@ -163,13 +163,13 @@ void vdp_setmode2bmp(void);
 */
 void vdp_setcharex(u8 first,u8 count, unsigned offset,u8 flags);
 
-/*
+/**
  * \fn void vdp_putchar (u8 x, u8 y, char value)
  * \brief  Put a single char on screen
  *
  * \param x colum to print
  * \param y line to print
-* \param value ascii value of char to print
+ * \param value ascii value of char to print
 */
 void vdp_putchar (u8 x, u8 y, char value);
 

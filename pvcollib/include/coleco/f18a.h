@@ -44,6 +44,18 @@
 #define sprtab_f18a_3	 	0x3800
 #define mapvram 			0x1f00  
 
+#define F18A_ECMS_0P		(0<<0)
+#define F18A_ECMS_1B		(1<<0)
+#define F18A_ECMS_2B		(2<<0)
+#define F18A_ECMS_3B		(3<<0)
+#define F18A_ECMT_0P		(0<<4)
+#define F18A_ECMT_1B		(1<<4)
+#define F18A_ECMT_2B		(2<<4)
+#define F18A_ECMT_3B		(3<<4)
+#define F18A_ECM_R30		(1<<6)
+#define F18A_ECM_TM2		(1<<7)
+#define F18A_ECM_YRE		(1<<3)
+
 /**
  *  \brief vdp_f18aok is set if f18a module is present<br>
  *	when calling vdp_f18ainit function<br>
@@ -67,13 +79,16 @@ void vdp_f18ainit(void);
 void vdp_f18asetpalette(void *data,unsigned count);
 
 /**
- * \fn void vdp_f18asetmode1ecm3(void)
+ * \fn vdp_f18asetmode1(u8 flags)
  * \brief Activate mode 1 in bitmap mode for f18a ONLY<br>
- * Activate Mode 1 of TMS in bitmap mode, 16K of VRAM, sprites 16x16<br>
- * 1 VRAM area  that can be populate<br>
- * name table 2 in 2400 and color table 2 in 2700<br>
- * Enhanced Color mode 3 (3 bits color mode) activated for sprites and tiles<br>
+ *
+ * \param flags	ecm mode definition<br>
+ * F18A_ECMS_0P	or F18A_ECMS_1..3B for sprite color mode<br>
+ * F18A_ECMT_0P	or F18A_ECMT_1..3B for tile color mode<br>
+ * F18A_ECM_R30	for 30 lines mode <br>
+ * F18A_ECM_TM2	to activate tile map 2 <br>
+ * F18A_ECM_YRE	to activate Y real coordinates <br>
 */
-void vdp_f18asetmode1ecm3(void);
+void vdp_f18asetmode1(u8 flags);
 
 #endif

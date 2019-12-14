@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PVcollib: f18a.h File Reference</title>
+<title>PVcollib: console.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,74 +68,79 @@ $(function() {
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">f18a.h File Reference</div>  </div>
+<div class="title">console.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>contains the basic definitions for controlling the f18a video device.  
+<p>coleco generic console support.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00287_source.html">coleco/coltypes.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00290_source.html">coleco/coltypes.h</a>&gt;</code><br />
 </div>
 <p><a href="a00293_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7f254d9050a4fffdbc5ae96d05849b20"><td class="memItemLeft" align="right" valign="top"><a id="a7f254d9050a4fffdbc5ae96d05849b20"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a7f254d9050a4fffdbc5ae96d05849b20">vdp_f18ainit</a> (void)</td></tr>
-<tr class="memdesc:a7f254d9050a4fffdbc5ae96d05849b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate f18a device<br />
- Activate f18a and init vdp_f18aok variable with 1 if it is ok<br />
- <br /></td></tr>
-<tr class="separator:a7f254d9050a4fffdbc5ae96d05849b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d26eaa6d89089a0fbfecf22cd595d89"><td class="memItemLeft" align="right" valign="top"><a id="a7d26eaa6d89089a0fbfecf22cd595d89"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a7d26eaa6d89089a0fbfecf22cd595d89">vdp_f18asetmode2bmp</a> (void)</td></tr>
-<tr class="memdesc:a7d26eaa6d89089a0fbfecf22cd595d89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate mode 2 in bitmap mode for f&amp;_a ONLY<br />
- Activate Mode 2 of TMS in bitmap mode, 16K of VRAM, sprites 16x16<br />
- 1 VRAM area (complete screen of 30 lines) that can be populate<br />
- <br /></td></tr>
-<tr class="separator:a7d26eaa6d89089a0fbfecf22cd595d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8b9c581e083c0a601957022c3cbbdcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ab8b9c581e083c0a601957022c3cbbdcd">vdp_f18asetpalette</a> (void *data, unsigned count)</td></tr>
-<tr class="memdesc:ab8b9c581e083c0a601957022c3cbbdcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a palette RGB 12bits color entries to f18a device<br />
-  <a href="#ab8b9c581e083c0a601957022c3cbbdcd">More...</a><br /></td></tr>
-<tr class="separator:ab8b9c581e083c0a601957022c3cbbdcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf19ef1f84fb54321a10b501aab19cdc"><td class="memItemLeft" align="right" valign="top"><a id="abf19ef1f84fb54321a10b501aab19cdc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a> (void)</td></tr>
+<tr class="memdesc:abf19ef1f84fb54321a10b501aab19cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a fire button is pressed (do a pause) <br /></td></tr>
+<tr class="separator:abf19ef1f84fb54321a10b501aab19cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e041a4d153b3774ed21fa4630026fc4"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a9e041a4d153b3774ed21fa4630026fc4">sys_randbyte</a> (u8 A, u8 B)</td></tr>
+<tr class="memdesc:a9e041a4d153b3774ed21fa4630026fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate and return a randomized a 8 bit number between two numbers named A and B.  <a href="#a9e041a4d153b3774ed21fa4630026fc4">More...</a><br /></td></tr>
+<tr class="separator:a9e041a4d153b3774ed21fa4630026fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9aabe5f00e8ff35a3440e0fbd44fed4"><td class="memItemLeft" align="right" valign="top">u16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">sys_random</a> (void)</td></tr>
+<tr class="memdesc:aa9aabe5f00e8ff35a3440e0fbd44fed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate and return a randomized 16 bit number.  <a href="#aa9aabe5f00e8ff35a3440e0fbd44fed4">More...</a><br /></td></tr>
+<tr class="separator:aa9aabe5f00e8ff35a3440e0fbd44fed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af542a03344e9ef82c556717a82fc6a0a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#af542a03344e9ef82c556717a82fc6a0a">sys_str</a> (unsigned value)</td></tr>
+<tr class="memdesc:af542a03344e9ef82c556717a82fc6a0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a converted value in string  <a href="#af542a03344e9ef82c556717a82fc6a0a">More...</a><br /></td></tr>
+<tr class="separator:af542a03344e9ef82c556717a82fc6a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73fe2ed032d9d01aa14f63b1cf76fd6a"><td class="memItemLeft" align="right" valign="top">u16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a73fe2ed032d9d01aa14f63b1cf76fd6a">sys_strlen</a> (char *text)</td></tr>
+<tr class="memdesc:a73fe2ed032d9d01aa14f63b1cf76fd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the length of a string  <a href="#a73fe2ed032d9d01aa14f63b1cf76fd6a">More...</a><br /></td></tr>
+<tr class="separator:a73fe2ed032d9d01aa14f63b1cf76fd6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6d25725161c2c658d2bcf667aef3a62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#aa6d25725161c2c658d2bcf667aef3a62">sys_utoa</a> (unsigned value, char *buffer)</td></tr>
+<tr class="memdesc:aa6d25725161c2c658d2bcf667aef3a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an unsigned value to ascii text.  <a href="#aa6d25725161c2c658d2bcf667aef3a62">More...</a><br /></td></tr>
+<tr class="separator:aa6d25725161c2c658d2bcf667aef3a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a0df35876d5d9c1b30ceaa2659ebb9357"><td class="memItemLeft" align="right" valign="top"><a id="a0df35876d5d9c1b30ceaa2659ebb9357"></a>
-volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a0df35876d5d9c1b30ceaa2659ebb9357">vdp_f18aok</a></td></tr>
-<tr class="memdesc:a0df35876d5d9c1b30ceaa2659ebb9357"><td class="mdescLeft">&#160;</td><td class="mdescRight">vdp_f18aok is set if f18a module is present<br />
- when calling vdp_f18ainit function<br />
- <br /></td></tr>
-<tr class="separator:a0df35876d5d9c1b30ceaa2659ebb9357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa757ae09831c155d9ac9306c2118beab"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#aa757ae09831c155d9ac9306c2118beab">buffer32</a> [32]</td></tr>
+<tr class="memdesc:aa757ae09831c155d9ac9306c2118beab"><td class="mdescLeft">&#160;</td><td class="mdescRight">buffer32 used for some functions.  <a href="#aa757ae09831c155d9ac9306c2118beab">More...</a><br /></td></tr>
+<tr class="separator:aa757ae09831c155d9ac9306c2118beab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53428dffba59cdff3cd7c39aba51df63"><td class="memItemLeft" align="right" valign="top"><a id="a53428dffba59cdff3cd7c39aba51df63"></a>
+volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a53428dffba59cdff3cd7c39aba51df63">vid_freq</a></td></tr>
+<tr class="memdesc:a53428dffba59cdff3cd7c39aba51df63"><td class="mdescLeft">&#160;</td><td class="mdescRight">vid_freq is set with video frequency (50 or 60) hz. <br /></td></tr>
+<tr class="separator:a53428dffba59cdff3cd7c39aba51df63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>contains the basic definitions for controlling the f18a video device. </p>
-<p>This unit provides generic features related to f18a device.<br />
+<div class="textblock"><p>coleco generic console support. </p>
+<p>This unit provides generic features related to the console.<br />
  <br />
  Here is the list of features:<br />
 </p><ul>
-<li>enable and disable f18a<br />
+<li>variable with 32 bytes long in RAM<br />
 </li>
-<li>update palette<br />
+<li>video frequency<br />
+</li>
+<li>string management<br />
  </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ab8b9c581e083c0a601957022c3cbbdcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8b9c581e083c0a601957022c3cbbdcd">&#9670;&nbsp;</a></span>vdp_f18asetpalette()</h2>
+<a id="a9e041a4d153b3774ed21fa4630026fc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e041a4d153b3774ed21fa4630026fc4">&#9670;&nbsp;</a></span>sys_randbyte()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void vdp_f18asetpalette </td>
+          <td class="memname">u8 sys_randbyte </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,16 +150,152 @@ volatile u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
       </table>
 </div><div class="memdoc">
 
-<p>Send a palette RGB 12bits color entries to f18a device<br />
- </p>
+<p>Generate and return a randomized a 8 bit number between two numbers named A and B. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>address of data to use </td></tr>
-    <tr><td class="paramname">count</td><td>number of data <b>in byte (so must be x2)</b> </td></tr>
+    <tr><td class="paramname">A</td><td>minimum value of random number </td></tr>
+    <tr><td class="paramname">B</td><td>maximum value of random number </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char of a randomized number </dd></dl>
 
+</div>
+</div>
+<a id="aa9aabe5f00e8ff35a3440e0fbd44fed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9aabe5f00e8ff35a3440e0fbd44fed4">&#9670;&nbsp;</a></span>sys_random()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u16 sys_random </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate and return a randomized 16 bit number. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short of a randomized number </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00350.html#a7">random/randvalue.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a id="af542a03344e9ef82c556717a82fc6a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af542a03344e9ef82c556717a82fc6a0a">&#9670;&nbsp;</a></span>sys_str()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * sys_str </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return a converted value in string </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>number to convert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to converted string </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00356.html#a10">scoring/scoring.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a id="a73fe2ed032d9d01aa14f63b1cf76fd6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73fe2ed032d9d01aa14f63b1cf76fd6a">&#9670;&nbsp;</a></span>sys_strlen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u16 sys_strlen </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the length of a string </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>text to analyze </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short of string length </dd></dl>
+
+</div>
+</div>
+<a id="aa6d25725161c2c658d2bcf667aef3a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6d25725161c2c658d2bcf667aef3a62">&#9670;&nbsp;</a></span>sys_utoa()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sys_utoa </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert an unsigned value to ascii text. </p>
+<p>Leading zeros are put in buffer</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>value to convert to text </td></tr>
+    <tr><td class="paramname">buffer</td><td>text that will receive vvalue converted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00350.html#a6">random/randvalue.c</a>.</dd>
+</dl>
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aa757ae09831c155d9ac9306c2118beab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa757ae09831c155d9ac9306c2118beab">&#9670;&nbsp;</a></span>buffer32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u8 buffer32[32]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>buffer32 used for some functions. </p>
+<p><br />
+ can be used by program too. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00350.html#a8">random/randvalue.c</a>.</dd>
+</dl>
 </div>
 </div>
 </div><!-- contents -->

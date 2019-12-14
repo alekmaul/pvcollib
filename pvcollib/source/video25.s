@@ -29,7 +29,7 @@
 	.globl _vdp_enablenmi
 	
 	; global from this module
-	.globl _vdp_f18asetmode2bmp
+	.globl _vdp_f18asetmode1
 
 	.area  _CODE
 		
@@ -40,18 +40,21 @@
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
-_vdp_f18asetmode2bmp:
+_vdp_f18asetmode1:
+	pop	bc
+	pop	hl
+	push	hl
+	push	bc
+
+	push	hl							; flags
+	
 	call	 _vdp_disablenmi
 
-	ld      bc,#0x0000            		; vdp_out(0,0) ; set mode 2
+	ld      bc,#0x0000            		; vdp_out(0,2) ; reset M3 & M4
 	call    0x1FD9
 
-	ld		a,(0x73C4)
-	and		#0xA7             	 	    ; blank screen, reset M1 & M3
-	or		#0x82             		    ; 16K, sprites 16x16
-	ld      c,a
-	ld      b,#1
-	call    0x1FD9						; vdp_out(1,xx)
+	ld      bc,#0x0182
+	call    0x1FD9						; vdp_out(1,82) 16K, sprite 16x16 , reset M2 & M1
 
 	ld      bc,#0x0206       	  		; vdp_out(2,6) set name table chrtab to 0x1800
 	call    0x1FD9
@@ -64,7 +67,10 @@ _vdp_f18asetmode2bmp:
 	ld      bc,#0x0605       	  		; vdp_out(6,5) sprites ecm 3  sprites data to 0x2800 = 10K  5*2K
 	call    0x1FD9
 	
-	ld      bc,#0x3121       	  		; vdp_out(49,33h) tiles ecm3/sprites ecm 3
+	pop		hl
+	ld		b,#0x31
+	ld		c,l
+	;ld      bc,#0x3133       	  		; vdp_out(49,33h) tiles ecm3/sprites ecm 3 1 bit color mode
 	call    0x1FD9
 	ld      bc,#0x0A09       	  		; vdp_out(10,0x09) set name table2  tiles ecm3/sprites ecm 3    0x2400 hidden screen
 	call    0x1FD9

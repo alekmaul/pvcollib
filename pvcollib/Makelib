@@ -1,0 +1,38 @@
+# path to colecodev root directory (for emulators, devkitcol, pvcollib)
+#export DEVKITCOL := /c/colecodev/
+export DEVKITCOL := /z/DropboxSvnClient/trunk/colecodev/pvcollib
+
+# path to devkitcol root directory for compiler
+#export DEVKITSDCC := /c/colecodev/devkitcol
+export DEVKITSDCC := /z/DropboxSvnClient/trunk/colecodev/pvcollib/devkitcol
+
+# change global path with PVcollib
+export PATH	:=	/c/msys/bin:$(DEVKITSDCC):$(PATH)
+
+#---------------------------------------------------------------------------------
+ifeq ($(strip $(DEVKITCOL)),)
+$(error "Please set DEVKITCOL in your environment. export DEVKITCOL=<path to>DEVKITCOL)
+endif
+
+export TOPDIR	:=	$(CURDIR)
+
+.PHONY: release clean all docs 
+
+all: include/coleco/libversion.h release docs dist-bin
+
+#-------------------------------------------------------------------------------
+release: lib
+#-------------------------------------------------------------------------------
+	make -C source all
+
+#-------------------------------------------------------------------------------
+lib:
+#-------------------------------------------------------------------------------
+	mkdir lib
+
+#-------------------------------------------------------------------------------
+clean:
+#-------------------------------------------------------------------------------
+	make -C source clean
+
+

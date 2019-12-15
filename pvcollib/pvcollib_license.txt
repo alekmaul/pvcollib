@@ -21,9 +21,14 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.4.0 (12/xx/2019)
+V1.4.0 (12/15/2019)
 - Add a specific file for f18a support
 - Add a specific file for Phoenix support
+- Fix example browsing directories in makefile
+- Fix lots of comments for doxygen documentation
+- Remove useless files from sdcc
+- Add specific makelib and bat file for windows
+- Change library in one tar gzipped file
 
 V1.3.0 (11/24/2019)
 - Add megacart support (tools and example)

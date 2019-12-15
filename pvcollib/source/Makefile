@@ -51,11 +51,11 @@ export OFILES	:=	$(C_SRC:.c=.rel) $(S_SRC:.s=.rel)
 
 #---------------------------------------------------------------------------------
 crtcol.rel: crtcol.s 
-	@echo Making entry point ... $(notdir $<)
+#	@echo Making entry point ... $(notdir $<)
 	$(AS) $(ASFLAGS) -o crtcol.rel $<
 
 collib.lib: $(OFILES)
-	@echo Making lib ... $(notdir $@)
+#	@echo Making lib ... $(notdir $@)
 	$(LK) collib.lib $(OFILES)
 
 all: $(COLOBJS)

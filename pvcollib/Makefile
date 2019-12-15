@@ -46,15 +46,13 @@ clean:
 #-------------------------------------------------------------------------------
 dist-src:
 #-------------------------------------------------------------------------------
-	@tar -cjf pvcollib-src-$(VERSION).tar.bz2 source include Makefile pvcollib_license.txt pvcollib.dox
+	@tar -cjf pvcollib-src-$(VERSION).tar.bz2 source include Makefile pvcollib_license.txt docs/pvcollib.dox docs/docs.css
 	@mv *.tar.gz2 ..
 
 #-------------------------------------------------------------------------------
 dist-bin: 
 #-------------------------------------------------------------------------------
-	@tar -cjf pvcollib-$(VERSION).tar.bz2 include lib docs pvcollib_license.txt
-	@tar -cjf devkitcol-$(VERSION).tar.bz2 ../devkitcol ../emulators/put_emulators_here.txt
-	@tar -cjf colexamples-$(VERSION).tar.bz2 ../coleco-examples
+	@tar -cjf pvcollib-$(VERSION).tar.bz2 source/*.s source/Makefile Makelib include lib docs pvcollib_license.txt build_pvcollib.bat ../devkitcol ../bin ../emulators/put_emulators_here.txt ../coleco-examples
 	@mv *.tar.bz2 ..
 
 dist: dist-bin dist-src

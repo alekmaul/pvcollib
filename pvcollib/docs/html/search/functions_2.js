@@ -18,6 +18,7 @@ var searchData=
   ['vdp_5fputchar',['vdp_putchar',['../a00281.html#a6cb95cb4406dff5e9ac77c4038341d25',1,'video.h']]],
   ['vdp_5fputstring',['vdp_putstring',['../a00281.html#a25772c7921c9b4a9e38259587049491a',1,'video.h']]],
   ['vdp_5fputvram',['vdp_putvram',['../a00281.html#a637ac20cdb5b3b7327599ed22465c931',1,'video.h']]],
+  ['vdp_5frle2vram',['vdp_rle2vram',['../a00281.html#a71028c8ea2d677d50a597fb32e146181',1,'video.h']]],
   ['vdp_5fsetcharex',['vdp_setcharex',['../a00281.html#a4a0c00b25ccb4971c31954724374fccf',1,'video.h']]],
   ['vdp_5fsetdefaultchar',['vdp_setdefaultchar',['../a00281.html#a40527bb5f06aebd1246928ff048bf060',1,'video.h']]],
   ['vdp_5fsetmode1txt',['vdp_setmode1txt',['../a00281.html#ad48a3bfdad3422710c86e1759fb2c701',1,'video.h']]],

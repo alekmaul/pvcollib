@@ -26,7 +26,7 @@
 ---------------------------------------------------------------------------------*/
 /**
  * \file sound.h
- * \brief coleco generic sound support..
+ * \brief coleco generic sound support.
 */
 
 #ifndef COL_SOUND_H

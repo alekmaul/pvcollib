@@ -130,6 +130,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a002
 <tr class="memitem:a637ac20cdb5b3b7327599ed22465c931"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a637ac20cdb5b3b7327599ed22465c931">vdp_putvram</a> (unsigned offset, void *data, unsigned count)</td></tr>
 <tr class="memdesc:a637ac20cdb5b3b7327599ed22465c931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the VRAM with some non compressed data.  <a href="#a637ac20cdb5b3b7327599ed22465c931">More...</a><br /></td></tr>
 <tr class="separator:a637ac20cdb5b3b7327599ed22465c931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71028c8ea2d677d50a597fb32e146181"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a71028c8ea2d677d50a597fb32e146181">vdp_rle2vram</a> (void *rledata, unsigned offset)</td></tr>
+<tr class="memdesc:a71028c8ea2d677d50a597fb32e146181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the VRAM with some RLE compressed data.  <a href="#a71028c8ea2d677d50a597fb32e146181">More...</a><br /></td></tr>
+<tr class="separator:a71028c8ea2d677d50a597fb32e146181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a0c00b25ccb4971c31954724374fccf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a4a0c00b25ccb4971c31954724374fccf">vdp_setcharex</a> (u8 first, u8 count, unsigned offset, u8 flags)</td></tr>
 <tr class="memdesc:a4a0c00b25ccb4971c31954724374fccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put some chars of default font.  <a href="#a4a0c00b25ccb4971c31954724374fccf">More...</a><br /></td></tr>
 <tr class="separator:a4a0c00b25ccb4971c31954724374fccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -553,6 +556,44 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a002
 </dl>
 </div>
 </div>
+<a id="a71028c8ea2d677d50a597fb32e146181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71028c8ea2d677d50a597fb32e146181">&#9670;&nbsp;</a></span>vdp_rle2vram()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * vdp_rle2vram </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>rledata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fill the VRAM with some RLE compressed data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rledata</td><td>address of data to use </td></tr>
+    <tr><td class="paramname">offset</td><td>address in VRAM of 1st data to fill </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00310.html#a2">graphics/rlecompress/grafrlecomp.c</a>.</dd>
+</dl>
+</div>
+</div>
 <a id="a4a0c00b25ccb4971c31954724374fccf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a0c00b25ccb4971c31954724374fccf">&#9670;&nbsp;</a></span>vdp_setcharex()</h2>
 
@@ -701,7 +742,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a002
   </table>
   </dd>
 </dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00322.html#a12">audio/music/music.c</a>, <a class="el" href="a00324.html#a12">audio/simplesound/ssound.c</a>, <a class="el" href="a00304.html#a5">graphics/dancompress/grafdancomp.c</a>, <a class="el" href="a00306.html#a5">graphics/notcompress/grafnocomp.c</a>, <a class="el" href="a00308.html#a5">graphics/plecompress/grafplecomp.c</a>, <a class="el" href="a00310.html#a4">graphics/rlecompress/grafrlecomp.c</a>, <a class="el" href="a00300.html#a6">helloworld/helloworld.c</a>, <a class="el" href="a00312.html#a8">input/input.c</a>, <a class="el" href="a00316.html#a0">megacart/megacart.c</a>, <a class="el" href="a00318.html#a7">palntsc/palntsc.c</a>, <a class="el" href="a00314.html#a10">random/randvalue.c</a>, and <a class="el" href="a00320.html#a14">scoring/scoring.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00322.html#a11">audio/music/music.c</a>, <a class="el" href="a00324.html#a11">audio/simplesound/ssound.c</a>, <a class="el" href="a00304.html#a5">graphics/dancompress/grafdancomp.c</a>, <a class="el" href="a00306.html#a5">graphics/notcompress/grafnocomp.c</a>, <a class="el" href="a00308.html#a5">graphics/plecompress/grafplecomp.c</a>, <a class="el" href="a00310.html#a5">graphics/rlecompress/grafrlecomp.c</a>, <a class="el" href="a00300.html#a6">helloworld/helloworld.c</a>, <a class="el" href="a00312.html#a8">input/input.c</a>, <a class="el" href="a00316.html#a0">megacart/megacart.c</a>, <a class="el" href="a00318.html#a7">palntsc/palntsc.c</a>, <a class="el" href="a00314.html#a10">random/randvalue.c</a>, and <a class="el" href="a00320.html#a14">scoring/scoring.c</a>.</dd>
 </dl>
 </div>
 </div>

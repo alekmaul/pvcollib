@@ -2,7 +2,6 @@ var searchData=
 [
   ['snd_5fisplaying',['snd_isplaying',['../a00275.html#a0d25ddc5bd874ca0ba9efe67f3234d4f',1,'sound.h']]],
   ['snd_5fsettable',['snd_settable',['../a00275.html#ac43e05b7403367c936679ea6ef180b47',1,'sound.h']]],
-  ['snd_5fstartplay',['snd_startplay',['../a00275.html#a0a1e7fae088aeacbbdd4f914ca4c1b86',1,'sound.h']]],
   ['snd_5fstopall',['snd_stopall',['../a00275.html#a87479438785b503827702d069b0fa238',1,'sound.h']]],
   ['snd_5fstopplay',['snd_stopplay',['../a00275.html#a925ea17298465a710547ed1fd6d17e07',1,'sound.h']]],
   ['spr_5fclear',['spr_clear',['../a00278.html#ac89d4a2532faa0c18ee4303bff1a409f',1,'sprite.h']]],

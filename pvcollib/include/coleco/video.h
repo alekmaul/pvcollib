@@ -243,7 +243,7 @@ void vdp_duplicatevram(void);
 */
 void vdp_putvram (unsigned offset,void *data,unsigned count);
 
-/*
+/**
  * \fn void *vdp_rle2vram (void *rledata,unsigned offset)
  * \brief Fill the VRAM with some RLE compressed data 
  * 

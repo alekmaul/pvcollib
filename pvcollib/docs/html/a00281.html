@@ -121,6 +121,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a002
 <tr class="memitem:a3365bea622a4fceccd49769a379579af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a3365bea622a4fceccd49769a379579af">vdp_ple2vram</a> (void *pledata, unsigned offset)</td></tr>
 <tr class="memdesc:a3365bea622a4fceccd49769a379579af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data in VRAM with some Pletter compressed data.  <a href="#a3365bea622a4fceccd49769a379579af">More...</a><br /></td></tr>
 <tr class="separator:a3365bea622a4fceccd49769a379579af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cb95cb4406dff5e9ac77c4038341d25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a6cb95cb4406dff5e9ac77c4038341d25">vdp_putchar</a> (u8 x, u8 y, char value)</td></tr>
+<tr class="memdesc:a6cb95cb4406dff5e9ac77c4038341d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a single char on screen.  <a href="#a6cb95cb4406dff5e9ac77c4038341d25">More...</a><br /></td></tr>
+<tr class="separator:a6cb95cb4406dff5e9ac77c4038341d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25772c7921c9b4a9e38259587049491a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a25772c7921c9b4a9e38259587049491a">vdp_putstring</a> (u8 x, u8 y, char *text)</td></tr>
 <tr class="memdesc:a25772c7921c9b4a9e38259587049491a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a string on screen at coordinates x,y.  <a href="#a25772c7921c9b4a9e38259587049491a">More...</a><br /></td></tr>
 <tr class="separator:a25772c7921c9b4a9e38259587049491a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -414,6 +417,50 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a002
 </dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="a00308.html#a2">graphics/plecompress/grafplecomp.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a id="a6cb95cb4406dff5e9ac77c4038341d25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cb95cb4406dff5e9ac77c4038341d25">&#9670;&nbsp;</a></span>vdp_putchar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vdp_putchar </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put a single char on screen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>colum to print </td></tr>
+    <tr><td class="paramname">y</td><td>line to print </td></tr>
+    <tr><td class="paramname">value</td><td>ascii value of char to print </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a25772c7921c9b4a9e38259587049491a"></a>

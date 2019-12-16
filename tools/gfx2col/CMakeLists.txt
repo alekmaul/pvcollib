@@ -21,12 +21,14 @@ set(gfx2col_sources
 	comptool.c
     gfx2col.c
     lodepng.c
+    lodepic.c
 )
 
 set(gfx2col_headers
 	comptool.h
     gfx2col.h
     lodepng.h
+    lodepic.h
     config.h
 )
 

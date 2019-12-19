@@ -43,6 +43,7 @@ int quietmode=0;              // 0 = not quiet, 1 = i can't say anything :P
 int compress=0;               // 0 = not compressed, 1 = rle compression, 2 = ple compression, 3 = dan1 compression
 int sprmode=0;                // 0 = background 1 = sprite
 int bmpmode=0;				  // 0 = normal tile mode, 1=bitmap mode
+int gramode=0;				  // 0 = TMS9918a graphic mode 2, 1 = graphic mode 1
 int ecmmode=0;				  // 0 = noactive, 1=ecm0,2=ecm1, etc ... (F18A only, will generate a palette)
 
 //---------------------------------------------------------------------------
@@ -139,10 +140,180 @@ unsigned char *ArrangeBlocks( unsigned char *img, int width, int height,
 } //end of ArrangeBlocks()
 
 //---------------------------------------------------------------------------
+unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char *num_col, unsigned int *colmap,unsigned int *idxcoltil, int num_tiles,int mapw, int maph)
+{
+	int colval,nbcol;
+	int i,j, t,x,y;
+	int colidx, tilidx;
+	unsigned char minv,maxv,actminv,actmaxv;
+	unsigned char valtil[8];
+	unsigned char newcol;
+	unsigned char *tilreorg;
+	unsigned int *mapreorg;
+
+	// init color values
+	newcol=0;
+	for (t=0;t<32;t++)
+		colmap[t]=0x100; 					// outside scope value 
+	for (t=0;t<256;t++)
+		*(idxcoltil+t)= 32;					// outside score value 
+		
+	//loop through tiles
+	for (t=0;t<num_tiles;t++) 
+	{ 
+		actminv=1; actmaxv=0xF;
+		for(y=0;y<8;y++) {
+			minv=0xFF; maxv=0x00;
+
+			// get the 8 values
+			for (x=0;x<8;x++) {
+				valtil[x]=buffer[t*64 + y*8 + x];
+				// get min and max value
+				if (valtil[x]<minv)
+					minv=valtil[x];
+				if (valtil[x]>maxv)
+					maxv=valtil[x];
+			}
+			// put 1 if max color
+			if (maxv <= 0x01) maxv=0xF;
+			if (minv == 0xff) minv=1;
+			colval=(maxv<<4) | (minv);		// FG color | BG color 
+			// if 1st time,assign it
+			if (y==0)
+			{
+				if ( (minv!=1) && (maxv!=minv) ) actminv=minv;
+				if (maxv!=0xF) actmaxv=maxv;
+			}
+			else
+			{
+				if ( (actminv!=minv) &&  (actmaxv!=maxv) ) 
+				{
+					printf("\nERROR: Too much color (4) for 8x8 tile #%d\n",t);
+					return 0;
+				}
+				if ( (actminv!=minv) && (actminv!=1)  && (maxv!=minv) )
+				{
+					printf("\nERROR: Too much color (min) for 8x8 tile #%d\n",t);
+					return 0;
+				}
+				else
+					if (maxv!=minv) actminv=minv;
+				if ( (actmaxv!=maxv) && (actmaxv!=0xF) && (maxv!=0xF) )
+				{
+					printf("\nERROR: Too much color (max) for 8x8 tile #%d\n",t);
+					return 0;
+				}
+				else
+					if (maxv!=0xF) actmaxv=maxv;
+			}
+		}
+		// try to assign for a color for the 8x8 square
+		colidx=-1;
+		for (i=0;i<32;i++)
+		{
+			if (colmap[i]==0x100) {
+				colmap[i]=colval;
+				colidx=i;
+				newcol++;
+	printf("\ncolr %d is %x...",colidx,colval);fflush(stdout);
+				break;
+			}
+			else if (colmap[i]==colval)
+			{
+				colidx=i;
+				break;
+			}
+		}
+		// if not assigned, huston, we have a problem ;)
+		if (colidx==-1) 
+		{
+			printf("\nERROR: Too much colors assigned (more than 32) encountered for 8x8 tile #%d\n",t);
+			return 0;
+		}
+		*(idxcoltil+t)=colval;
+	printf("\ntile %d is is %x...",t,colval);fflush(stdout);
+	}
+	
+	// try to alloc for new tiles arrangement
+	tilreorg=(unsigned char *) malloc((size_t)256*64);
+	if(tilreorg==NULL) {
+		return 0;
+	}
+	mapreorg=(unsigned int *) malloc((size_t)mapw*maph*sizeof(int));
+	if(mapreorg==NULL) {
+		return 0;
+	}
+	
+	// Rearrange tiles & map to fit with colors (1 colors for 8 tiles)
+	printf("\nRearrange tiles & map to fit with colors (1 colors for 8 tiles) %d...",num_tiles);fflush(stdout);
+	tilidx=0;
+	for (i=0;i<32;i++)
+	{
+		// check all tiles
+		nbcol=0;
+		for (t=0;t<num_tiles;t++) 
+		{
+			// if we find the color, just put the tile
+			if (*(idxcoltil+t)==colmap[i])
+			{
+				printf("\nswap tile %d for %d with map %d!!!",t,i,(tilidx/64));fflush(stdout);
+				// Put the tile
+				memcpy(&tilreorg[tilidx],&buffer[t*64],64);
+				// Adapt the map
+				for (j=0;j<mapw*maph;j++)
+				{
+					if (*(tilemap+j)==t)
+					{
+						*(mapreorg+j)=(tilidx/64);
+					}
+				}
+				tilidx+=64;
+				nbcol++;
+				printf("\ndone swap tile %d for %d!!!",t,i);fflush(stdout);
+			}
+			// if we have now more than 8 tiles, need to go next color entry
+			if (nbcol==8)
+			{
+				printf("\nnew col detected %d!!!",i);fflush(stdout);
+				nbcol=0;
+				i++;
+				newcol++;
+				for (j=31;j>i;j--)
+				{
+					colmap[j]=colmap[j-1];
+				}
+				colmap[i]=colmap[i-1];
+			}
+		}
+		
+		// one color is finished, if we are not near a 8 tiles border, need to adapt
+		if (nbcol & 7)
+		{
+			tilidx+=(8-nbcol)*64;
+			printf("\n now we are at %d!!!",tilidx/64);fflush(stdout);
+		}
+	}
+	// now put back to buffer & map
+	printf("\nok, reorder all things %d!!!",tilidx);fflush(stdout);
+
+	for (i=0;i<tilidx;i++)
+	 *(buffer+i)=*(tilreorg+i);
+	for (i=0;i<mapw*maph;i++)
+	 *(tilemap+i)=*(mapreorg+i);
+	
+	free(mapreorg);
+	free(tilreorg);
+
+	// keep track of number of colors
+	*num_col=newcol;
+	
+	return 1;
+}
+
+//---------------------------------------------------------------------------
 unsigned int *MakeMap(unsigned char *img, int *num_tiles, int xsize, int ysize, int tile_x, int tile_y, unsigned char optimize)
 {
 	unsigned int *map;
-	//unsigned char blank[8*8];
 	int newtiles;
 	int current;	//the current tile we're looking at
 	int i,t;
@@ -281,7 +452,7 @@ void addcomment(FILE *fp, unsigned int ratio,unsigned int size,unsigned int comp
 		fprintf(fp, "// dan1 compression %d bytes (%d%%)\n", size,ratio);
 }
 
-int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, int num_tiles, int mapw, int maph, int savemap)
+int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, unsigned int *tilecol, int num_tiles, int mapw, int maph, int savemap)
 {
 	char filenamec[256],filenameh[256];
 	unsigned int val16b;
@@ -317,7 +488,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	
     tiMem = (unsigned char *) malloc(num_tiles*8);
     tiMemEncode = (unsigned char *) malloc(num_tiles*8);
-    coMem = (unsigned char *) malloc(num_tiles*8);
+	coMem = (unsigned char *) malloc(num_tiles*8);
     coMemEncode = (unsigned char *) malloc(num_tiles*8);
     maMem = (unsigned char *) malloc(mapw*maph);
     maMemEncode = (unsigned char *) malloc(mapw*maph);
@@ -354,8 +525,14 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 					value=value | (1<<(7-x));
 			}
 			*(tiMem+y+t*8)=value;
-			*(coMem+y+t*8)=(maxv<<4) | (minv);    // FG color | BG color 
+			if (gramode!=1)
+				*(coMem+y+t*8)=(maxv<<4) | (minv);    // FG color | BG color 
 		}
+	}
+	if (gramode==1)
+	{
+		for (t=0;t<32;t++)
+		 *(coMem+t)=*(tilecol+t);
 	}
 
 	// sprites are 16x16 but we need to swap tile 2<>3  
@@ -391,12 +568,24 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	lenencode=num_tiles*8;lenencode1=num_tiles*8;lenencode2=mapw*maph;
 	if (compress==0) { // no compression
 		memcpy(tiMemEncode,tiMem,lenencode);
-		memcpy(coMemEncode,coMem,lenencode1);
+		if (gramode==1)
+		{
+			memcpy(coMemEncode,coMem,32);
+			lenencode1=32;
+		}
+		else
+			memcpy(coMemEncode,coMem,lenencode1);
 		memcpy(maMemEncode,maMem,lenencode2);
 	}
 	else if (compress==1) { // rle compression
         lenencode=rleCompress( tiMem,tiMemEncode,num_tiles*8);
-        lenencode1=rleCompress(coMem,coMemEncode,num_tiles*8);
+		if (gramode==1)
+		{
+			memcpy(coMemEncode,coMem,32);
+			lenencode1=32;
+		}
+		else
+			lenencode1=rleCompress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
             lenencode2=rleCompress(maMem,maMemEncode,mapw*maph);
         else
@@ -404,7 +593,13 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	}
 	else if (compress==2) { // ple compression
         lenencode=pletterCompress( tiMem,tiMemEncode,num_tiles*8);
-        lenencode1=pletterCompress(coMem,coMemEncode,num_tiles*8);
+		if (gramode==1)
+		{
+			memcpy(coMemEncode,coMem,32);
+			lenencode1=32;
+		}
+		else
+			lenencode1=pletterCompress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
             lenencode2=pletterCompress(maMem,maMemEncode,mapw*maph);
         else
@@ -412,7 +607,13 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	}
 	else if (compress==3) { // dan1 compression
         lenencode=dan1Compress( tiMem,tiMemEncode,num_tiles*8);
-        lenencode1=dan1Compress(coMem,coMemEncode,num_tiles*8);
+		if (gramode==1)
+		{
+			memcpy(coMemEncode,coMem,32);
+			lenencode1=32;
+		}
+		else
+			lenencode1=dan1Compress(coMem,coMemEncode,num_tiles*8);
         if (savemap)
             lenencode2=dan1Compress(maMem,maMemEncode,mapw*maph);
         else
@@ -439,7 +640,8 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
-		addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
+		if (gramode!=1)
+			addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
 		fprintf(fpc, "const unsigned char COL%s[%d]={\n", filebase,lenencode1);
 		for (t = 0; t < lenencode1; t++) {
 			if(t) {
@@ -548,7 +750,8 @@ void PrintOptions(char *str) {
 	printf("\n\n--- Graphic options ---");
 	printf("\n-s                    Generate sprite graphics");
 	printf("\n-b                    Bitmap mode (no more 256 tiles limit)");
-	printf("\n-e[0|1|2|3]           Enhanced Color Mode (F18A) [0]");
+	printf("\n-g[m1|m2]             TMS9918 Graphic mode (mode 2 or mode 1) [m2]");
+	printf("\n-e[0|1|2|3]           Enhanced Color Mode (F18A only) [0]");
 	printf("\n\n--- Map options ---");
 	printf("\n-m!                   Exclude map from output");
 	printf("\n-m                    Convert the whole picture");
@@ -557,7 +760,7 @@ void PrintOptions(char *str) {
 	printf("\n-po                   Export palette (64 colours)");
 	printf("\n-pR                   Palette rounding");
 	printf("\n\n--- File options ---");
-	printf("\n-f[bmp|pcx|tga|png]   Convert a bmp or pcx or gta or png file [bmp]");
+	printf("\n-f[bmp|pcx|tga|png]   Convert a bmp or pcx or tga or png file [bmp]");
 	printf("\n\n--- Misc options ---");
 	printf("\n-q                quiet mode");
 	printf("\n");
@@ -572,7 +775,9 @@ void PrintOptions(char *str) {
 // M A I N 
 int main(int argc, char **arg) {
 	unsigned int palette[64];
-
+	unsigned int colorspal[32],coltilopt[256];
+	unsigned char colornumbers;
+	
 	int height, width;
 	int xsize, ysize,xsize1, ysize1;
 	pcx_picture image;
@@ -633,6 +838,13 @@ int main(int argc, char **arg) {
 				{
 					PrintOptions(arg[i]);
 					return 1;
+				}
+			}
+			else if(arg[i][1]=='g')		// graphic mode
+			{
+				if( strcmp(&arg[i][1],"gm1") == 0)
+				{
+					gramode = 1; 
 				}
 			}
 			else if(arg[i][1]=='p') 	//palette options
@@ -753,10 +965,14 @@ int main(int argc, char **arg) {
 			printf("\nSprite mode=OFF");
 
 			if (bmpmode)
-				printf("\nBitmap mode=ON");
-			else 
-				printf("\nnBitmap mode=OFF");
-
+				printf("\nTMS9918 Bitmap mode2=ON");
+			else {
+				printf("\nTMS9918 Bitmap mode2=OFF");
+				if (gramode == 0)
+					printf("\nTMS9918 Graphic mode 2");
+				else if (gramode == 1)
+					printf("\nTMS9918 Graphic mode 1");
+			}
 			if (tile_reduction)
 				printf("\nOptimize tilemap=ON");
 			else
@@ -858,6 +1074,18 @@ int main(int argc, char **arg) {
 			printf("\nERROR:Not enough memory to do tile map optimizations..\n");
 			return 1;
 		}
+
+		// make color map now if not F18A enhanced and mode 1
+		if ( (ecmmode==0) && (gramode==1) )
+		{
+			if ( MakeCol(buffer, tilemap,&colornumbers, colorspal, coltilopt, ysize,width/8, height/8) == 0)
+			{
+				return 1;
+			}
+			if (quietmode == 0) 
+				printf("\nScreen uses %d colors.",colornumbers);
+				
+		}
 	}
 
 	if (ysize>0) 
@@ -877,7 +1105,7 @@ int main(int argc, char **arg) {
 		}
 		
 		//convert pictures and save to file
-		if(!Convert2Pic(filebase, buffer, tilemap, palette, ysize, width/8, height/8,savemap)) 
+		if(!Convert2Pic(filebase, buffer, tilemap, palette, colorspal, ysize, width/8, height/8,savemap)) 
 		{
 			//free up image & tilemap memory
 			free(tilemap);

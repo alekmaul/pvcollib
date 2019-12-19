@@ -1,7 +1,7 @@
 #export PATH	:=	/c/msys/bin:$(PATH)
 export PATH := /c/MinGW32/bin/:/c/msys/bin:$(PATH)
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -9,8 +9,8 @@ VERSION = "1.1.0"
 CC=gcc
 CFLAGS=-g -O2 -Wall -D__BUILD_DATE="\"`date +'%Y%m%d'`\"" -D__BUILD_VERSION="\"$(VERSION)\""
 
-SOURCES=gfx2col.c lodepng.c comptool.c
-OBJS=gfx2col.o  lodepng.o comptool.o
+SOURCES=gfx2col.c lodepng.c lodepic.c comptool.c
+OBJS=gfx2col.o  lodepng.o lodepic.o comptool.o
 EXE=gfx2col.exe
 DEFINES =
 LIBS =
@@ -27,6 +27,10 @@ gfx2col.o : gfx2col.c
 	$(CC) $(CFLAGS) -c $<
 
 lodepng.o : lodepng.c
+	@echo make obj $(notdir $<)
+	$(CC) $(CFLAGS) -c $<
+
+lodepic.o : lodepic.c
 	@echo make obj $(notdir $<)
 	$(CC) $(CFLAGS) -c $<
 

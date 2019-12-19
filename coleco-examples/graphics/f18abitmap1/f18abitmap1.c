@@ -30,7 +30,7 @@ void main (void) {
 		//vdp_f18asetmode1(0);
 		
 		vdp_ple2vram (TILourvision, chrgen); // characters
-		vdp_ple2vram (COLourvision, coltab); // colors
+		vdp_putvram (coltab,COLourvision,32); // colors
 		vdp_ple2vram (MAPourvision, chrtab); // map
 		//vdp_duplicatevram();
 

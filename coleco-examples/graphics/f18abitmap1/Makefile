@@ -64,7 +64,7 @@ clean:
 #---------------------------------------------------------------------------------
 ourvisiongfx.inc: ourvision.png
 	@echo convert graphic ... $(notdir $@)
-	$(GFXCONV) -cple -fpng -po -m $<
+	$(GFXCONV) -cple -fpng -po -gm1 -m $<
 	
 bitmaps: ourvisiongfx.inc
 

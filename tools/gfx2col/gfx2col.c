@@ -140,7 +140,7 @@ unsigned char *ArrangeBlocks( unsigned char *img, int width, int height,
 } //end of ArrangeBlocks()
 
 //---------------------------------------------------------------------------
-unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char *num_col, unsigned int *colmap,unsigned int *idxcoltil, int num_tiles,int mapw, int maph)
+unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char *num_col, unsigned int *colmap,unsigned int *idxcoltil, int *num_tiles,int mapw, int maph)
 {
 	int colval,nbcol;
 	int i,j, t,x,y;
@@ -159,7 +159,7 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 		*(idxcoltil+t)= 32;					// outside score value 
 		
 	//loop through tiles
-	for (t=0;t<num_tiles;t++) 
+	for (t=0;t<*num_tiles;t++) 
 	{ 
 		actminv=1; actmaxv=0xF;
 		for(y=0;y<8;y++) {
@@ -177,7 +177,6 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 			// put 1 if max color
 			if (maxv <= 0x01) maxv=0xF;
 			if (minv == 0xff) minv=1;
-			colval=(maxv<<4) | (minv);		// FG color | BG color 
 			// if 1st time,assign it
 			if (y==0)
 			{
@@ -206,6 +205,7 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 				else
 					if (maxv!=0xF) actmaxv=maxv;
 			}
+			colval=(actmaxv<<4) | (actminv);		// FG color | BG color 
 		}
 		// try to assign for a color for the 8x8 square
 		colidx=-1;
@@ -215,7 +215,7 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 				colmap[i]=colval;
 				colidx=i;
 				newcol++;
-	printf("\ncolr %d is %x...",colidx,colval);fflush(stdout);
+	//REMprintf("\ncolr %d is %x...",colidx,colval);fflush(stdout);
 				break;
 			}
 			else if (colmap[i]==colval)
@@ -243,20 +243,38 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 	if(mapreorg==NULL) {
 		return 0;
 	}
-	
+	memset(tilreorg,0,256*64);
+	memset(mapreorg,0,mapw*maph*sizeof(int));
+
 	// Rearrange tiles & map to fit with colors (1 colors for 8 tiles)
-	printf("\nRearrange tiles & map to fit with colors (1 colors for 8 tiles) %d...",num_tiles);fflush(stdout);
+	printf("\nRearrange tiles & map to fit with colors (1 colors for 8 tiles) %d %d...",*num_tiles,newcol);fflush(stdout);
 	tilidx=0;
 	for (i=0;i<32;i++)
 	{
 		// check all tiles
 		nbcol=0;
-		for (t=0;t<num_tiles;t++) 
+		for (t=0;t<*num_tiles;t++) 
 		{
 			// if we find the color, just put the tile
 			if (*(idxcoltil+t)==colmap[i])
 			{
-				printf("\nswap tile %d for %d with map %d!!!",t,i,(tilidx/64));fflush(stdout);
+				// if we have now more than 8 tiles, need to go next color entry
+				if (nbcol==8)
+				{
+					nbcol=0;
+					newcol++;
+					for (j=31;j>i;j--)
+					{
+						colmap[j]=colmap[j-1];
+					}
+					i++;
+					colmap[i]=colmap[i-1];
+					printf("\nnew col detected %d!!!",i);fflush(stdout);
+					for (j=0;j<32;j++) printf("%02x ",colmap[j]);
+					printf("\n");fflush(stdout);
+				}
+
+				printf("\nswap tile %d for color %d with map %d!!!",t,i,(tilidx/64));fflush(stdout);
 				// Put the tile
 				memcpy(&tilreorg[tilidx],&buffer[t*64],64);
 				// Adapt the map
@@ -271,30 +289,18 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 				nbcol++;
 				printf("\ndone swap tile %d for %d!!!",t,i);fflush(stdout);
 			}
-			// if we have now more than 8 tiles, need to go next color entry
-			if (nbcol==8)
-			{
-				printf("\nnew col detected %d!!!",i);fflush(stdout);
-				nbcol=0;
-				i++;
-				newcol++;
-				for (j=31;j>i;j--)
-				{
-					colmap[j]=colmap[j-1];
-				}
-				colmap[i]=colmap[i-1];
-			}
 		}
 		
 		// one color is finished, if we are not near a 8 tiles border, need to adapt
 		if (nbcol & 7)
 		{
 			tilidx+=(8-nbcol)*64;
-			printf("\n now we are at %d!!!",tilidx/64);fflush(stdout);
+			//REMprintf("\n now we are at %d!!!",tilidx/64);fflush(stdout);
 		}
 	}
 	// now put back to buffer & map
-	printf("\nok, reorder all things %d!!!",tilidx);fflush(stdout);
+	//REMprintf("\nok, reorder all things %d!!!",tilidx);fflush(stdout);
+	printf("\nNew number of tiles is %d...",tilidx/64);fflush(stdout);
 
 	for (i=0;i<tilidx;i++)
 	 *(buffer+i)=*(tilreorg+i);
@@ -304,8 +310,9 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 	free(mapreorg);
 	free(tilreorg);
 
-	// keep track of number of colors
+	// keep track of number of colors & number of tiles
 	*num_col=newcol;
+	*num_tiles=tilidx/64;
 	
 	return 1;
 }
@@ -1078,7 +1085,7 @@ int main(int argc, char **arg) {
 		// make color map now if not F18A enhanced and mode 1
 		if ( (ecmmode==0) && (gramode==1) )
 		{
-			if ( MakeCol(buffer, tilemap,&colornumbers, colorspal, coltilopt, ysize,width/8, height/8) == 0)
+			if ( MakeCol(buffer, tilemap,&colornumbers, colorspal, coltilopt, &ysize,width/8, height/8) == 0)
 			{
 				return 1;
 			}

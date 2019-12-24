@@ -17,6 +17,9 @@ SPECIAL THANKS
                
 CHANGE LOG
 ----------------------
+VERSION 1.20 (December, 2019)
+- Add graphic mode 1 in gfx2col
+
 VERSION 1.11 (November, 2019)
 - Fix bitmap mode issues in gfx2col
 - Remove O2 compiler option

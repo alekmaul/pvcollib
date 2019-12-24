@@ -59,11 +59,13 @@ _vdp_read2:
 	nop
 	nop
 	nop
+	nop
 
 	in		a, (0xbe)							; get the MSB (delay needed before next read)
 	ld		b, a
 	ld		c, #0x00							; shift up to MSB (could be optimized to a move, 1uS)
 	nop											; (maybe overkill here, but this function doesn't need to be fast)
+	nop
 	nop
 	nop
 	nop
@@ -112,6 +114,7 @@ _vdp_f18ainit:
 	ld		bc, #0x3700							; LSB in register 55 - GPU starts!
 	call    0x1FD9								; vdp_out(55, VDPRAM_TEST_ADR&0xff)
 
+	nop
 	nop
 	nop
 	nop

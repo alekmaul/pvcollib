@@ -56,6 +56,11 @@ _vdp_f18asetpalette:
 	out		(0xBF),a
 	ld		a, #0xaf									; 10101111	write to reg 0x2F
 	out		(0xBF),a
+	nop
+	nop
+	nop
+	nop
+	nop
 	
 vfsp1:
 	ld		a,(hl)
@@ -69,6 +74,11 @@ vfsp1:
 	out		(0xBF),a
 	ld		a, #0xaf
 	out		(0xBF),a									; write to reg 0x2F
+	nop
+	nop
+	nop
+	nop
+	nop
 
 	call	_vdp_enablenmi
 

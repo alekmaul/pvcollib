@@ -135,9 +135,9 @@ int PCX_Load(char *filename, pcx_picture_ptr image)
 	//get the pallete data
 	for (index=0; index<256; index++)
     {
-	    image->palette[index].red   = (getc(fp) >> 2);
-	    image->palette[index].green = (getc(fp) >> 2);
-	    image->palette[index].blue  = (getc(fp) >> 2);
+	    image->palette[index].red   = (getc(fp) >> 3);
+	    image->palette[index].green = (getc(fp) >> 3);
+	    image->palette[index].blue  = (getc(fp) >> 3);
     }
 
 	//check to make sure there weren't errors while reading the file
@@ -305,9 +305,9 @@ int BMP_Load(char *filename, pcx_picture_ptr image)
 	// read the palette information
 	for (index = 0; index<256; index++)
 	{
-		image->palette[index].blue = getc(fp) >> 2;
-		image->palette[index].green = getc(fp) >> 2;
-		image->palette[index].red = getc(fp) >> 2;
+		image->palette[index].blue = getc(fp) >> 3;
+		image->palette[index].green = getc(fp) >> 3;
+		image->palette[index].red = getc(fp) >> 3;
 		//data=getc(fp);
 		getc(fp);
 	}
@@ -423,9 +423,9 @@ int TGA_Load(char *filename, pcx_picture_ptr image)
 	// read the palette information
 	for(index=0;index<256;index++)
 	{
-		image->palette[index].blue = getc(fp) >> 2;
-		image->palette[index].green = getc(fp) >> 2;
-		image->palette[index].red = getc(fp) >> 2;
+		image->palette[index].blue = getc(fp) >> 3;
+		image->palette[index].green = getc(fp) >> 3;
+		image->palette[index].red = getc(fp) >> 3;
 	}
 
 	// read the bitmap
@@ -489,9 +489,9 @@ int PNG_Load(char *filename, pcx_picture_ptr image)
 	// read the palette information
 	sz=state.info_png.color.palettesize;
 	for(index=0;index<sz;index++) {
-		image->palette[index].red = state.info_png.color.palette[(index*4) + 0]>>2;
-		image->palette[index].green = state.info_png.color.palette[(index*4) + 1]>>2;
-		image->palette[index].blue = state.info_png.color.palette[(index*4) + 2]>>2;
+		image->palette[index].red = state.info_png.color.palette[(index*4) + 0]>>3;
+		image->palette[index].green = state.info_png.color.palette[(index*4) + 1]>>3;
+		image->palette[index].blue = state.info_png.color.palette[(index*4) + 2]>>3;
 	}
 	
 	// get png information

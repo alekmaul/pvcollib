@@ -18,26 +18,21 @@ void nmi (void) {
 
 //---------------------------------------------------------------------------------
 void main (void) {
-#if 0
 	// Check if f18a is available
 	vdp_f18ainit();
 
 	// display a message regarding result of test
 	if (vdp_f18aok==1) {
-#endif
 		// put screen in mode 1 with no specific f18a stuffs
-		vdp_setmode1txt();
-		//vdp_f18asetmode1(0);
+		vdp_f18asetmode1(0x30);
 		
 		vdp_ple2vram (TILourvision, chrgen); // characters
-		vdp_putvram (coltab,COLourvision,32); // colors
 		vdp_ple2vram (MAPourvision, chrtab); // map
-		//vdp_duplicatevram();
+		vdp_ple2vram (COLourvision, coltab); // colours
 
-		//vdp_f18asetpalette(PALourvision,64*2);
+		vdp_f18asetpalette(PALourvision,64*2);
 		
 		vdp_enablescr();
-#if 0
 	}
 	else {
 		// Put screen in text mode 2
@@ -53,7 +48,6 @@ void main (void) {
 		// Print text as we are not going to do something else
 		vdp_putstring(8,5,"NO F18A SUPPORT...");
 	}
-#endif
 
 	// Wait for nothing :P
 	while(1) {

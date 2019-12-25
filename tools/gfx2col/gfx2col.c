@@ -474,7 +474,7 @@ void addcomment(FILE *fp, unsigned int ratio,unsigned int size,unsigned int comp
 
 int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, unsigned int *tilecol, int num_tiles, int mapw, int maph, int savemap)
 {
-	char filenamec[256],filenameh[256];
+	char filenamec[256],filenameh[256],filenamef[256];
 	unsigned int val16b;
 	unsigned char bufsw1[8];
 	unsigned char value, minv,maxv;
@@ -486,6 +486,24 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	FILE *fpc,*fph;
 	unsigned char bitplanes,mask;
 	
+	int len = strlen(filebase)-1;
+	int i;
+	for (i = len; i >= 0; i--) {
+		if (filebase[i] == '/') {
+			break;
+		}
+	}
+	if (i==-1)
+	{
+		sprintf(filenamef,"%sgfx",filebase);
+	}
+	else
+	{
+		sprintf(filenamef,"%sgfx",&filebase[i+1]);
+	}
+
+	sprintf(filenamec,"%sgfx.inc",&filebase[i+1]);
+	sprintf(filenameh,"%sgfx.h",&filebase[i+1]);
 
 	sprintf(filenamec,"%sgfx.inc",filebase);
 	sprintf(filenameh,"%sgfx.h",filebase);
@@ -708,8 +726,8 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	
 	if (ecmmode>1)
 	{
-		addcomment(fpc, ((lenencodet1-lenencode)*100)/lenencodet1,lenencode,compress);
-		fprintf(fpc, "const unsigned char TILP1%s[%d]={\n", filebase,lenencodet1);
+		addcomment(fpc, (((num_tiles*8)-lenencodet1)*100)/(num_tiles*8),lenencodet1,compress);
+		fprintf(fpc, "const unsigned char TILP1%s[%d]={\n", filenamef,lenencodet1);
 		// write characters & colors
 		for (t = 0; t < lenencodet1; t++) {
 			if(t) {
@@ -723,8 +741,8 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 		fprintf(fpc, "\n};\n\n");
 		if (ecmmode>2)
 		{
-			addcomment(fpc, ((lenencodet2-lenencode)*100)/lenencodet2,lenencode,compress);
-			fprintf(fpc, "const unsigned char TILP2%s[%d]={\n", filebase,lenencodet2);
+			addcomment(fpc, (((num_tiles*8)-lenencodet2)*100)/(num_tiles*8),lenencodet2,compress);
+			fprintf(fpc, "const unsigned char TILP2%s[%d]={\n", filenamef,lenencodet2);
 			// write characters & colors
 			for (t = 0; t < lenencodet2; t++) {
 				if(t) {
@@ -739,8 +757,8 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 		}
 		if (ecmmode>3)
 		{
-			addcomment(fpc, ((lenencodet3-lenencode)*100)/lenencodet3,lenencode,compress);
-			fprintf(fpc, "const unsigned char TILP3%s[%d]={\n", filebase,lenencodet3);
+			addcomment(fpc, ((num_tiles*8-lenencodet3)*100)/(num_tiles*8),lenencodet3,compress);
+			fprintf(fpc, "const unsigned char TILP3%s[%d]={\n", filenamef,lenencodet3);
 			// write characters & colors
 			for (t = 0; t < lenencodet3; t++) {
 				if(t) {
@@ -757,7 +775,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	else
 	{
 		addcomment(fpc, ((num_tiles*8-lenencode)*100)/(num_tiles*8),lenencode,compress);
-		fprintf(fpc, "const unsigned char TIL%s[%d]={\n", filebase,lenencode);
+		fprintf(fpc, "const unsigned char TIL%s[%d]={\n", filenamef,lenencode);
 		// write characters & colors
 		for (t = 0; t < lenencode; t++) {
 			if(t) {
@@ -783,7 +801,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 			else
 				addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
 		}
-		fprintf(fpc, "const unsigned char COL%s[%d]={\n", filebase,lenencode1);
+		fprintf(fpc, "const unsigned char COL%s[%d]={\n", filenamef,lenencode1);
 		for (t = 0; t < lenencode1; t++) {
 			if(t) {
 				if((t & 31) == 0)
@@ -798,7 +816,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 		// write map if needed
 		if (savemap) {
 			addcomment(fpc, ((mapw*maph-lenencode2)*100)/(mapw*maph),lenencode2,compress);
-			fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filebase,lenencode2);
+			fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filenamef,lenencode2);
 			for (t = 0; t < lenencode2; t++) {
 				if(t) {
 					if((t & 31) == 0)
@@ -815,7 +833,7 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	// do that only if we need palette
 	if (output_palette==64) 
 	{
-		fprintf(fpc, "const unsigned char PAL%s[%d]={\n", filebase,(ecmmode==1) ? 16*2 : 64*2);
+		fprintf(fpc, "const unsigned char PAL%s[%d]={\n", filenamef,(ecmmode==1) ? 16*2 : 64*2);
 		if (ecmmode==1)
 		{
 			y=15;
@@ -856,44 +874,44 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	}
 
 	// write hearder file
-	fprintf(fph, "#ifndef %s_INC_\n", filebase);
-	fprintf(fph, "#define %s_INC_\n\n", filebase);
+	fprintf(fph, "#ifndef %s_INC_\n", filenamef);
+	fprintf(fph, "#define %s_INC_\n\n", filenamef);
 	if (ecmmode>1)
 	{
-		fprintf(fph, "#define SZTILP1%s %d\n", filebase,lenencodet1);
-		fprintf(fph, "#define SZTILP2%s %d\n", filebase,lenencodet2);
-		fprintf(fph, "#define SZTILP3%s %d\n", filebase,lenencodet3);
+		fprintf(fph, "#define SZTILP1%s %d\n", filenamef,lenencodet1);
+		fprintf(fph, "#define SZTILP2%s %d\n", filenamef,lenencodet2);
+		fprintf(fph, "#define SZTILP3%s %d\n", filenamef,lenencodet3);
 
 	}
 	else
-		fprintf(fph, "#define SZTIL%s %d\n", filebase,lenencode);
+		fprintf(fph, "#define SZTIL%s %d\n", filenamef,lenencode);
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
 
-		fprintf(fph, "#define SZCOL%s %d\n", filebase,lenencode1);
+		fprintf(fph, "#define SZCOL%s %d\n", filenamef,lenencode1);
 		if (savemap)
-			fprintf(fph, "#define SZMAP%s %d\n", filebase,lenencode2);
+			fprintf(fph, "#define SZMAP%s %d\n", filenamef,lenencode2);
 		fprintf(fph,"\n");
 	}
 	if (ecmmode>1)
 	{
-		fprintf(fph, "extern const unsigned char TILP1%s[];\n", filebase);
-		fprintf(fph, "extern const unsigned char TILP2%s[];\n", filebase);
-		fprintf(fph, "extern const unsigned char TILP3%s[];\n", filebase);
+		fprintf(fph, "extern const unsigned char TILP1%s[];\n", filenamef);
+		fprintf(fph, "extern const unsigned char TILP2%s[];\n", filenamef);
+		fprintf(fph, "extern const unsigned char TILP3%s[];\n", filenamef);
 	}
 	else
-		fprintf(fph, "extern const unsigned char TIL%s[];\n", filebase);
+		fprintf(fph, "extern const unsigned char TIL%s[];\n", filenamef);
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
-		fprintf(fph, "extern const unsigned char COL%s[];\n", filebase);
+		fprintf(fph, "extern const unsigned char COL%s[];\n", filenamef);
 		if (savemap)
-			fprintf(fph, "extern const unsigned char MAP%s[];\n", filebase);
+			fprintf(fph, "extern const unsigned char MAP%s[];\n", filenamef);
 	}
 	if (output_palette==64) 
 	{
-		fprintf(fph, "extern const unsigned char PAL%s[];\n", filebase);
+		fprintf(fph, "extern const unsigned char PAL%s[];\n", filenamef);
 	}
 
 	fprintf(fph, "\n\n");

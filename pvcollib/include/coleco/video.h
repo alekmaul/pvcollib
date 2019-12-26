@@ -188,12 +188,24 @@ u8  vdp_getchar (u8 x, u8 y);
  * \brief  Get an area of chars from screen
  *
  * \param table area in ram to save chars
- * \param x column of the char
- * \param y line of the char
- * \param width length of x char to get
- * \param height length of y char to get
+ * \param x column of the chars
+ * \param y line of the chars
+ * \param width length of x chars to get
+ * \param height length of y chars to get
 */
 void vdp_getarea (void *table, u8 x, u8 y, u8 width, u8 height);
+
+/**
+ * \fn void vdp_putarea (void *table, u8 x, u8 y, u8 width, u8 height)
+ * \brief  Put an area of chars to screen
+ *
+ * \param table area in ram to load chars
+ * \param x column of the chars
+ * \param y line of the chars
+ * \param width length of x chars to put
+ * \param height length of y chars to put
+*/
+void vdp_putarea (void *table, u8 x, u8 y, u8 width, u8 height);
 
 /**
  * \fn  void vdp_setdefaultchar(u8 flags)

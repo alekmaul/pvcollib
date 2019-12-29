@@ -46,16 +46,23 @@ _vdp_setmode2bmp:
 	push    hl
 	push    ix
 	push    iy
-	ld		a,(0x73C4)
-	and		#0xA7             	 	    ; blank screen, reset M1 & M3
+	
+	ld      a,(0x73C4)					; 73C4 -> Copy of VDP1
+	and		#0xA7             	 	    ; blank screen, reset M1 & M2
 	or		#0x82             		    ; 16K, sprites 16x16
 	ld      c,a
 	ld      b,#1
 	call    0x1FD9
+	
 	ld      bc,#0x03FF       	  		; vdp_out(3,ffh)
 	call    0x1FD9
+	
 	ld      bc,#0x0403        	 		; vdp_out(4,3)
 	call    0x1FD9
+	
+	ld      bc,#0x0607       	  		; vdp_out(6,7) sprites data to 0x3800
+	call    0x1FD9
+
 	xor     a
 	out		(0xBF),a
 	ld      a,#0x18

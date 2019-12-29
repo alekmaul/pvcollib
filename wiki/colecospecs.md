@@ -191,6 +191,7 @@ M4 is only available for F18A device.
 </pre>
 768-bytes per table for 24 rows  
 960-bytes per table for 30 rows  
+Multiply this value by 400h to have the real address  
 
 **Register 3: VR3 Color Table Base Address, 64-byte boundaries**  
 <pre>
@@ -198,9 +199,10 @@ M4 is only available for F18A device.
   Name   A00  A01  A02  A03  A04  A05  A06  A07
 </pre>
 32-bytes long for original color mode (default)  
-For the F18A enhanced color modes this becomes Tile Attribute Table Base Address  
+For the F18A enhanced color modes, this becomes Tile Attribute Table Base Address  
 The Tile Attribute Table is 256 bytes long  
 768 to 4K when in position-attribute mode depending on the size of the horz / vert pages.  
+Multiply this value by 400h to have the real address  
 
 **Register 4: VR4 Pattern Generator Base Address, 2K boundaries** 
 <pre>  
@@ -209,6 +211,7 @@ The Tile Attribute Table is 256 bytes long
 </pre>
 2K for 256 tiles  
 4K for 2-bit color mode, 6K for 3-bit color mode  
+Multiply this value by 800h to have the real address  
 
 **Register 5: VR5 Sprite Attribute Table Base Address, 128-byte boundaries**  
 <pre>
@@ -216,6 +219,7 @@ The Tile Attribute Table is 256 bytes long
   Name    0   A00  A01  A02  A03  A04  A05  A06
 </pre>
 128-bytes (32 sprites, 4 bytes each)  
+Multiply this value by 80h to have the real address  
 
 **Register 6: VR6 Sprite Pattern Generator Base Address, 2K boundaries** 
 <pre>
@@ -224,6 +228,7 @@ The Tile Attribute Table is 256 bytes long
 </pre>
 2K for 256 patterns  
 4K for 2-bit color mode, 6K for 3-bit color mode  
+Multiply this value by 800h to have the real address  
 
 **Register 7: VR7 Text color / background color**  
 <pre>
@@ -404,63 +409,87 @@ Video Display Processor: Texas Instruments TMS9928A
 
 JUMP functions   
 ===
-JUMP TABLE  from Colecovion BIOS.  
+ColecoVision BIOS is also refered as OS 7prime, also refered simply as OS7.  
+Because it was the 7th revision of the BIOS when the console was released.  
+
+OS 7prime BIOS Jump table  
 Legend:
 P (at the end): function specifically done for Pascal programs.  
 <pre>
-1F61 > 0300 : PLAY_SONGS
-1F64 > 0488 : ACTIVATEP
-1F67 > 06C7 : PUTOBJP
-1F6A > 1D5A : REFLECT_VERTICAL
-1F6D > 1D60 : REFLECT_HORIZONTAL
-1F70 > 1D66 : ROTATE_90
-1F73 > 1D6C : ENLARGE
-1F76 > 114A : CONTROLLER_SCAN
-1F79 > 118B : DECODER
-1F7C > 1979 : GAME_OPT
-1F7F > 1927 : LOAD_ASCII
-1F82 > 18D4 : FILL_VRAM
-1F85 > 18E9 : MODE_1
-1F88 > 116A : UPDATE_SPINNER
-1F8B > 1B0E : INIT_TABLEP
-1F8E > 1B8C : GET_VRAMP
-1F91 > 1C10 : PUT_VRAMP
-1F94 > 1C5A : INIT_SPR_ORDERP
-1F97 > 1C76 : WR_SPR_NM_TBLP
-1F9A > 0F9A : INIT_TIMERP
-1F9D > 0FB8 : FREE_SIGNALP
-1FA0 > 1044 : REQUEST_SIGNALP
-1FA3 > 10BF : TEST_SIGNALP
-1FA6 > 1CBC : WRITE_REGISTERP
-1FA9 > 1CED : WRITE_VRAMP
-1FAC > 1D2A : READ_VRAMP
-1FAF > 0655 : INIT_WRITERP
-1FB2 > 0203 : SOUND_INITP
-1FB5 > 0251 : PLAY_ITP
-1FB8 > 1B08 : INIT_TABLE
-1FBB > 1BA3 : GET_VRAM
-1FBE > 1C27 : PUT_VRAM
-1FC1 > 1C66 : INIT_SPR_ORDER
-1FC4 > 1C82 : WR_SPR_NM_TBL
-1FC7 > 0FAA : INIT_TIMER
-1FCA > 0FC4 : FREE_SIGNAL
-1FCD > 1053 : REQUEST_SIGNAL
-1FD0 > 10CB : TEST_SIGNAL
-1FD3 > 0F37 : TIME_MGR
-1FD6 > 023B : TURN_OFF_SOUND
-1FD9 > 1CCA : WRITE_REGISTER
-1FDC > 1D57 : READ_REGISTER
-1FDF > 1D01 : WRITE_VRAM
-1FE2 > 1D3E : READ_VRAM
-1FE5 > 0664 : INIT_WRITER
-1FE8 > 0679 : WRITER
-1FEB > 11C1 : POLLER
-1FEE > 0213 : SOUND_INIT
-1FF1 > 025E : PLAY_IT
-1FF4 > 027F : SOUND_MAN
-1FF7 > 04A3 : ACTIVATE
-1FFA > 06D8 : PUTOBJ
+1F61 > 0300 : PLAY_SONGS                      1F64 > 0488 : ACTIVATEP
+1F67 > 06C7 : PUTOBJP                         1F6A > 1D5A : REFLECT_VERTICAL
+1F6D > 1D60 : REFLECT_HORIZONTAL              1F70 > 1D66 : ROTATE_90
+1F73 > 1D6C : ENLARGE                         1F76 > 114A : CONTROLLER_SCAN
+1F79 > 118B : DECODER                         1F7C > 1979 : GAME_OPT
+1F7F > 1927 : LOAD_ASCII                      1F82 > 18D4 : FILL_VRAM
+1F85 > 18E9 : MODE_1                          1F88 > 116A : UPDATE_SPINNER
+1F8B > 1B0E : INIT_TABLEP                     1F8E > 1B8C : GET_VRAMP
+1F91 > 1C10 : PUT_VRAMP                       1F94 > 1C5A : INIT_SPR_ORDERP
+1F97 > 1C76 : WR_SPR_NM_TBLP                  1F9A > 0F9A : INIT_TIMERP
+1F9D > 0FB8 : FREE_SIGNALP                    1FA0 > 1044 : REQUEST_SIGNALP
+1FA3 > 10BF : TEST_SIGNALP                    1FA6 > 1CBC : WRITE_REGISTERP
+1FA9 > 1CED : WRITE_VRAMP                     1FAC > 1D2A : READ_VRAMP
+1FAF > 0655 : INIT_WRITERP                    1FB2 > 0203 : SOUND_INITP
+1FB5 > 0251 : PLAY_ITP                        1FB8 > 1B08 : INIT_TABLE
+1FBB > 1BA3 : GET_VRAM                        1FBE > 1C27 : PUT_VRAM
+1FC1 > 1C66 : INIT_SPR_ORDER                  1FC4 > 1C82 : WR_SPR_NM_TBL
+1FC7 > 0FAA : INIT_TIMER                      1FCA > 0FC4 : FREE_SIGNAL
+1FCD > 1053 : REQUEST_SIGNAL                  1FD0 > 10CB : TEST_SIGNAL
+1FD3 > 0F37 : TIME_MGR                        1FD6 > 023B : TURN_OFF_SOUND
+1FD9 > 1CCA : WRITE_REGISTER                  1FDC > 1D57 : READ_REGISTER
+1FDF > 1D01 : WRITE_VRAM                      1FE2 > 1D3E : READ_VRAM
+1FE5 > 0664 : INIT_WRITER                     1FE8 > 0679 : WRITER
+1FEB > 11C1 : POLLER                          1FEE > 0213 : SOUND_INIT
+1FF1 > 025E : PLAY_IT                         1FF4 > 027F : SOUND_MAN
+1FF7 > 04A3 : ACTIVATE                        1FFA > 06D8 : PUTOBJ
 1FFD > 003B : RAND_GEN 
+</pre>
+
+RAM MAP  
+===
+Complete OS 7prime RAM Map
+<pre>
+Address   Name                 Description                 
+7020-7021 PTR_LST_OF_SND_ADDRS Pointer to list (in RAM) of sound addrs
+7022-7023 PTR_TO_S_ON_0        Pointer to song for noise
+7024-7025 PTR_TO_S_ON_1        Pointer to song for channel#1
+7026-7027 PTR_TO_S_ON_2        Pointer to song for channel#2
+7028-7029 PTR_TO_S_ON_3        Pointer to song for channel#3
+702A      SAVE_CTRL            CTRL data (byte)
+73B9      STACK                Beginning of the stack
+73BA-73BF PARAM_AREA           Common passing parameters area (PASCAL)
+73C0-73C1 TIMER_LENGTH         Length of timer
+73C2 TEST_SIG_NUM              Signal Code
+73C3-73C4 VDP_MODE_WORD        Copy of data in the 1st 2 VDP registers
+73C5      VDP_STATUS_BYTE      Contents of default NMI handler
+73C6      DEFER_WRITES         Defered sprites flag
+73C7      MUX_SPRITES          Multiplexing sprites flag
+73C8-73C9 RAND_NUM             Pseudo random number value
+73CA      QUEUE_SIZE           Size of the defered write queue
+73CB      QUEUE_HEAD           Indice of the head of the write queue
+73CC      QUEUE_TAIL           Indice of the tail of the write queue
+73CD-73CE HEAD_ADDRESS         Address of the queue head
+73CF-73D0 TAIL_ADDRESS         Address of the queue tail
+73D1-73D2 BUFFER               Buffer pointer to defered objects
+73D3-73D4 TIMER_TABLE_BASE     Timer base address
+73D5-73D6 NEXT_TIMER_DATA_BYTE Next available timer address
+73D7-73EA DBNCE_BUFF           Debounce buffer. 5 pairs (old and state)
+                                of fire, joy, spin, arm and kbd for each player.
+73EB      SPIN_SW0_CT          Spinner counter port#1
+73EC      SPIN_SW1_CT          Spinner counter port#2
+73ED                           (reserved)
+73EE      S0_C0                Segment 0 data, Controller port #1
+73EF      S0_C1                Segment 0 data, Controller port #2
+73F0      S1_C0                Segment 1 data, Controller port #1
+73F1      S1_C1                Segment 1 data, Controller port #2
+73F2-73FB VRAM_ADDR_TABLE      Block of VRAM table pointers
+73F2-73F3 SPRITENAMETBL        Sprite name table offset
+73F4-73F5 SPRITEGENTBL         Sprite generator table offset
+73F6-73F7 PATTERNNAMETBL       Pattern name table offset
+73F8-73F9 PATTERNGENTBL        Pattern generator table offset
+73FA-73FB COLORTABLE           Color table offset
+73FC-73FD SAVE_TEMP            (no more used - in VRAM routines)
+73FE-73FF SAVED_COUNT          Copy of COUNT for PUT_VRAM and GET_VRAM
 </pre>
 
 ROM Header  

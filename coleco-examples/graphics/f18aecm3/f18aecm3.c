@@ -21,19 +21,25 @@ void main (void) {
 	// Check if f18a is available
 	vdp_f18ainit();
 
+	// Disable screen
+	vdp_disablescr();
+
 	// display a message regarding result of test
 	if (vdp_f18aok==1) {
+		vdp_setreg(50,16);//turn off tile layer
+
 		// put screen in mode 1 with no specific f18a stuffs
-		vdp_f18asetmode1(0x30);
+		vdp_f18asetmode1(0x70);
 		
-		vdp_ple2vram (TILP1ourvision, chrgen); 		   // characters Layer 1
-		vdp_ple2vram (TILP2ourvision, chrgen+256*8);   // characters Layer 2
-		vdp_ple2vram (TILP3ourvision, chrgen+256*8*2); // characters Layer 2
-		vdp_ple2vram (COLourvision, coltab); 		   // colours  (attribute table in our ecm3 case)
-		vdp_ple2vram (MAPourvision, chrtab);           // map
-		vdp_f18asetpalette(PALourvision,64*2);
+		vdp_ple2vram (TILP1ourvisiongfx, chrgen); 		   // characters Layer 1
+		vdp_ple2vram (TILP2ourvisiongfx, chrgen+256*8);   // characters Layer 2
+		vdp_ple2vram (TILP3ourvisiongfx, chrgen+256*8*2); // characters Layer 2
+		vdp_ple2vram (COLourvisiongfx, coltab); 		   // colours  (attribute table in our ecm3 case)
+		vdp_ple2vram (MAPourvisiongfx, chrtab);           // map
+		vdp_f18asetpalette(PALourvisiongfx,64*2);
 		
 		vdp_enablescr();
+		vdp_setreg(50,0);//turn on tile layer
 	}
 	else {
 		// Put screen in text mode 2

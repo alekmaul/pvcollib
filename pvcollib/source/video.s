@@ -65,7 +65,7 @@ _vdp_setmode1txt:
 	ld      bc,#0x0400  				; vdp_out(4,00h) ; CHRGEN = 0000
 	call    0x1FD9
   
-  	ld      bc,#0x0538       	  		; vdp_out(5,38h) sprites pattern to 0x1f00
+  	ld      bc,#0x053E       	  		; vdp_out(5,3Eh) sprites pattern to 0x1f00
 	call    0x1FD9
 
 	ld      hl,#0x1800                 ; clear screen

@@ -63,7 +63,7 @@ _vdp_setmode2bmp:
 	ld      bc,#0x0607       	  		; vdp_out(6,7) sprites data to 0x3800
 	call    0x1FD9
 
-	ld      bc,#0x0538       	  		; vdp_out(5,38h) sprites pattern to 0x1f00
+	ld      bc,#0x053E       	  		; vdp_out(5,3Eh) sprites pattern to 0x1f00
 	call    0x1FD9
 
 	xor     a

@@ -39,10 +39,10 @@
 
 #include <coleco/coltypes.h>
 
-#define sprtab_f18a  		0x2800 //f18a colour only requires 1/3 the colour data? til 0x2800
+#define sprtab_f18a  		0x2800 //f18a colour only requires 1/3 the colour data so til 0x2800
 #define sprtab_f18a_2  		0x3000
 #define sprtab_f18a_3	 	0x3800
-#define mapvram 			0x1f00  
+#define mapvram 			0x1b00  
 
 #define F18A_ECMS_0P		(0<<0)
 #define F18A_ECMS_1B		(1<<0)

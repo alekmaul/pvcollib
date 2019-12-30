@@ -48,12 +48,12 @@ _spr_update:
 	ld		(_spr_order),a  
 	di                
 	xor		a          
-	out		(#0xbf),a    
-	ld		a,#0x5b      
-	out		(#0xbf),a    
+	out		(#0xbf),a    							; 00000000 -> lower value of address
+	ld		a,#0x5f      
+	out		(#0xbf),a    							; 01011111 -> 0xBF Write data to 0x1F 00
 	ei                
 	ld		hl,#_sprites 
-	ld		bc,#0x80be   
+	ld		bc,#0x80be   							; write 4*32 data
 	di                
 	otir              
 	ei                
@@ -65,7 +65,7 @@ spwv0:
 	di                
 	xor		a          
 	out		(#0xbf),a    
-	ld		a,#0x5b      
+	ld		a,#0x5f
 	out		(#0xbf),a    
 	ei                
 	ld		hl,#_sprites+124

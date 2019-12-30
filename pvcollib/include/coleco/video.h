@@ -49,8 +49,9 @@
 #define chrgen  			0x0000
 #define coltab  			0x2000
 #define chrtab 				0x1800
+#define chrtab2				0x1B00
 #define sprtab  			0x3800
-#define sprgen  			0x1b00
+#define sprgen  			0x1f00
 
 #define COLTRANSP			0
 #define COLBLACK			1

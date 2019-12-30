@@ -62,7 +62,7 @@ _vdp_f18asetmode1:
 	call    0x1FD9
 	ld      bc,#0x0400       	  		; vdp_out(4,0) set tiles table chrgen to 0x0000
 	call    0x1FD9
-	ld      bc,#0x0536       	  		; vdp_out(5,54) sprgen 0x1b00 temp dem 54 = 6912 sprites ecm 3  sprites data to 0x2800 = 10K  5*2K
+	ld      bc,#0x0538       	  		; vdp_out(5,56) sprgen 0x1C00 
 	call    0x1FD9
 	ld      bc,#0x0605       	  		; vdp_out(6,5) sprites ecm 3  sprites data to 0x2800 = 10K  5*2K
 	call    0x1FD9

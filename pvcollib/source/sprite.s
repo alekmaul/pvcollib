@@ -72,7 +72,7 @@ spcv0:
 	push	hl         
 	ld		hl,#_sprites 				; adr sprites
 	push	hl         
-	ld		hl,#0x1b00  				; sprgen
+	ld		hl,#0x1f00  				; sprgen
 	push	hl         
 	call	_vdp_putvram				; put really sprites on vram
 	ld		hl,#0x0006   

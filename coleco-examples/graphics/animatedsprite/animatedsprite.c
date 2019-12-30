@@ -36,7 +36,7 @@ void main (void) {
 	vdp_fillvram(0x2000,0xf1,128*8); 	// Change color (or we will see nothing)
 
 	// Put sprite character
-	vdp_putvram (sprtab,TILpacsprite,SZTILpacsprite); // sprite characters
+	vdp_putvram (sprtab,TILpacspritegfx,SZTILpacspritegfx); // sprite characters
 
 	vdp_enablescr();
 	

@@ -202,7 +202,7 @@ Multiply this value by 400h to have the real address
 For the F18A enhanced color modes, this becomes Tile Attribute Table Base Address  
 The Tile Attribute Table is 256 bytes long  
 768 to 4K when in position-attribute mode depending on the size of the horz / vert pages.  
-Multiply this value by 400h to have the real address  
+Multiply this value by 40h to have the real address  
 
 **Register 4: VR4 Pattern Generator Base Address, 2K boundaries** 
 <pre>  
@@ -272,7 +272,7 @@ Works the same as VR3 in Enhanced Color Modes / Position-Attribute Mode
 **Register 18: VR24 Extra palette-select bits for original color modes**  
 <pre>
   Bit  Name       Expl.
-  0-1  T1PS01-1   Tile 1 layer palette selector
+  0-1  T1PS0-1    Tile 1 layer palette selector
   2-3  T2PS0-1    Tile 2 layer palette selector
   4-6  SPS0-1     Sprite palette selector
   6-7  0          Not used

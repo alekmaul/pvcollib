@@ -81,6 +81,13 @@ void spr_clear(void);
 */
 void spr_update(void);
 
+/*! \fn spr_updatefast(void)
+	\brief put sprite on screen without checking order
+	Put all 32 sprites on screen.
+	<b>Must be call in NMI routine.</b>
+*/
+void spr_updatefast(void);
+
 /*! \fn spr_getentry(void)
 	\brief get a sprite id in sprite list 
 	\return sprite entry (0..31)

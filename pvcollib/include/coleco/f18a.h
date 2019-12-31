@@ -91,4 +91,24 @@ void vdp_f18asetpalette(void *data,unsigned count);
 */
 void vdp_f18asetmode1(u8 flags);
 
+/**
+ * \fn vdp_f18asetscrollx(u8 bgnum, u8 x)
+ * \brief Sets the horizontal scroll offset to the specified location
+ *
+ * \param bgnum	background number (1 or 2 for TL1 and TL2)
+ * \param x	the horizontal scroll offset <br>
+ *     (5 bits of scroll | 3 bits for planes : HTO0	HTO1	HTO2	HTO3	HTO4	HPO0	HPO1	HPO2)
+*/
+void vdp_f18asetscrollx(u8 bgnum, u8 x);
+
+/**
+ * \fn vdp_f18asetscrolly(u8 bgnum, u8 y)
+ * \brief Sets the vertical scroll offset to the specified location
+ *
+ * \param bgnum	background number (1 or 2 for TL1 and TL2)
+ * \param y	the vertical scroll offset <br>
+ *     (5 bits of scroll | 3 bits for planes : VTO0	VTO1	VTO2	VTO3	VTO4	VPO0	VPO1	VPO2)
+*/
+void vdp_f18asetscrolly(u8 bgnum, u8 y);
+
 #endif

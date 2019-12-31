@@ -1,0 +1,12 @@
+-mjwx
+-i crtcol.ihx
+-b _CODE = 0x8048
+-b _DATA = 0x7000
+-k c:\colecodev\devkitcol\bin\..\lib\z80
+-l c:/colecodev/lib/collib.lib
+-l z80
+c:/colecodev/lib/crtcol.rel
+f18ascroll.rel
+gfxs.rel
+
+-e

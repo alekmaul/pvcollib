@@ -27,7 +27,6 @@ void main (void) {
 	vdp_disablescr();
 
 	// display a message regarding result of test
-	vdp_f18aok=1;
 	if (vdp_f18aok==1) {
 		vdp_setreg(50,16);//turn off tile layer
 

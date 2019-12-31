@@ -74,11 +74,18 @@
 		\example games/diamond/diamond.c
 
     <!-- graphic management -->
-		\example graphics/dancompress/grafdancomp.c
-		\example graphics/notcompress/grafnocomp.c
-		\example graphics/plecompress/grafplecomp.c
-		\example graphics/rlecompress/grafrlecomp.c
-		
+		\example graphics/backgrounds/dancompress/grafdancomp.c
+		\example graphics/backgrounds/notcompress/grafnocomp.c
+		\example graphics/backgrounds/plecompress/grafplecomp.c
+		\example graphics/backgrounds/rlecompress/grafrlecomp.c
+		\example graphics/sprites/simplesprite/simplesprite.c
+		\example graphics/sprites/animatedsprite/animatedsprite.c
+	
+	<!-- f18a gaphic management -->
+		\example graphics/f18a/f18abitmap1/f18abitmap1.c
+		\example graphics/f18a/f18aecm3/f18aecm3.c
+		\example graphics/f18a/f18atest/f18atest.c
+	
     <!-- pad management -->
 		\example input/input.c
 

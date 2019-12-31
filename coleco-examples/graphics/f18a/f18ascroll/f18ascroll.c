@@ -67,12 +67,12 @@ void main (void) {
 			// test keyboard
 			if (joypad_1 & PAD_DOWN)  { yscr--; while (joypad_1 & PAD_DOWN) { vdp_waitvblank(1); } }
 			if (joypad_1 & PAD_UP)    { yscr++; while (joypad_1 & PAD_UP) { vdp_waitvblank(1); } }
-			if (joypad_1 & PAD_LEFT)  { xscr--; while (joypad_1 & PAD_LEFT) { vdp_waitvblank(1); } }
-			if (joypad_1 & PAD_RIGHT) { xscr++; while (joypad_1 & PAD_RIGHT) { vdp_waitvblank(1); } }
+			if (joypad_1 & PAD_LEFT)  { xscr++; while (joypad_1 & PAD_LEFT) { vdp_waitvblank(1); } }
+			if (joypad_1 & PAD_RIGHT) { xscr--; while (joypad_1 & PAD_RIGHT) { vdp_waitvblank(1); } }
 			
 			// check boundaries for y scroll
-			if (yscr<0) { if (yscr>=-64) yscr=-191; }
-			if (yscr>=192) yscr=0; 
+			//if (yscr<0) { if (yscr>=-64) yscr=-191; }
+			//else if (yscr>=192) yscr=0; 
 			
 			//scroll in x & y
 			vdp_f18asetscrollx(1, xscr);

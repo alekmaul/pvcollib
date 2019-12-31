@@ -45,6 +45,9 @@ int sprmode=0;                // 0 = background 1 = sprite
 int bmpmode=0;				  // 0 = normal tile mode, 1=bitmap mode
 int gramode=0;				  // 0 = TMS9918a graphic mode 2, 1 = graphic mode 1
 int ecmmode=0;				  // 0 = noactive, 1=ecm0,2=ecm1, etc ... (F18A only, will generate a palette)
+int offset_tile=0;			  // n = offset in tile number
+int transmode=0;			  // 0 = not transparent, 1 = transprent tiles activated
+int highpriority=0;     	  // 1 = high priority for map
 
 //---------------------------------------------------------------------------
 void PutWord(int data, FILE *fp)
@@ -314,7 +317,7 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 {
 	unsigned int *map;
 	int newtiles;
-	int current,palette;	//the current tile we're looking at
+	int current,palette,oldpal;	//the current tile we're looking at
 	int i,t;
 	int x,y;
 
@@ -330,6 +333,7 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 	current=0;
 	t=0;
 	newtiles=0;
+	oldpal=-1;
 
 	for(y=0;y<ysize;y++)
     {
@@ -343,6 +347,13 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 				palette = (img[current*64] >> 2) & 0x0F;
 			else				// ecm 1 and others
 				palette = (img[current*64] >> 1) & 0x1F;
+			if (ecmmode>1) 
+			{
+				if (oldpal!=palette) {
+					printf("\npalette=%04x",palette);fflush(stdout);
+					oldpal=palette;
+				}
+			}
 
     		//check for matches with previous tiles if tile_reduction on
             if (optimize)
@@ -357,14 +368,23 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 			// if ecm mode, put in color table for the tile attributre
 			if (ecmmode>1) 
 			{
+				// How colors are managed:
 				// ps  = palette select from VR24
 				// cs  = color value from color table (256 bytes for ECM1..3)
 				// px0 = pixel from byte from pattern table 0 (original mode and EMC1)
 				// px1 = pixel from byte from pattern table 1 (ECM2)
 				// px2 = pixel from byte from pattern table 2 (ECM3)
-				if (ecmmode==2) colf18a[newtiles]=(palette); 					// ECM1    : ps0 cs0 cs1 cs2 cs3 px0 
+			
+				// Bit  Name       Expl.
+				// 0-3  PS3-0      Palette selection (b3=PS0, b0=PS3)
+				// 4    TRANS      When 1, colors with 0, 00 or 000 will be transparent instead of a palette index
+				// 5    FLIPY      Tile flip over Y
+				// 6    FLIPX      Tile flip over X
+				// 7    PRI        Tile priority over sprite
+  				if (ecmmode==2) colf18a[newtiles]=(palette); 					// ECM1    : ps0 cs0 cs1 cs2 cs3 px0 
 				else if (ecmmode==3) colf18a[newtiles]=(palette); 				// ECM2    : cs0 cs1 cs2 cs3 px1 px0
 				else if (ecmmode==4) colf18a[newtiles]=(palette<<1)& 0xFE; 		// ECM3    : cs0 cs1 cs2 px2 px1 px0
+				colf18a[newtiles]|=(transmode<<4) | (highpriority<<7);
 			}
 			
 			//is it a new tile?
@@ -381,7 +401,7 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 			}
 
     		//put tile number in map
-	    	map[y*tile_x+x] = t;
+	    	map[y*tile_x+x] = t+offset_tile;
 		}
 
 		//goto the next tile
@@ -472,7 +492,7 @@ void addcomment(FILE *fp, unsigned int ratio,unsigned int size,unsigned int comp
 		fprintf(fp, "// dan1 compression %d bytes (%d%%)\n", size,ratio);
 }
 
-int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, unsigned int *tilecol, int num_tiles, int mapw, int maph, int savemap)
+int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, unsigned int *tilecol, int num_tiles, int mapw, int maph, int savemap, int savepal)
 {
 	char filenamec[256],filenameh[256],filenamef[256];
 	unsigned int val16b;
@@ -613,10 +633,29 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	// sprites are 16x16 but we need to swap tile 2<>3  
 	if (sprmode)
 	{
-		for(t=0;t<num_tiles;t+=4) { //loop through tiles
-			memcpy(bufsw1,(tiMem+(t+1)*8),8);
-			memcpy((tiMem+(t+1)*8),(tiMem+(t+2)*8),8);
-			memcpy((tiMem+(t+2)*8),bufsw1,8);
+		// different check for ecm1-3
+		if (ecmmode>1)
+		{
+			// grab number of planes
+			bitplanes=(ecmmode-1);
+		
+			for(t=0;t<num_tiles;t+=4)  //loop through tiles
+			{
+				for(b=0;b<bitplanes;b++) //loop through bitplane pairs
+				{
+					memcpy(bufsw1,(tiMem+(t+1)*8+(b*256*8)),8);
+					memcpy((tiMem+(t+1)*8+(b*256*8)),(tiMem+(t+2)*8+(b*256*8)),8);
+					memcpy((tiMem+(t+2)*8+(b*256*8)),bufsw1,8);
+				}
+			}
+		}
+		else 
+		{
+			for(t=0;t<num_tiles;t+=4) { //loop through tiles
+				memcpy(bufsw1,(tiMem+(t+1)*8),8);
+				memcpy((tiMem+(t+1)*8),(tiMem+(t+2)*8),8);
+				memcpy((tiMem+(t+2)*8),bufsw1,8);
+			}
 		}
 	}
 
@@ -831,46 +870,49 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	}
 
 	// do that only if we need palette
-	if (output_palette==64) 
+	if (savepal) 
 	{
-		fprintf(fpc, "const unsigned char PAL%s[%d]={\n", filenamef,(ecmmode==1) ? 16*2 : 64*2);
-		if (ecmmode==1)
+		if (output_palette==64) 
 		{
-			y=15;
-			for (t = 0; t <  16; t++) 
+			fprintf(fpc, "const unsigned char PAL%s[%d]={\n", filenamef,(ecmmode==1) ? 16*2 : 64*2);
+			if (ecmmode==1)
 			{
-				if (t) 
+				y=15;
+				for (t = 0; t <  16; t++) 
 				{
-					if((t & 15) == 0)
-						fprintf(fpc, ",\n");
-					else
-						fprintf(fpc, ", ");
-				}
+					if (t) 
+					{
+						if((t & 15) == 0)
+							fprintf(fpc, ",\n");
+						else
+							fprintf(fpc, ", ");
+					}
 
-				val16b=*(palet+t);
-				fprintf(fpc, "0x%02X", (val16b & 0xF00)>>8);
-				fprintf(fpc, ",0x%02X", (val16b & 0xFF));
+					val16b=*(palet+t);
+					fprintf(fpc, "0x%02X", (val16b & 0xF00)>>8);
+					fprintf(fpc, ",0x%02X", (val16b & 0xFF));
+				}
 			}
-		}
-		else
-		{
-			y = (1<<(ecmmode-1))-1;
-			for (t = 0; t < 64; t++) 
+			else
 			{
-				if (t) 
+				y = (1<<(ecmmode-1))-1;
+				for (t = 0; t < 64; t++) 
 				{
-					if((t & y) == 0)
-						fprintf(fpc, ", // PAL %d\n",(t/(y+1))-1);
-					else
-						fprintf(fpc, ", ");
-				}
+					if (t) 
+					{
+						if((t & y) == 0)
+							fprintf(fpc, ", // PAL %d\n",(t/(y+1))-1);
+						else
+							fprintf(fpc, ", ");
+					}
 
-				val16b=*(palet+t);
-				fprintf(fpc, "0x%02X", (val16b & 0xF00)>>8);
-				fprintf(fpc, ",0x%02X", (val16b & 0xFF));
+					val16b=*(palet+t);
+					fprintf(fpc, "0x%02X", (val16b & 0xF00)>>8);
+					fprintf(fpc, ",0x%02X", (val16b & 0xFF));
+				}
 			}
+			fprintf(fpc, "  // PAL %d\n};\n\n",(t/(y+1))-1);
 		}
-		fprintf(fpc, "  // PAL %d\n};\n\n",(t/(y+1))-1);
 	}
 
 	// write hearder file
@@ -909,9 +951,12 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 		if (savemap)
 			fprintf(fph, "extern const unsigned char MAP%s[];\n", filenamef);
 	}
-	if (output_palette==64) 
+	if (savepal)
 	{
-		fprintf(fph, "extern const unsigned char PAL%s[];\n", filenamef);
+		if (output_palette==64) 
+		{
+			fprintf(fph, "extern const unsigned char PAL%s[];\n", filenamef);
+		}
 	}
 
 	fprintf(fph, "\n\n");
@@ -949,11 +994,15 @@ void PrintOptions(char *str) {
 	printf("\n-b                    Bitmap mode (no more 256 tiles limit)");
 	printf("\n-g[m1|m2]             TMS9918 Graphic mode (mode 2 or mode 1) [m2]");
 	printf("\n-e[0|1|2|3]           Enhanced Color Mode (F18A only) [0]");
+	printf("\n-t                    Enable transparent tiles (color 0)");
 	printf("\n\n--- Map options ---");
 	printf("\n-m!                   Exclude map from output");
 	printf("\n-m                    Convert the whole picture");
 	printf("\n-mR!                  No tile reduction (not advised)");
+	printf("\n-mn#              	Generate the whole picture with an offset for tile number");
+	printf("\n                   	 where # is the offset in decimal (0 to 2047)");
 	printf("\n\n--- Palette options ---");
+	printf("\n-p!                   Exclude palette from output");
 	printf("\n-po                   Export palette (16 colors (ecm0) or 64 colors(ecm1-3)");
 	printf("\n-pR                   Palette rounding");
 	printf("\n\n--- File options ---");
@@ -990,6 +1039,7 @@ int main(int argc, char **arg) {
     int file_type=BMP_FILE;
     int tile_reduction=1;         // 0 = no tile reduction (warning !)
     int savemap=1;                // 1 = save the map
+    int savepal=1;                // 1 = save the palette
     
 	// Show something to begin :)
 	if (quietmode == 0) {
@@ -1009,6 +1059,10 @@ int main(int argc, char **arg) {
 			{
 				quietmode=1;
 			}
+			else if(arg[i][1]=='t') // transparent tile mode 
+			{
+				transmode=1;
+			}
 			else if(arg[i][1]=='s') // sprite mode
 			{
 				sprmode=1;
@@ -1026,6 +1080,14 @@ int main(int argc, char **arg) {
 				else if( strcmp(&arg[i][1],"m!") == 0)
 				{
 					savemap=0;
+				}
+				else if( strcmp(&arg[i][1],"mp") == 0)
+				{
+					highpriority=1;
+				}
+				else if(arg[i][2]=='n') //offset for tiles
+				{
+					offset_tile = atoi(&arg[i][3]);
 				}
 				else if( strcmp(&arg[i][1],"mR!") == 0)
 				{
@@ -1046,7 +1108,11 @@ int main(int argc, char **arg) {
 			}
 			else if(arg[i][1]=='p') 	//palette options
 			{
-				if(arg[i][2]=='o') 		//palette output (64 colors)
+				if( strcmp(&arg[i][1],"p!") == 0)
+				{
+					savepal=0;
+				}
+				else if(arg[i][2]=='o') 		//palette output (64 colors)
 				{
 					output_palette=64;
 				}
@@ -1181,22 +1247,36 @@ int main(int argc, char **arg) {
 			printf("\nSprite mode=ON");
 		else {
 			printf("\nSprite mode=OFF");
-
-			if (bmpmode)
-				printf("\nTMS9918 Bitmap mode2=ON");
-			else {
-				printf("\nTMS9918 Bitmap mode2=OFF");
-				if (gramode == 0)
-					printf("\nTMS9918 Graphic mode 2");
-				else if (gramode == 1)
-					printf("\nTMS9918 Graphic mode 1");
+			if (transmode)
+				printf("\nF18A Tile transparent mode=ON");
+			else 
+				printf("\nF18A Tile transparent mode=OFF");
+			if (highpriority)
+				printf("\nF18A Tile highpriority mode=ON");
+			else
+				printf("\nF18A Tile highpriority mode=OFF");
+			if (ecmmode==0) 
+			{
+				if (bmpmode)
+					printf("\nTMS9918 Bitmap mode2=ON");
+				else {
+					printf("\nTMS9918 Bitmap mode2=OFF");
+					if (gramode == 0)
+						printf("\nTMS9918 Graphic mode 2");
+					else if (gramode == 1)
+						printf("\nTMS9918 Graphic mode 1");
+				}
 			}
 			if (tile_reduction)
 				printf("\nOptimize tilemap=ON");
 			else
 				printf("\nOptimize tilemap=OFF");
 		}
-
+		if (ecmmode!=0) 
+		{
+			printf("\nF18A Enhanced Color Mode=%d",ecmmode-1);
+		}
+			
 		if (file_type == 2)
 			printf("\nPCX file: %dx%d pixels",width,height);
 		else if (file_type == 3)
@@ -1325,7 +1405,7 @@ int main(int argc, char **arg) {
 		}
 		
 		//convert pictures and save to file
-		if(!Convert2Pic(filebase, buffer, tilemap, palette, colorspal, ysize, width/8, height/8,savemap)) 
+		if(!Convert2Pic(filebase, buffer, tilemap, palette, colorspal, ysize, width/8, height/8,savemap,savepal)) 
 		{
 			//free up image & tilemap memory
 			free(tilemap);

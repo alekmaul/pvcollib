@@ -23,9 +23,9 @@ void main (void) {
 	// put screen in mode 1 
 	vdp_setmode1txt();
 	
-	vdp_ple2vram (TILourvision, chrgen); // characters
-	vdp_putvram (coltab,COLourvision,32); // colors (not compressed as it is only 32 bytes)
-	vdp_ple2vram (MAPourvision, chrtab); // map
+	vdp_ple2vram (TILourvisiongfx, chrgen); // characters
+	vdp_putvram (coltab,COLourvisiongfx,32); // colors (not compressed as it is only 32 bytes)
+	vdp_ple2vram (MAPourvisiongfx, chrtab); // map
 	
 	vdp_enablescr();
 

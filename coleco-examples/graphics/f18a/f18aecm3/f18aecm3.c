@@ -29,7 +29,7 @@ void main (void) {
 		vdp_setreg(50,16);//turn off tile layer
 
 		// put screen in mode 1 with no specific f18a stuffs
-		vdp_f18asetmode1(0x70);
+		vdp_f18asetmode1(0x30);
 		
 		vdp_ple2vram (TILP1ourvisiongfx, chrgen); 		   // characters Layer 1
 		vdp_ple2vram (TILP2ourvisiongfx, chrgen+256*8);   // characters Layer 2

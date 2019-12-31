@@ -57,10 +57,13 @@
 
  \section external_links Useful links
  - <a href="http://atariage.com/forums/forum/55-colecovision-programming/">AtariAge ColecoVision development forum.</a>
+ - <a href="https://atariage.com/forums/topic/280138-f18a-mk2/">AtariAge F18A development topic.</a>
  
  \section special_thanks Special Thanks
- - Amy Purple (aka newcoleco) for cvlib source code, which are parts of PVcollib.</a>
- - <a href="https://sourceforge.net/projects/sdcc/files/">Philipp Klaus Krause - SDCC Release Manager. </a>
+ - Amy Purple (aka newcoleco) for cvlib source code, which are parts of PVcollib.
+ - <a href="https://sourceforge.net/projects/sdcc/files/">Philipp Klaus Krause</a> - SDCC Release Manager. 
+ - AtariAge member <a href="http://eriscreations.com/">digress</a> for his help about F18A programming on Coleco.
+ - AtariAge member <a href="http://codehackcreate.com/archives/592">matthew180</a> for his help on discord about F18A device, thanks for making it real matthew ;) !.
 */
 
 

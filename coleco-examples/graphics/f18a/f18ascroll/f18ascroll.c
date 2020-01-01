@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------
 
 
-	f18a test with a bitmap 
+	f18a bitmap scroll only with one screen (infinite scroll)
 	-- alekmaul
 
 
@@ -28,20 +28,22 @@ void main (void) {
 
 	// display a message regarding result of test
 	if (vdp_f18aok==1) {
-		vdp_setreg(50,16);//turn off tile layer
+		vdp_setreg(50,16);									//turn off tile layer
 
-		// put screen in mode 1 with no specific f18a stuffs
+		// put screen in mode 1 with ecm3 f18a stuffs
 		vdp_f18asetmode1(0x30);
 		
-		vdp_ple2vram (TILP1ourvisiongfx, chrgen); 		   // characters Layer 1
-		vdp_ple2vram (TILP2ourvisiongfx, chrgen+256*8);   // characters Layer 2
-		vdp_ple2vram (TILP3ourvisiongfx, chrgen+256*8*2); // characters Layer 2
-		vdp_ple2vram (COLourvisiongfx, coltab); 		   // colours  (attribute table in our ecm3 case)
-		vdp_ple2vram (MAPourvisiongfx, chrtab);           // map
+		vdp_ple2vram (TILP1ourvisiongfx, chrgen); 		   	// characters Layer 1
+		vdp_ple2vram (TILP2ourvisiongfx, chrgen+256*8);   	// characters Layer 2
+		vdp_ple2vram (TILP3ourvisiongfx, chrgen+256*8*2); 	// characters Layer 2
+		vdp_ple2vram (COLourvisiongfx, coltab); 		    // colours  (attribute table in our ecm3 case)
+		vdp_ple2vram (MAPourvisiongfx, chrtab);           	// map
 		vdp_f18asetpalette(PALourvisiongfx,64);
 		
+		vdp_setreg(29,0);									//only use 1 page for scrlling (Horiz & Vert)
+		
 		vdp_enablescr();
-		vdp_setreg(50,0);//turn on tile layer
+		vdp_setreg(50,0);									//turn on tile layer
 	}
 	else {
 		// Put screen in text mode 2
@@ -64,14 +66,20 @@ void main (void) {
 		// only for F18a
 		if (vdp_f18aok==1) {
 			// test keyboard
-			if (joypad_1 & PAD_DOWN)  { yscr--; while (joypad_1 & PAD_DOWN) { vdp_waitvblank(1); } }
-			if (joypad_1 & PAD_UP)    { yscr++; while (joypad_1 & PAD_UP) { vdp_waitvblank(1); } }
-			if (joypad_1 & PAD_LEFT)  { xscr++; while (joypad_1 & PAD_LEFT) { vdp_waitvblank(1); } }
-			if (joypad_1 & PAD_RIGHT) { xscr--; while (joypad_1 & PAD_RIGHT) { vdp_waitvblank(1); } }
-			
-			// check boundaries for y scroll
-			//if (yscr<0) { if (yscr>=-64) yscr=-191; }
-			//else if (yscr>=192) yscr=0; 
+			// Y can be only 0..191 because of 32x24 screen
+			// X can be 0..255 so no pb for it
+			if (joypad_1 & PAD_DOWN)  { 
+				if (yscr==0) yscr=191; else yscr--; 
+			}
+			if (joypad_1 & PAD_UP)    { 
+				if (yscr==191) yscr=0; else yscr++; 
+			}
+			if (joypad_1 & PAD_LEFT)  { 
+				xscr++; 
+			}
+			if (joypad_1 & PAD_RIGHT) { 
+				xscr--; 
+			}
 			
 			//scroll in x & y
 			vdp_f18asetscrollx(1, xscr);

@@ -278,6 +278,25 @@ Works the same as VR3 in Enhanced Color Modes / Position-Attribute Mode
   6-7  0          Not used
 </pre>
 
+**Register 1D: VR29 Page size for scrolling**  
+<pre>
+  Bit  Name       Expl.
+  0    VPSIZE1    VPSIZE = vertical page size layer 1, 0 = 1 page, 1 = 2 pages
+  1    HPSIZE1	  HPSIZE = horizontal page size  layer 1, 0 = 1 page, 1 = 2 pages
+  2-3  TPGS0-1    TPGS = tile pattern generator offset size, 11=256, 10=512, 01=1K, 00=2K
+  4    VPSIZE2	  VPSIZE = vertical page size layer 2, 0 = 1 page, 1 = 2 pages
+  5    HPSIZE2	  HPSIZE = horizontal page size  layer 2, 0 = 1 page, 1 = 2 pages
+  6-7  SPGS0-1    SPGS = sprite pattern generator offset size, 11=256, 10=512, 01=1K, 00=2K
+</pre>
+
+**Register 1E: VR30 Max sprite per scan line**  
+<pre>
+  Bit  Name       Expl.
+  0-4  SPRTMAX0-4 Max sprites per scan line
+  5-7  0          Not used
+</pre>
+Max sprites per scan line are set to 0 to reset sprite max to jumper setting  
+
 **Register 2F: VR47**  
 <pre>
   Bit  Name       Expl.

@@ -79,6 +79,16 @@ void vdp_f18ainit(void);
 void vdp_f18asetpalette(void *data,unsigned count);
 
 /**
+ * \fn void vdp_f18asetpaletteentry(void *data,u8 entry,unsigned count)
+ * \brief Send a palette RGB 12bits color entries to f18a device<br>
+ *
+ * \param data address of data to use
+ * \param offset 1st entry in the palette (0..64)
+ * \param count number of data <b>in words (each entry is two bytes)</b>
+*/
+void vdp_f18asetpaletteentry(void *data,unsigned offset,unsigned count);
+
+/**
  * \fn vdp_f18asetmode1(u8 flags)
  * \brief Activate mode 1 in bitmap mode for f18a ONLY<br>
  *

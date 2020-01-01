@@ -74,7 +74,7 @@ void vdp_f18ainit(void);
  * \brief Send a palette RGB 12bits color entries to f18a device<br>
  *
  * \param data address of data to use
- * \param count number of data <b>in byte (so must be x2)</b>
+ * \param count number of data <b>in words (each entry is two bytes)</b>
 */
 void vdp_f18asetpalette(void *data,unsigned count);
 

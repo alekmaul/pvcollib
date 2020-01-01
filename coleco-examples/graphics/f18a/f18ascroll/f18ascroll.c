@@ -38,7 +38,7 @@ void main (void) {
 		vdp_ple2vram (TILP3ourvisiongfx, chrgen+256*8*2); // characters Layer 2
 		vdp_ple2vram (COLourvisiongfx, coltab); 		   // colours  (attribute table in our ecm3 case)
 		vdp_ple2vram (MAPourvisiongfx, chrtab);           // map
-		vdp_f18asetpalette(PALourvisiongfx,64*2);
+		vdp_f18asetpalette(PALourvisiongfx,64);
 		
 		vdp_enablescr();
 		vdp_setreg(50,0);//turn on tile layer

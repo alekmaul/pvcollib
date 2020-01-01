@@ -13,10 +13,14 @@ SPECIAL THANKS
 ----------------------
   Philipp Klaus Krause for sdcc - SDCC Release Manager  https://sourceforge.net/projects/sdcc/files/
   Amy Purple (aka newcoleco) for cvlib :  <no website>
-  
+  matthew180 for F18A support (http://codehackcreate.com/archives/592)
+  digress (http://eriscreations.com) for F18A support on Colecovision.    
                
 CHANGE LOG
 ----------------------
+VERSION 1.30 (January, 2020)
+- Add lots of feature in gfx2col for f18a
+
 VERSION 1.20 (December, 2019)
 - Add graphic mode 1 in gfx2col
 

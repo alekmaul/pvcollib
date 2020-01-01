@@ -68,6 +68,11 @@ vfsp1:
     nop
     nop
 	inc		hl
+	ld		a,(hl)
+	out		(0xbe), a									; put palette data
+    nop
+    nop
+	inc		hl
 	djnz    vfsp1
 	
 	xor     a											; Data Port Mode OFF

@@ -30,7 +30,7 @@ void main (void) {
 		vdp_ple2vram (MAPourvision, chrtab); // map
 		vdp_ple2vram (COLourvision, coltab); // colours
 
-		vdp_f18asetpalette(PALourvision,64*2);
+		vdp_f18asetpalette(PALourvision,64);
 		
 		vdp_enablescr();
 	}

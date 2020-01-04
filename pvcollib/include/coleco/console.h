@@ -106,4 +106,14 @@ void sys_utoa(unsigned value,char *buffer);
 */
 char *sys_str(unsigned value);
 
+/**
+ * \fn void sys_memcpyb (void *dest,void *src,unsigned num)
+ * \brief Copy memory 
+ *
+ * \param dest destination memory
+ * \param src source memory
+ * \param num number of bytes to copy
+*/
+void sys_memcpyb (void *dest,void *src,unsigned num);
+
 #endif

@@ -28,6 +28,7 @@ V1.5.0 (12/xx/2020)
 - Add default sprite address 0x3800 in mode 2 
 - Add spr_updatefast funciton without changing order
 - Change palette for f18a from bytes to words
+- Add sys_memcpyb yto copy memro byte per byte
 
 V1.4.0 (12/15/2019)
 - Add a specific file for f18a support

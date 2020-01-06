@@ -764,8 +764,8 @@ int  save(struct pakdata *p, unsigned int mode,byte *dstcomp)
         add1();
         addvar(p[i].mlen - 1);
         j = m[i].cpos[0] - 1;
-        if (j > 127)
-          printf("-j>128-");
+        //if (j > 127)
+        //  printf("-j>128-");
         adddata(j);
         i += p[i].mlen;
         break;
@@ -773,8 +773,8 @@ int  save(struct pakdata *p, unsigned int mode,byte *dstcomp)
         add1();
         addvar(p[i].mlen - 1);
         j = m[i].cpos[mode] - 1;
-        if (j < 128)
-          printf("-j<128-");
+        //if (j < 128)
+        //  printf("-j<128-");
         adddata(128 | (j & 127));
         j -= 128;
         switch (mode) {
@@ -792,13 +792,13 @@ int  save(struct pakdata *p, unsigned int mode,byte *dstcomp)
           case 1:
             break;
           default:
-            printf("-2-");
+            //printf("-2-");
             break;
         }
         i += p[i].mlen;
         break;
       default:
-        printf("-?-");
+        //printf("-?-");
         break;
     }
   }

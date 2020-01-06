@@ -347,13 +347,13 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 				palette = (img[current*64] >> 2) & 0x0F;
 			else				// ecm 1 and others
 				palette = (img[current*64] >> 1) & 0x1F;
-			if (ecmmode>1) 
+			/* test purpose if (ecmmode>1) 
 			{
 				if (oldpal!=palette) {
 					printf("\npalette=%04x",palette);fflush(stdout);
 					oldpal=palette;
 				}
-			}
+			}*/
 
     		//check for matches with previous tiles if tile_reduction on
             if (optimize)
@@ -965,12 +965,12 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	fclose(fpc);fclose(fph);
 
     // free memory
-    free(maMemEncode);
-    free(maMem);
-    free(coMemEncode);
-    free(coMem);
-    free(tiMemEncode);
-    free(tiMem);
+    if (maMemEncode) free(maMemEncode);
+    if (maMem) free(maMem);
+    if (coMemEncode) free(coMemEncode);
+    if (coMem) free(coMem);
+    if (tiMemEncode) free(tiMemEncode);
+    if (tiMem) free(tiMem);
 
 	return -1;
 } //end of Convert2Pic

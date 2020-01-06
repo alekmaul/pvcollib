@@ -47,7 +47,7 @@ _snd_settable:
     pop hl
     push hl
     push de
-snd_settable:
+snd_settable:										; for crtcol entry
 	ld	b,#6
     ld a,h
     or a

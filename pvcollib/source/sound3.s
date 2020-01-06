@@ -21,7 +21,7 @@
 ;		distribution.
 ;
 ;---------------------------------------------------------------------------------
-	.module pvclsound
+	.module pvclsound3
 	
 
 	; global from external entries / code

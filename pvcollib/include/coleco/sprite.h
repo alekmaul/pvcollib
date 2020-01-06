@@ -24,9 +24,11 @@
 
 
 ---------------------------------------------------------------------------------*/
-
-/*! \file sprite.h
-    \brief coleco generic sprites support.
+/**
+ * \file sprite.h
+ * \brief coleco generic sprites support.
+ *
+ * This unit provides methods to display / remove sprites on screen.<br>
 */
 
 #ifndef COL_SPRITE_H
@@ -68,11 +70,17 @@ extern volatile sprite_t sprites[MAXSPRITE];	// sprites entries
  */
 extern volatile u8 spr_enable;
 
-/*! \fn spr_clear(void)
-	\brief remove all sprite 
-	Remove all sprite from screen and init their positions
+/**
+ * \fn void spr_clear(void)
+ * \brief Remove all sprite from screen and init their positions
 */
 void spr_clear(void);
+
+/**
+ * \fn void spr_clear30r(void)
+ * \brief Remove all sprite from screen and init their positions in F18a 30 rows mode
+*/
+void spr_clear30r(void);
 
 /*! \fn spr_update(void)
 	\brief put sprite on screen

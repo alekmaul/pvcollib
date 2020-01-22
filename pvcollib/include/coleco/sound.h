@@ -54,6 +54,12 @@ typedef struct
 #define SOUNDAREA6  0x702b+50
 
 /**
+ * \brief
+ * put 1 to snd_mute to disable sound update.
+ */
+extern volatile u8 snd_mute;
+
+/**
  * \fn snd_settable (void *snd_table)
  * \brief define the sound table used for playing sound
  *

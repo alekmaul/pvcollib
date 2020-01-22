@@ -283,4 +283,15 @@ void vdp_ple2vram(void *pledata, unsigned offset);
 */
 void vdp_dan2vram(void *dandata, unsigned offset);
 
+
+/*! \fn vdp_blocknmi 
+	\brief set no_nmi flag to avoid nmi 
+*/
+#define vdp_blocknmi  { __asm__("\tpush hl\n\tld hl,#_no_nmi\n\tset 0,(hl)\n\tpop hl"); }
+
+/*! \fn vdp_releasenmi 
+	\brief reset no_nmi flag to allow nmi 
+*/
+#define vdp_releasenmi { __asm__("\tpush hl\n\tld hl,#_no_nmi\n\tbit 7,(hl)\n\tjp z,.+6\n\tcall _nmi_direct\n\tres 0,(hl)\n\tpop hl"); }
+
 #endif

@@ -30,6 +30,7 @@
 	.globl snd_settable
 
 	; global from this code
+	.globl _nmi_direct
 	.globl snd_areas
 	.globl _buffer32
 	.globl _no_nmi
@@ -46,6 +47,8 @@
 
 	.globl _vid_freq
 	.globl _vid_frsw
+	
+	.globl _snd_mute
 	
 	; global from C code
 	.globl _main
@@ -95,6 +98,8 @@ _spinner_enabled::
 _vid_freq::
 	.ds 1
 _vid_frsw::
+	.ds 1
+_snd_mute::
 	.ds 1
 	
 _spinner_1 = 0x73eb
@@ -172,20 +177,29 @@ _spinner_2 = 0x73ec
 
 	;; CODE STARTS HERE WITH NMI
         .area _CODE
+  ;; direct force NMI call for the release_nmi handler
+_nmi_direct:
+	    push	  af
+	    push    hl
+	    ld      a,#1
+	    ld      (_nmi_flag),a						; flag an nmi happened even if we won't process it!
+	    ld      hl,#_no_nmi
+		set     0,(hl)                  ; prevent re-entrancy
+	    jr      _nmi_direct2
+
+;; This is the real interrupt-driven entry point
 _int_nmi:
         push	af
-        ld	a,#1
+		push    hl
+        ld	a,	#1
         ld      (_nmi_flag),a           ; set NMI flag
-	;;;
-        call    0x1fdc                   ; get VDP status
-        ld      (_vdp_status),a
-	;;;
-        ld      a,(_no_nmi)             ; check if nmi() should be
-        or      a                       ;  called
-        jp      nz,nmi_exit
-        inc     a
-        ld      (_no_nmi),a
+
+		ld      hl,#_no_nmi
+        bit     0,(hl)                  ; check if nmi() should be called
+        jp      nz,nmi_skip
+        set     0,(hl)                  ; prevent re-entrancy
         
+_nmi_direct2:
         ld      a,(_vid_frsw) ; update flag for frequency
         inc	a
         ld		(_vid_frsw),a
@@ -216,12 +230,16 @@ _int_nmi:
         ld      (_keypad_2),a
         call    decode_controllers
         call    _nmi                    ; call C function
+		ld		a,(_snd_mute)
+        and		#0x01
+        jr 		nz, $1101
+
         call    0x1f61                   ; play sounds
         call    0x1ff4                   ; update snd_addr with snd_areas
         
         ld      a,(_vid_freq)           ; if 50Hz, setting redo music for sagaruo
         sub 	#0x32
-        jr nz, $1101
+        jr 		nz, $1101
         ld      a,(_vid_frsw)           ; only recall if 1 cycle per 3
         and		#0x03
         jr nz, $1101
@@ -240,14 +258,28 @@ $1101:
         pop     hl
         pop     de
         pop     bc
+		
         xor     a
         ld      (_no_nmi),a
+
+        in      a,(#0xbf)               ; get VDP status faster
+        ld      (_vdp_status),a
+
+        jp      nmi_exit
+
+; if you skipped the NMI, you better mean it in your code! :) (tursi)
+; we no longer read the VDP status in that case, which means that
+; unless you read the status register, you will never get another NMI
+; so on every enable, ALWAYS read VDP status to reset it.
+nmi_skip:
+        set     7,(hl)									; flag missed interrupt
 nmi_exit:
         ld	a,(_spinner_enabled)
         or	a
         jr	z,nmi_end
         ei
 nmi_end:
+        pop     hl
         pop     af
         ret
 
@@ -340,6 +372,10 @@ start_program:
 	ld      (hl),a
 	ldir                            ; zero-fill bss
 
+	ld	    a,#1                    ; this is after we zero fill, should still be early
+	ld      (_no_nmi),a             ; don't process NMI during setup (tursi)
+
+
 	call gsinit						; Initialize global variables.
 
 	ld	h,#0 						; set dummy sound table
@@ -357,6 +393,14 @@ start_program:
 	
 	ld 		a, (0x0069)				; initialise video frequency
 	ld      (_vid_freq),a
+
+  ; re-enable NMIs (tursi)
+	xor     a
+	ld      (_no_nmi),a
+	ld      (_snd_mute),a
+
+	in      a,(#0xbf)               ; clear VDP status 	
+	ld      (_vdp_status),a         ; and save it
 	
 	jp      _main					; call main rountine
 	

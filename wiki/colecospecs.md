@@ -107,7 +107,7 @@ In F18A unlocked mode, for all modes and ECM modes settings:
   4    SIZE       Size: 0 = global VR1 setting, 1 = 16x16
   5    FLIPY      Sprite flip Y axis 
   6    FLIPX      Sprite flip X axis
-  7    F          V-Blank IRQ Flag (1=interrupt) (See also IE0 flag)
+  7    EC         Early Clock
 </pre>
 
 VRAM Data Read/Write  

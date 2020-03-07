@@ -191,7 +191,7 @@ _nmi_direct:
 _int_nmi:
         push	af
 		push    hl
-        ld	a,	#1
+        ld	    a,	#1
         ld      (_nmi_flag),a           ; set NMI flag
 
 		ld      hl,#_no_nmi
@@ -201,7 +201,7 @@ _int_nmi:
         
 _nmi_direct2:
         ld      a,(_vid_frsw) ; update flag for frequency
-        inc	a
+        inc	    a
         ld		(_vid_frsw),a
                 
         push    bc
@@ -242,7 +242,7 @@ _nmi_direct2:
         jr 		nz, $1101
         ld      a,(_vid_frsw)           ; only recall if 1 cycle per 3
         and		#0x03
-        jr nz, $1101
+        jr      nz, $1101
         call    0x1f61                   ; play sounds
         call    0x1ff4                   ; update snd_addr with snd_areas
 
@@ -274,9 +274,9 @@ $1101:
 nmi_skip:
         set     7,(hl)									; flag missed interrupt
 nmi_exit:
-        ld	a,(_spinner_enabled)
-        or	a
-        jr	z,nmi_end
+        ld	    a,(_spinner_enabled)
+        or	    a
+        jr	    z,nmi_end
         ei
 nmi_end:
         pop     hl

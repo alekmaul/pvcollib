@@ -30,6 +30,7 @@ V1.5.0 (12/xx/2020)
 - Change palette for f18a from bytes to words
 - Add sys_memcpyb yto copy memory byte per byte
 - Add snd_mute variable to mute background sound playing (if you have another sound engine)
+- Change vdp_disablescr & vdp_enablescr with flag for nmi
 
 V1.4.0 (12/15/2019)
 - Add a specific file for f18a support

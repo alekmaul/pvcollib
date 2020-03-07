@@ -26,11 +26,13 @@
 	; global from external entries / code
 	.globl _vdp_enablevdp
 	.globl _vdp_disablevdp
-	.globl  _vdp_enablenmi
-	.globl _vdp_disablenmi
+	;.globl  _vdp_enablenmi
+	;.globl _vdp_disablenmi
+    .globl _nmi_direct
 	.globl _spr_clear
 	.globl _spr_enable
 	.globl _vdp_waitvblank
+    .globl _no_nmi
 	
 	; global from this module
 	.globl _vdp_enablescr
@@ -43,21 +45,30 @@
 ;---------------------------------------------------------------------------------
 _vdp_enablescr:
 	call 	_vdp_enablevdp
-	call 	_vdp_enablenmi
+    push    hl
+    ld      hl,#_no_nmi
+    bit     7,(hl)
+    jp      z,.+6
+    call    _nmi_direct
+    res     0,(hl)
 	ld		hl,#_spr_enable
 	ld		(hl),#00   
+    pop     hl
 
 	ret
 	
 _vdp_disablescr:
+	push	hl
 	ld 		hl,#1
 	push	hl
 	call 	_vdp_waitvblank
 	pop		af
 	call 	_spr_clear
 	call 	_vdp_disablevdp
-	call 	_vdp_disablenmi
+    ld      hl,#_no_nmi
+    set     0,(hl)
 	ld		hl,#_spr_enable
 	ld		(hl),#00   
+    pop     hl
 
 	ret

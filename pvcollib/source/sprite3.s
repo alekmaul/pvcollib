@@ -80,7 +80,7 @@ spwv1:
 	inc		hl         
 	ld		a,(hl)     
 	out		(#0xbe),a    
-	inc    hl         
+	inc     hl         
 	ld		a,(hl)     
 	out		(#0xbe),a    
 	ei                
@@ -96,5 +96,5 @@ spwv1:
 	xor    a          
 	cp     c          
 	jr     nz,spwv1
-	
+
 	ret    

@@ -99,9 +99,19 @@ void spr_updatefast(void);
 /*! \fn spr_getentry(void)
 	\brief get a sprite id in sprite list 
 	\return sprite entry (0..31)
-	Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b>
+	Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b><br>
+	<b>Warning, it uses 0xcf Y attribute to know if sprite is used or not.</b>
 */
 u8 spr_getentry(void);
+
+/*! \fn spr_getentry30r(void)
+	\brief get a sprite id in sprite list 
+	\return sprite entry (0..31)
+	Must be used to allocate sprite because we swap sprite each NMI to <b>avoid 4 sprites limit per line.</b><br>
+	<b>Warning, it uses 0xf0 Y attribute to know if sprite is used or not.</b>
+*/
+u8 spr_getentry30r(void);
+
 
 /*! \fn spr_mode8x8(void)
 	\brief put sprite in 8x8 pix mode

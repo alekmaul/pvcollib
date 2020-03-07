@@ -40,36 +40,36 @@
 ;---------------------------------------------------------------------------------
 _vdp_putarea:
 	exx
-	pop	hl
+	pop	    hl
 	exx
-	pop	hl
-	pop	de
+	pop	    hl
+	pop	    de
 	call	calcoffset
-	pop	bc
+	pop	    bc
 	push	bc
 	push	de
 	push	hl
 	exx
 	push	hl
 	exx
-loop:
+looppu:
 	push	bc
 	push	de
 	push	hl
-	ld	b,#0
-	xor	a
+	ld	    b,#0
+	xor	    a
 	call	0x1fdf
-	pop	hl
-	pop	de
-	pop	bc
+	pop	    hl
+	pop	    de
+	pop	    bc
 	push	bc
-	ld	b,#0
-	add	hl,bc
-	ex	de,hl
-	ld	bc,#0x0020
-	add	hl,bc
-	ex	de,hl
-	pop	bc
-	djnz loop
+	ld	    b,#0
+	add	    hl,bc
+	ex	    de,hl
+	ld	    bc,#0x0020
+	add	    hl,bc
+	ex	    de,hl
+	pop	    bc
+	djnz    looppu
 	ret
 	

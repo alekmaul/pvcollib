@@ -21,12 +21,12 @@
 ;		distribution.
 ;
 ;---------------------------------------------------------------------------------
-	.module pvclsprite6
+	.module pvclsprite
 	
 	; global from external entries / code
-	.globl	_spr_odd
+	.globl	_vdp_putvram
 	.globl	_sprites
-	.globl _vdp_putvram
+	.globl	_spr_odd
 	
 	; global from this module
 	.globl _spr_clear30r
@@ -43,18 +43,18 @@
 _spr_clear30r:
 	ld		c,#0x00      
 
-spc30rv0:
+spcv0:
 	ld		de,#_sprites 
 	ld		l,c        
 	ld		h,#0x00      
 	add		hl,hl      
 	add		hl,hl      					; c*4 because of sprite definition
 	add		hl,de      
-	ld		(hl),#0xF0					; SPHIDE row 30
+	ld		(hl),#0xF0					; SPHIDE
 	inc		c          
 	ld		a,c        
 	sub		#0x20        
-	jr		c,spc30rv0    
+	jr		c,spcv0    
 	
 	ld		hl,#0x80		   			; MAXSPRITE4
 	push	hl         

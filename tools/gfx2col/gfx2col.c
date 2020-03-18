@@ -746,18 +746,26 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 			lenencodet3=dan1Compress( tiMem+256*8*2,tiMemEncode+256*8*2,lenencode);
 		}
 		else
+        {
 			lenencode=dan1Compress( tiMem,tiMemEncode,lenencode);
+        }
 		if (gramode==1)
 		{
 			memcpy(coMemEncode,coMem,32);
 			lenencode1=32;
 		}
 		else
+        {
 			lenencode1=dan1Compress(coMem,coMemEncode,lenencode1);
+        }
         if (savemap)
+        {
             lenencode2=dan1Compress(maMem,maMemEncode,lenencode2);
+        }
         else
+        {
             memcpy(maMemEncode,maMem,lenencode2);
+        }
     }		
 	
 	// write to files
@@ -1067,6 +1075,7 @@ int main(int argc, char **arg) {
 			{
 				sprmode=1;
 				tile_reduction=0;
+                savemap=0;          // Fix 200318 , no need for sprite
 			}
 			else if(arg[i][1]=='b') // bitmap mode
 			{

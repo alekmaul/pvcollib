@@ -386,6 +386,123 @@ When T40/T80 Mode, ECM0, and Position-Based Attributes is Enabled
   Name   FG0	FG1	FG2	FG3	BG0	BG1	BG2	BG3	T40/80 fg / bg color
 </pre>
 
+SN76489 sound chip
+===
+The sound chip in the CV is a SN76489AN manufactured by Texas Instruments.  
+It has 4 sound channels- 3 tone and 1 noise.  
+
+The volume of each channel can be controlled seperately in 16 steps from full volume to silence.  
+
+A byte written into the sound chip determines which register is used, along with the frequency/ attenuation information.
+
+The frequency of each channel is represented by 10 bits.  10 bits won't fit into 1 byte, so the data is written in as 2 bytes.  
+
+Here's the control word:  
+<pre>
++--+--+--+--+--+--+--+--+
+|1 |R2|R1|R0|D3|D2|D1|D0|
++--+--+--+--+--+--+--+--+
+</pre>
+
+1: This denotes that this is a control word  
+R2-R0 the register number:  
+
+000 Tone 1 Frequency
+001 Tone 1 Volume
+010 Tone 2 Frequency
+011 Tone 2 Volume
+100 Tone 3 Frequency
+101 Tone 3 Volume
+110 Noise Control
+111 Noise Volume
+
+D3-D0 is the data
+
+Here's the second frequency register:
+<pre>
++--+--+--+--+--+--+--+--+
+|0 |xx|D9|D8|D7|D6|D5|D4|
++--+--+--+--+--+--+--+--+
+</pre>
+0: This denotes that we are sending the 2nd part of the frequency
+
+D9-D4 is 6 more bits of frequency 
+
+
+To write a 10-bit word for frequenct into the sound chip you must first send the control word, then the second frequency register.  
+Note that the second frequency register doesn't have a register number.  
+When you write to it, it uses which ever register you used in the control word.  
+
+So, if we want to output 11 0011 1010b to tone channel 1:
+
+First, we write the control word:  
+<pre>
+LD A,1000 1010b
+OUT (F0h),A
+</pre>
+
+Then, the second half of the frequency: 
+<pre>
+LD A,0011 0011b
+OUT (F0h),A
+</pre>
+
+To tell the frequency of the wave generated, use this formula:  
+
+
+   3579545
+f= -------
+     32n
+
+Where f= frequency out,
+and n= your 10-bit binary number in
+
+
+To control the Volume:  
+<pre>
++--+--+--+--+--+--+--+--+
+|1 |R2|R1|R0|V3|V2|V1|V0|
++--+--+--+--+--+--+--+--+
+</pre>
+
+R2-R0 tell the register  
+V3-V0 tell the volume:  
+
+0000=Full volume  
+.  
+.  
+.  
+1111=Silence  
+
+
+The noise source is quite intresting.  It has several modes of operation.  
+Here's a control word:  
+
++--+--+--+--+--+--+--+--+
+|1 |1 |1 |0 |xx|FB|M1|M0|
++--+--+--+--+--+--+--+--+
+
+FB= Feedback:
+
+0= 'Periodic' noise
+1= 'white' noise 
+
+The white noise sounds, well, like white noise.
+The periodic noise is intresting.  Depending on the frequency, it can
+sound very tonal and smooth.
+
+M1-M0= mode bits:
+
+00= Fosc/512  Very 'hissy'; like grease frying
+01= Fosc/1024 Slightly lower
+10= Fosc/2048 More of a high rumble
+11= output of tone generator #3
+
+You can use the output of gen. #3 for intresting effects.  
+If you sweep the frequency of gen. #3, it'll cause a cool sweeping effect of the noise.  
+The usual way of using this mode is to attenuate gen. #3, and use the output of the noise source only.  
+
+The attenuator for noise works in the same way as it does for the other channels.    
 
 Colecovision Models  
 ===

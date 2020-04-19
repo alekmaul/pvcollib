@@ -70,23 +70,23 @@ extern volatile u8 vdp_f18aok;
 void vdp_f18ainit(void);
 
 /**
- * \fn void vdp_f18asetpalette(void *data,unsigned count)
+ * \fn void vdp_f18asetpalette(void *data,unsigned char count)
  * \brief Send a palette RGB 12bits color entries to f18a device<br>
  *
  * \param data address of data to use
  * \param count number of data <b>in words (each entry is two bytes)</b>
 */
-void vdp_f18asetpalette(void *data,unsigned count);
+void vdp_f18asetpalette(void *data,unsigned char count);
 
 /**
- * \fn void vdp_f18asetpaletteentry(void *data,u8 entry,unsigned count)
+ * \fn void vdp_f18asetpaletteentry(void *data,u8 entry,unsigned char count)
  * \brief Send a palette RGB 12bits color entries to f18a device<br>
  *
  * \param data address of data to use
  * \param offset 1st entry in the palette (0..64)
  * \param count number of data <b>in words (each entry is two bytes)</b>
 */
-void vdp_f18asetpaletteentry(void *data,unsigned offset,unsigned count);
+void vdp_f18asetpaletteentry(void *data,unsigned offset,unsigned char count);
 
 /**
  * \fn vdp_f18asetmode1(u8 flags)

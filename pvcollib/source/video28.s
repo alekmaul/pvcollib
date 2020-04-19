@@ -54,6 +54,7 @@ _vdp_f18asetpaletteentry:
     push    hl
     exx
 
+	ld 		b,c											; to have the right counter
 	push 	bc											; because not preserved in nmi fonc
 	call	_vdp_disablenmi
 	pop 	bc

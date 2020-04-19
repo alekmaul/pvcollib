@@ -21,7 +21,7 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.5.0 (12/xx/2020)
+V1.5.0 (yy/xx/2020)
 - Remove docs content (useless)
 - Add graphic mode 1 example
 - Add vdp_putarea function
@@ -31,6 +31,7 @@ V1.5.0 (12/xx/2020)
 - Add sys_memcpyb yto copy memory byte per byte
 - Add snd_mute variable to mute background sound playing (if you have another sound engine)
 - Change vdp_disablescr & vdp_enablescr with flag for nmi
+- Add vdp_getvram function
 
 V1.4.0 (12/15/2019)
 - Add a specific file for f18a support

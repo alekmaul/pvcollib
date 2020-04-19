@@ -257,6 +257,16 @@ void vdp_duplicatevram(void);
 void vdp_putvram (unsigned offset,void *data,unsigned count);
 
 /**
+ * \fn void vdp_putvram (unsigned offset,void *data,unsigned count)
+ * \brief Get from VRAM to a RAM pointer with some non compressed data 
+ *
+ * \param offset address in VRAM of 1st data to get
+ * \param data address of RAM to use
+ * \param count number of data
+*/
+void vdp_getvram (unsigned offset,void *data,unsigned count);
+
+/**
  * \fn void *vdp_rle2vram (void *rledata,unsigned offset)
  * \brief Fill the VRAM with some RLE compressed data 
  * 

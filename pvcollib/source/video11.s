@@ -27,6 +27,7 @@
 	
 	; global from this module
 	.globl _vdp_putvram
+	.globl _vdp_getvram
 	
 	.area  _CODE
 		
@@ -58,3 +59,23 @@ _vdp_putvram:
     ; - End Patch -
     jp	0x1fdf
 	
+_vdp_getvram:
+    exx
+    pop     hl
+    exx
+    pop     de
+    pop     hl
+    pop     bc
+    push    bc
+    push    hl
+    push    de
+    exx
+    push    hl 
+    exx
+    ; - Patch to fix a curious bug -
+    ld      a,c
+    or	a
+    jp	z,0x1fe2
+    inc	b
+    ; - End Patch -
+    jp	0x1fe2	

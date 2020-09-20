@@ -69,8 +69,10 @@ void PrintOptions(char *str)
 
 int main(int argc, char **arg)
 {
-	int i;
+	int i,j,k;
 	unsigned char bytei;
+    unsigned char tabascii[16];
+    
 
 	// Show something to begin :)
 	if (quietmode == 0) {
@@ -187,20 +189,37 @@ int main(int argc, char **arg)
 		fprintf(fpo, "#ifndef %s_INC_\n", filebase);
 		fprintf(fpo, "#define %s_INC_\n\n", filebase);
 		fprintf(fpo, "#define %s_SIZE 0x%x\n\n", filebase,filesize);
-		fprintf(fpo, "unsigned char %s[%d]={\n", filebase,filesize);
-		
+		fprintf(fpo, "const unsigned char %s[%d]={\n", filebase,filesize);
+		fprintf(fpo, "\t");
 		// write const
+        j = 0;
 		for(i = 0; i < filesize; i++) {
 			if(i) {
-				if((i & 31) == 0)
-					fprintf(fpo, ",\n");
+				if((i & 15) == 0) {
+                    fprintf(fpo, ",\t // ");
+                    fprintf(fpo, "%08x ",i-16);
+                    for (k=0;k<16;k++) {
+                        fputc( ( (tabascii[k]>=32) && (tabascii[k]<128)) ? tabascii[k] : '.',fpo);
+                    }
+                    j=0;
+                    fprintf(fpo, "\n\t");
+                }
 				else
 					fprintf(fpo, ",");
 			}
 			fread(&bytei, 1, 1, fpi);
+            tabascii[j++]=bytei;
 			fprintf(fpo, "0x%02X", bytei);
 		}
-	
+        for (k=0;k<16-j;k++) {
+            fprintf(fpo, "     ");
+        }
+        fprintf(fpo, " \t // ");
+        fprintf(fpo, "%08x ",i-16);
+        for (k=0;k<j;k++) {
+            fputc( ( (tabascii[k]>=32) && (tabascii[k]<128)) ? tabascii[k] : '.',fpo);
+        }
+
 		// write footer
 		fprintf(fpo, "\n};\n\n");
 		fprintf(fpo, "#endif\n");

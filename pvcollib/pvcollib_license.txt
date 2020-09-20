@@ -21,14 +21,15 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.5.0 (yy/xx/2020)
+V1.5.0 (09/20/2020)
+- Add sys_choice function to choose a key on joypad (thanks Amy Purple for this function)
 - Remove docs content (useless)
 - Add graphic mode 1 example
 - Add vdp_putarea function
 - Add default sprite address 0x3800 in mode 2 
 - Add spr_updatefast funciton without changing order
 - Change palette for f18a from bytes to words
-- Add sys_memcpyb yto copy memory byte per byte
+- Add sys_memcpyb to copy memory byte per byte
 - Add snd_mute variable to mute background sound playing (if you have another sound engine)
 - Change vdp_disablescr & vdp_enablescr with flag for nmi
 - Add vdp_getvram function

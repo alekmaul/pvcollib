@@ -1,7 +1,7 @@
 # A C library for the ColecoVision #
 ![PVcollib](https://www.portabledev.com/wp-content/uploads/2019/11/pvcollib_logo.png)
 
-PVcollib V1.5.0 (09, 20, 2020)  
+PVcollib V1.5.1 (09, 20, 2020)  
 
 PVcollib is an open and free library to develop programs for ColecoVision in C language.
 

@@ -24,6 +24,7 @@
 	.module pvclconsole5
 
 	; global from external entries / code
+    .globl _keypad_1
 
 	; global from this module
 	.globl _sys_choice

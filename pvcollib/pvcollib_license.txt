@@ -21,7 +21,12 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
+V1.5.1 (09/20/2020)
+- Add bunny example (thanks AMy Purple for sharing this game)
+- Fix MAkefile to add sys_choice and vdp_putvram_reapeat <_< (stupid I was ...)
+
 V1.5.0 (09/20/2020)
+- Add vdp_putvram_repeat to repeat some chars n times on screen (thanks Amy Purple for this function)
 - Add sys_choice function to choose a key on joypad (thanks Amy Purple for this function)
 - Remove docs content (useless)
 - Add graphic mode 1 example

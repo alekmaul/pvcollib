@@ -116,4 +116,14 @@ char *sys_str(unsigned value);
 */
 void sys_memcpyb (void *dest,void *src,unsigned num);
 
+/**
+ * \fn u8 sys_choice(u8 minval, u8 maxval)
+ * \brief Wait until a key between two values if pressed
+ *
+ * \param minval  minimum value of key pressed
+ * \param maxval  maximum value of key pressed
+ * \return value of key pressed
+*/
+u8 sys_choice(u8 minval, u8 maxval);
+
 #endif

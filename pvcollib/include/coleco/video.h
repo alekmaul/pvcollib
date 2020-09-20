@@ -241,6 +241,17 @@ void vdp_putstring(u8 x, u8 y, char* text);
 void vdp_fillvram(u16 offset,u8 value,u16 count);
 
 /**
+ * \fn void vdp_putvram_repeat(unsigned offset,void *table, u8 count, u8 times)
+ * \brief  Repeat n times an area of chars to screen
+ *
+ * \param offset  address in VRAM
+ * \param table   area in ram to load chars
+ * \param count   number of chars to repeat
+ * \param times   number of time we set chars
+*/
+void vdp_putvram_repeat(unsigned offset,void *table, u8 count, u8 times);
+
+/**
  * \fn void vdp_duplicatevram(void)
  * \brief Put 1st area of pattern vram to the 2nd and 3rd one
 */

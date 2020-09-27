@@ -21,6 +21,9 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
+V1.5.2 (mm/dd/2020)
+- Add sys_memcpy function (fast mem copy)
+
 V1.5.1 (09/20/2020)
 - Add bunny example (thanks AMy Purple for sharing this game)
 - Fix MAkefile to add sys_choice and vdp_putvram_reapeat <_< (stupid I was ...)

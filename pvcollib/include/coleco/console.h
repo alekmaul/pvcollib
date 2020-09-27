@@ -2,7 +2,7 @@
 
 	Generic console functions.
 
-	Copyright (C) 2018-2019
+	Copyright (C) 2018-2020
 		Alekmaul
 
 	This software is provided 'as-is', without any express or implied
@@ -108,13 +108,23 @@ char *sys_str(unsigned value);
 
 /**
  * \fn void sys_memcpyb (void *dest,void *src,unsigned num)
- * \brief Copy memory 
+ * \brief Copy memory
  *
  * \param dest destination memory
  * \param src source memory
  * \param num number of bytes to copy
 */
 void sys_memcpyb (void *dest,void *src,unsigned num);
+
+/**
+ * \fn void sys_memcpy (void *dest,void *src,unsigned num)
+ * \brief Fast memcpy function
+ *
+ * \param dest destination memory
+ * \param src source memory
+ * \param num number of bytes to copy
+*/
+void sys_memcpy(void *dest,void *src,unsigned num);
 
 /**
  * \fn u8 sys_choice(u8 minval, u8 maxval)

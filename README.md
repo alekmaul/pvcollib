@@ -10,6 +10,7 @@ Sdcc compiler from Philipp Klaus Krause - SDCC Release Manager  (https://sourcef
 C Library is based on works from Amy Purple (aka newcoleco), a great Colecovision coder and music composer (<no website currently>).  
 Amy Purple continues to help me to improve the library, thanks to her !
 F18A support from matthew180 (http://codehackcreate.com/archives/592) with the help of digress (http://eriscreations.com) on Colecovision.  
+NMI cautions in ctrcol.s from Tursi (http://www.harmlesslion.com/cgi-bin/showprog.cgi?ColecoVision), thanks to him !
 
 It also contains examples to help how to use functions with the library. You can find the Doxygen documentation of the library in the ['docs'](pvcollib/docs/html/files.html) directory.  
 

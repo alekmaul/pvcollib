@@ -24,9 +24,9 @@ void main (void) {
 	vdp_setmode2txt();
 	
 	// Put image in vram  and duplicate to the 2nd & 3rd zone
-	vdp_rle2vram (TILourvision, chrgen); // characters
-	vdp_rle2vram (COLourvision, coltab); // colors
-	vdp_rle2vram (MAPourvision, chrtab); // map
+	vdp_rle2vram (TILourvisiongfx, chrgen); // characters
+	vdp_rle2vram (COLourvisiongfx, coltab); // colors
+	vdp_rle2vram (MAPourvisiongfx, chrtab); // map
 
 	vdp_duplicatevram();
 	vdp_enablescr();

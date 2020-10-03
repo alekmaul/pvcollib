@@ -15,7 +15,7 @@ C_SRC	:=
 
 CFLAGS	:=	
 
-S_SRC	:=	console.s console1.s console2.s console3.s console4.s console5.s console6.s \
+S_SRC	:=	console.s console1.s console1_1.s console2.s console3.s console4.s console5.s console5_1.s console6.s \
 	pad.s \
 	sound0.s sound.s sound1.s sound2.s sound3.s \
 	sprite.s sprite1.s sprite2.s sprite3.s sprite4.s sprite5.s sprite6.s sprite7.s \

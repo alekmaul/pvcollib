@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------
-  Copyright (C) 2018-2019
+  Copyright (C) 2018-2020
    Alekmaul
 
   This software is provided 'as-is', without any express or implied
@@ -21,12 +21,21 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.5.2 (mm/dd/2020)
-- Add sys_memcpy function (fast mem copy)
+V1.6.0 (mm/dd/2020)
+- Add sys_memcpyf function (forward memcopy)
+- Change sys_memcpyb for backward copy
+- Add vdp_dan22vram & vdp_dan32vram compression
+- Rename vdp_dan2vram to vdp_dan12vram
+- Optimize rle & ple compression (thanks Amy Purple)
+- Update all examples regading new dan1 function name
+- Update all examples regarding new graphic filenames
+- Add sys_pause_delay function (thanks Amy Purple)
+- Change sys_choice to sys_choice_keypad1 
+- Add sys_choice_keypad2 function (thanks Amy Purple) 
 
 V1.5.1 (09/20/2020)
-- Add bunny example (thanks AMy Purple for sharing this game)
-- Fix MAkefile to add sys_choice and vdp_putvram_reapeat <_< (stupid I was ...)
+- Add bunny example (thanks Amy Purple for sharing this game)
+- Fix Makefile to add sys_choice and vdp_putvram_repeat <_< (stupid I was ...)
 
 V1.5.0 (09/20/2020)
 - Add vdp_putvram_repeat to repeat some chars n times on screen (thanks Amy Purple for this function)

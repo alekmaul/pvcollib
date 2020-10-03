@@ -70,7 +70,11 @@ void main (void) {
 	vdp_setdefaultchar(FNTNORMAL);
 	vdp_duplicatevram();
 	vdp_fillvram(0x2000,0xf1,128*8); // Change color (or we will see nothing)
-	vdp_enablescr();
+    vdp_putstring(7,6,"PUSH PAD FOR SOUNDS");
+	
+    // display screen and enable sound
+    vdp_enablescr();
+    vdp_enablenmi();
 	
 	// Wait for nothing :P
 	while(1) {

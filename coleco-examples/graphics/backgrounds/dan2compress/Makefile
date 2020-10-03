@@ -23,7 +23,7 @@ include $(DEVKITSDCC)/col_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	grafdancomp
+TARGET		:=	grafdan2comp
 SOURCES		:=	.
 
 #---------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ clean:
 #---------------------------------------------------------------------------------
 ourvisiongfx.inc: ourvision.png
 	@echo convert graphic ... $(notdir $@)
-	$(GFXCONV) -cdan1 -fpng -m $<
+	$(GFXCONV) -cdan2 -fpng -m $<
 	
 bitmaps: ourvisiongfx.inc
 

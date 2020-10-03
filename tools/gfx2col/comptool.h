@@ -12,9 +12,10 @@
 
 extern int rleCompress(byte *src,byte *dst,int n);
 extern int dan1Compress(byte *src,byte *dst,int n);
+extern int dan2Compress(byte *src,byte *dst,int n);
+extern int pleCompress(byte *src,byte *dst,int n);
 
 extern void addevent(void);
 extern void claimevent(void);
-extern int pletterCompress(byte *src,byte *dst,int n);
 
 #endif

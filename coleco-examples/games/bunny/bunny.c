@@ -461,7 +461,7 @@ void main(void)
         snd_startplay(7);
         flag_effect = (u8)-1;
 		vdp_enablenmi(); // NMI running from now till the end of the game!
-        speed = 5 - sys_choice(1,3); //choice_keypad1(1,3);
+        speed = 5 - sys_choice_keypad1(1,3); //choice_keypad1(1,3);
         flag_effect = 0;
         snd_stopplay(6);
         snd_stopplay(7);

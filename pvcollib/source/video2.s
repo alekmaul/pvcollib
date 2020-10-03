@@ -20,11 +20,13 @@
 ;	3.	This notice may not be removed or altered from any source
 ;		distribution.
 ;
+;   Updated by Amy Purple for optimization
 ;---------------------------------------------------------------------------------
 	.module pvclvideo2
 	
 	; global from external entries / code
-	
+	.globl vdpwrite
+    
 	; global from this module
 	.globl _vdp_ple2vram
 	
@@ -47,13 +49,8 @@ _vdp_ple2vram:
     
     push    ix
     
-	di
 
-	ld	a,e								; VRAM address setup
-	out	(0xbf),a
-	ld	a,d
-	or	#0x40
-	out	(0xbf),a
+	call vdpwrite						; VRAM address setup
 
 	ld	a,(hl)							; Initialization
 	inc	hl
@@ -154,8 +151,6 @@ vr2p9:
 	out	(0xbf),a
 	ld	a,h
 	nop									; VDP timing
-	nop									; VDP timing
-	nop									; VDP timing
 	out	(0xbf),a
 	nop                     			; VDP timing
 	nop									; VDP timing
@@ -171,7 +166,6 @@ vr2p9:
 	or	#0x40
 	out	(0xbf),a
 	ex	af,af'
-	nop									; VDP timing
 	nop									; VDP timing
 	nop									; VDP timing
 	out	(0xbe),a
@@ -199,7 +193,6 @@ getbits:
 
 Depack_out:								; Depacker exit
     pop ix
-	ei
 	ret
 
 modes:

@@ -195,7 +195,7 @@ dan2_copybytes_loop:
 	dec		bc
 	ld		a,b
 	or		c
-	jr		nz, dan1_copybytes_loop
+	jr		nz, dan2_copybytes_loop
 	res		6,d
 	ex		af,af'
     pop		hl							; restore source address (compressed data)

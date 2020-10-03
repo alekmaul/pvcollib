@@ -192,7 +192,7 @@ dan3_copybytes_loop:
 	pop	hl		; restore source address (compressed data)
 	jp	dan3_main_loop
 
-gethighbitse:
+get_highbits_e:
 	jp	(ix)
 
 get5bitse:

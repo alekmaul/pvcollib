@@ -21,51 +21,27 @@
 ;		distribution.
 ;
 ;   Updated by Amy Purple for optimization
+;	Definition:
+;	To start writing at a destination (DE) offset in VRAM.
+;	Note:
+;	A further optimization might be to make this routine a software interupt in the cart header
+;
 ;---------------------------------------------------------------------------------
-	.module pvclvideo3
-	
+	.module pvclvideo3_1
+
 	; global from external entries / code
-	.globl vdpwrite
-    
+
 	; global from this module
-	.globl _vdp_rle2vram
-	
+	.globl vdpwrite
+
 	.area  _CODE
-		
+
 ;---------------------------------------------------------------------------------
-; Here begin routines that can be call from programs
+; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-_vdp_rle2vram:
-    pop     bc
-    pop     hl
-    pop     de
-    push    de
-    push    hl
-    push    bc
-	call	vdpwrite
-    ld      c,#0xbe 					; (1d47h) = 0beh
-vr2v0:
-    ld      a,(hl)
-    inc     hl
-    cp      #0xff
-    ret     z
-    bit     7,a
-    jr      z,vr2v2
-    and     #0x7f
-    inc     a
-    ld      b,a
-    ld      a,(hl)
-    inc     hl
-vr2v1:
-    out     (c),a
-    nop
-    nop
-    djnz    vr2v1
-    jr      vr2v0
-vr2v2:      
-    inc     a
-    ld      b,a
-vr2v3:            
-    outi
-    jr      z,vr2v0
-    jp      vr2v3
+vdpwrite:
+    ld      c,#0xbf
+    out     (c),e
+    set     6,d
+    out     (c),d
+	ret

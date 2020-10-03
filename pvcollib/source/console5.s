@@ -1,6 +1,6 @@
 ;---------------------------------------------------------------------------------
 ;
-;	Copyright (C) 2018-2019
+;	Copyright (C) 2018-2020
 ;		Alekmaul 
 ;
 ;	This software is provided 'as-is', without any express or implied
@@ -27,7 +27,7 @@
     .globl _keypad_1
 
 	; global from this module
-	.globl _sys_choice
+	.globl _sys_choice_keypad1
 
 	.area   _CODE
 
@@ -38,7 +38,7 @@
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
-_sys_choice:
+_sys_choice_keypad1:
 	pop	af
 	pop de
 	push de

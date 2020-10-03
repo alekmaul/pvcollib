@@ -80,6 +80,14 @@ u8 sys_randbyte(u8 A, u8 B);
 void sys_pause(void);
 
 /**
+ * \fn void sys_pause_delay(unsigned cycles)
+ * \brief Wait until delay is over or a fire button is pressed
+ * 
+ * \param cycles number of cycles to wait
+*/
+void sys_pause_delay(unsigned cycles);
+
+/**
  * \fn u16 sys_strlen(char *text)
  * \brief return the length of a string
  * 
@@ -108,7 +116,7 @@ char *sys_str(unsigned value);
 
 /**
  * \fn void sys_memcpyb (void *dest,void *src,unsigned num)
- * \brief Copy memory
+ * \brief Copy memory backward
  *
  * \param dest destination memory
  * \param src source memory
@@ -117,23 +125,33 @@ char *sys_str(unsigned value);
 void sys_memcpyb (void *dest,void *src,unsigned num);
 
 /**
- * \fn void sys_memcpy (void *dest,void *src,unsigned num)
- * \brief Fast memcpy function
+ * \fn void sys_memcpyf (void *dest,void *src,unsigned num)
+ * \brief Copy memory forward
  *
  * \param dest destination memory
  * \param src source memory
  * \param num number of bytes to copy
 */
-void sys_memcpy(void *dest,void *src,unsigned num);
+void sys_memcpyf(void *dest,void *src,unsigned num);
 
 /**
- * \fn u8 sys_choice(u8 minval, u8 maxval)
- * \brief Wait until a key between two values if pressed
+ * \fn sys_choice_keypad1(u8 minval, u8 maxval)
+ * \brief Wait until a key between two values if pressed on keypad 1
  *
  * \param minval  minimum value of key pressed
  * \param maxval  maximum value of key pressed
  * \return value of key pressed
 */
-u8 sys_choice(u8 minval, u8 maxval);
+u8 sys_choice_keypad1(u8 minval, u8 maxval);
+
+/**
+ * \fn sys_choice_keypad2(u8 minval, u8 maxval)
+ * \brief Wait until a key between two values if pressed on keypad 2
+ *
+ * \param minval  minimum value of key pressed
+ * \param maxval  maximum value of key pressed
+ * \return value of key pressed
+*/
+u8 sys_choice_keypad2(u8 minval, u8 maxval);
 
 #endif

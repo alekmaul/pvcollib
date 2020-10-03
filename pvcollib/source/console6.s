@@ -26,7 +26,7 @@
 	; global from external entries / code
 
 	; global from this module
-	.globl _sys_memcpy
+	.globl _sys_memcpyf
 
 	.area   _CODE
 
@@ -37,7 +37,7 @@
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can be call from programs
 ;---------------------------------------------------------------------------------
-_sys_memcpy:
+_sys_memcpyf:
     pop     bc
     exx
     pop     de

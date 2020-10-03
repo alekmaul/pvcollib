@@ -42,9 +42,9 @@ void initvramIMG1(void) {
 	SWITCH_IN_BANK1;
 	
 	// Put image in vram  
-	vdp_dan2vram (TILimage1gfx, chrgen); // characters
-	vdp_dan2vram (COLimage1gfx, coltab); // colors
-	vdp_dan2vram (MAPimage1gfx, chrtab); // map
+	vdp_dan12vram (TILimage1gfx, chrgen); // characters
+	vdp_dan12vram (COLimage1gfx, coltab); // colors
+	vdp_dan12vram (MAPimage1gfx, chrtab); // map
 
 	// enable interrupt
 	vdp_enablescr(); 
@@ -60,9 +60,9 @@ void initvramIMG2(void) {
 	SWITCH_IN_BANK2;
 	
 	// Put image in vram  
-	vdp_dan2vram (TILimage2gfx, chrgen); // characters
-	vdp_dan2vram (COLimage2gfx, coltab); // colors
-	vdp_dan2vram (MAPimage2gfx, chrtab); // map
+	vdp_dan12vram (TILimage2gfx, chrgen); // characters
+	vdp_dan12vram (COLimage2gfx, coltab); // colors
+	vdp_dan12vram (MAPimage2gfx, chrtab); // map
 
 	// enable interrupt
 	vdp_enablescr(); 
@@ -78,9 +78,9 @@ void initvramIMG3(void) {
 	SWITCH_IN_BANK3;
 	
 	// Put image in vram  
-	vdp_dan2vram (TILimage3gfx, chrgen); // characters
-	vdp_dan2vram (COLimage3gfx, coltab); // colors
-	vdp_dan2vram (MAPimage3gfx, chrtab); // map
+	vdp_dan12vram (TILimage3gfx, chrgen); // characters
+	vdp_dan12vram (COLimage3gfx, coltab); // colors
+	vdp_dan12vram (MAPimage3gfx, chrtab); // map
 
 	// enable interrupt
 	vdp_enablescr(); 

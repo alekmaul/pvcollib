@@ -155,12 +155,16 @@ void main (void) {
 	vdp_setdefaultchar(FNTNORMAL);
 	vdp_duplicatevram();
 	vdp_fillvram(0x2000,0xf1,128*8); // Change color (or we will see nothing)
-	vdp_enablescr();
-	
+	vdp_putstring(7,6,"PUT RIGHT FOR MUSIC");
+    
+    // Display screen and enable audio
+    vdp_enablescr();
+    vdp_enablenmi();
+    
 	// Wait for nothing :P
 	while(1) {
 		// Update display with current pad 1 values
-		if (joypad_1 & PAD_RIGHT) { vdp_putstring(9,10,"MUSIC"); snd_startplay(1); snd_startplay(2); snd_startplay(3); }
+		if (joypad_1 & PAD_RIGHT) { vdp_putstring(11,10,"MUSIC"); snd_startplay(1); snd_startplay(2); snd_startplay(3); }
 
 		while (joypad_1) vdp_waitvblank(1); // Wait Vblank while joy pressed 
 		

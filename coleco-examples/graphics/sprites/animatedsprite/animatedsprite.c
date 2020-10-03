@@ -38,7 +38,9 @@ void main (void) {
 	// Put sprite character
 	vdp_putvram (sprtab,TILpacspritegfx,SZTILpacspritegfx); // sprite characters
 
-	vdp_enablescr();
+    // Enable screen and nmi to allow display and sprite management
+    vdp_enablescr();
+	vdp_enablenmi();
 	
 	// Put sprite in middle of screen with color light yellow, 0 because we have only one pattern (index 0)
 	xp=8*16;yp=8*12;pattern=0;

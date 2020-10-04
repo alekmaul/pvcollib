@@ -1,0 +1,162 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           pvclvideo11
+     00000000  l__BSEG                         
+     00000000  l__BSS                          
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__HEADER                       
+     00000000  l__HEAP                         
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__DABS                         
+     00000000  s__HEADER                       
+     00000000  s__HEADER0                      
+     00000001  l__GSFINAL                      
+     0000000F  l__GSINIT                       
+     00000024  l__HEADER0                      
+     000000F6  l__DATA                         
+     0000071C  l__CODE                         
+     00007000  s__DATA                         
+     000070F6  s__BSEG                         
+     000070F6  s__BSS                          
+     000070F6  s__HEAP                         
+     000070F6  s__INITIALIZED                  
+     000073EB  _spinner_1                         crtcol
+     000073EC  _spinner_2                         crtcol
+     00008048  s__CODE                         
+     00008764  s__GSINIT                       
+     00008764  s__HOME                         
+     00008764  s__INITIALIZER                  
+     00008773  s__GSFINAL                      
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00008048    0000071C =        1820. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008048  _nmi_direct                        crtcol
+     000080EA  keypad_table                       crtcol
+     00008193  _TILourvisiongfx                   gfxs
+     00008361  _COLourvisiongfx                   gfxs
+     00008431  _MAPourvisiongfx                   gfxs
+     000084F5  _nmi                               grafdan3comp
+     000084F6  _main                              grafdan3comp
+     00008531  _vdp_setmode2txt                   pvclvideo22
+     00008561  _vdp_dan32vram                     pvclvideo1_3
+     00008623  _vdp_enablescr                     pvclvideo10
+     0000863B  _vdp_disablescr                    pvclvideo10
+     00008656  _vdp_disablevdp                    pvclvideo9
+     00008661  default_setmode2                   pvclvideo20
+     00008667  default_vdpreg                     pvclvideo20
+     00008678  vdpwrite                           pvclvideo3_1
+     00008681  _snd_settable                      pvclsound0
+     00008685  snd_settable                       pvclsound0
+     00008696  _vdp_enablevdp                     pvclvideo8
+     000086A1  _vdp_duplicatevram                 pvclvideo12
+     000086E3  _spr_clear                         pvclsprite
+     00008710  _vdp_waitvblank                    pvclvideo5
+     0000873A  _vdp_putvram                       pvclvideo11
+     0000874F  _vdp_getvram                       pvclvideo11
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_GSINIT                             00008764    0000000F =          15. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008764  gsinit                             crtcol
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_GSFINAL                            00008773    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_DATA                               00007000    000000F6 =         246. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00007000  _buffer32                          crtcol
+     00007020  snd_addr                           crtcol
+     0000702B  snd_areas                          crtcol
+     00007068  _no_nmi                            crtcol
+     00007069  _vdp_status                        crtcol
+     0000706A  _nmi_flag                          crtcol
+     0000706B  _joypad_1                          crtcol
+     0000706C  _keypad_1                          crtcol
+     0000706D  _joypad_2                          crtcol
+     0000706E  _keypad_2                          crtcol
+     0000706F  _spinner_enabled                   crtcol
+     00007070  _vid_freq                          crtcol
+     00007071  _vid_frsw                          crtcol
+     00007072  _snd_mute                          crtcol
+     00007073  _spr_enable                        pvclsprite
+     00007074  _spr_order                         pvclsprite
+     00007075  _spr_odd                           pvclsprite
+     00007076  _sprites                           pvclsprite
+ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_HEADER0                            00000000    00000024 =          36. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
+
+Files Linked                              [ module(s) ]
+
+c:/colecodev/lib/crtcol.rel               [ crtcol ]
+gfxs.rel                                  [ gfxs ]
+grafdan3comp.rel                          [ grafdan3comp ]
+
+
+Libraries Linked                          [ object file ]
+
+c:/colecodev/lib/collib.lib               [ video22 ]
+c:/colecodev/lib/collib.lib               [ video1_2 ]
+c:/colecodev/lib/collib.lib               [ video10 ]
+c:/colecodev/lib/collib.lib               [ video9 ]
+c:/colecodev/lib/collib.lib               [ video20 ]
+c:/colecodev/lib/collib.lib               [ video3_1 ]
+c:/colecodev/lib/collib.lib               [ sound0 ]
+c:/colecodev/lib/collib.lib               [ video8 ]
+c:/colecodev/lib/collib.lib               [ video12 ]
+c:/colecodev/lib/collib.lib               [ sprite ]
+c:/colecodev/lib/collib.lib               [ video5 ]
+c:/colecodev/lib/collib.lib               [ video11 ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
+
+User Base Address Definitions
+
+_CODE = 0x8048
+_DATA = 0x7000
+
+

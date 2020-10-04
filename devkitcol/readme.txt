@@ -18,6 +18,9 @@ SPECIAL THANKS
                
 CHANGE LOG
 ----------------------
+VERSION 1.40 (October, 2020)
+- Add dan2 & dan3 compression to gfx2col
+
 VERSION 1.30 (January, 2020)
 - Add lots of feature in gfx2col for f18a
 

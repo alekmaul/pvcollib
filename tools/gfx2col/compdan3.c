@@ -1,7 +1,5 @@
 #include "compdan3.h"
 
-#include "compdan1.h"
-
 //---------------------------------------------------------------------------
 #define DAN3RAW_MIN	1
 #define DAN3RAW_RANGE (1<<8)
@@ -24,6 +22,14 @@
 #define DAN3MAX_OFFSET		(1<<DAN3BIT_OFFSET_MAX) + DAN3MAX_OFFSET2
 #define DAN3BIT_OFFSET_NBR	DAN3BIT_OFFSET_MAX - DAN3BIT_OFFSET_MIN + 1
 
+// MATCHES -
+struct t_match
+{
+	int index;
+	struct t_match *next;
+};
+struct t_match dan3matches[65536];
+
 struct t_optimal
 {
 	int bits[DAN3BIT_OFFSET_NBR]; /* COST */
@@ -39,6 +45,39 @@ int dan3bit_index;
 int dan3index_dest;
 int dan3index_src;
 int dan3bit_mask;
+
+// - INITIALIZE MATCHES TABLE -
+void dan3reset_matches(void)
+{
+	int i;
+	for (i = 0;i < 65536;i++)
+	{
+		dan3matches[i].next = NULL;
+	}
+}
+
+// REMOVE MATCHE(S) FROM MEMORY -
+void dan3flush_match(struct t_match *match)
+{
+	struct t_match *node;
+	struct t_match *head = match->next;
+	while ((node = head) != NULL)
+	{
+		head = head->next;
+		free(node);
+	}
+	match->next = NULL;
+}
+
+// - INSERT A MATCHE IN TABLE -
+void dan3insert_match(struct t_match *match, int index)
+{
+	struct t_match *new_match = (struct t_match *) malloc( sizeof(struct t_match) );
+	new_match->index = match->index;
+	new_match->next = match->next;
+	match->index = index;
+	match->next = new_match;
+}
 
 void set_BIT_OFFSET3(int i)
 {
@@ -303,14 +342,14 @@ void dan3cleanup_optimals(int subset)
 void dan3lzss_slow(byte *data_src,byte *data_dest)
 {
 	//int temp_bits;
-	//int best_len;
+	int best_len;
 	int len;
 	int i, j, k;
 	int offset;
-	int match_index;//, prev_match_index = -1;
+	int match_index, prev_match_index = -1;
 	int bits_minimum_temp, bits_minimum;
 	struct t_match *match;
-	reset_matches();
+	dan3reset_matches();
 	update_optimal(0, 1, 0);
 	i = 1;
 	while (i < dan3index_src)
@@ -350,22 +389,22 @@ void dan3lzss_slow(byte *data_src,byte *data_dest)
 		}
 		// LZ MATCH OF 2+ 
 		match_index = ((int) data_src[i-1]) << 8 | ((int) data_src[i] & 255);
-		match = &matches[match_index];
-		/*if (prev_match_index == match_index && bFAST == TRUE && dan3optimals[i-1].offset[0] == 1 && dan3optimals[i-1].len[0] > 2)
+		match = &dan3matches[match_index];
+		if (prev_match_index == match_index /*&& bFAST == TRUE*/ && dan3optimals[i-1].offset[0] == 1 && dan3optimals[i-1].len[0] > 2)
 		{
 			len = dan3optimals[i-1].len[0];
-			if (len < MAX_GAMMA)
+			if (len < DAN3MAX_GAMMA)
 				update_optimal(i, len + 1, 1);
 		}
-		else*/
+		else
 		{
-			//best_len = 1;
+			best_len = 1;
 			for (;match->next != NULL; match = match->next)
 			{
 				offset = i - match->index;
 				if (offset > DAN3MAX_OFFSET)
 				{
-					flush_match(match);
+					dan3flush_match(match);
 					break;
 				}
 				for (len = 2;len <= DAN3MAX_GAMMA;len++)
@@ -378,10 +417,11 @@ void dan3lzss_slow(byte *data_src,byte *data_dest)
 					}
 				}
 				//if (bFAST && best_len > 255) break;
+                if (best_len > 255) break;
 			}
 		}
 		//prev_match_index = match_index;
-		insert_match(&matches[match_index], i);
+		dan3insert_match(&dan3matches[match_index], i);
 		i++;
 	}
 	bits_minimum = dan3optimals[dan3index_src-1].bits[0];
@@ -423,7 +463,6 @@ int dan3Compress(byte *src,byte *dst,int n)
 
 	// Apply compression
     dan3lzss_slow(src,dst);
-	free_matches();
 
     // compute ratio
     count=dan3index_dest;

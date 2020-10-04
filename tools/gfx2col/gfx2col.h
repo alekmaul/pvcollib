@@ -28,15 +28,6 @@
 #ifndef GFX2COL_H
 #define GFX2COL_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <memory.h>
-#include <malloc.h>
-#include <string.h>
-
-#include "lodepng.h"
-#include "comptool.h"
-
 #ifndef __BUILD_VERSION
 #include "config.h"
 #else

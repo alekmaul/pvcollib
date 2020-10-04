@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.1)
 project(gfx2col C)
 
 set(gfx2col_major_version 1)
-set(gfx2col_minor_version 0)
+set(gfx2col_minor_version 4)
 set(gfx2col_path_version 0)
 set(gfx2col_version "${gfx2col_major_version}.${gfx2col_minor_version}.${gfx2col_path_version}")
 
@@ -18,6 +18,10 @@ set(CMAKE_C_STANDARDS 11)
 configure_file(config.h.in config.h)
 
 set(gfx2col_sources
+	compdan1.c
+	compdan2.c
+	compdan3.c
+	comprle.c
 	comptool.c
     gfx2col.c
     lodepng.c
@@ -25,7 +29,10 @@ set(gfx2col_sources
 )
 
 set(gfx2col_headers
-	comptool.h
+	compdan1.h
+	compdan2.h
+	compdan3.h
+	comprle.h
     gfx2col.h
     lodepng.h
     lodepic.h

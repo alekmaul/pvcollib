@@ -28,8 +28,22 @@
 ***************************************************************************/
 
 //INCLUDES
+#include <stdlib.h>
+#include <stdio.h>
+#include <memory.h>
+#include <malloc.h>
+#include <string.h>
+
 #include "gfx2col.h"
+
 #include "lodepic.h"
+#include "lodepng.h"
+
+#include "comptool.h"
+#include "comprle.h"
+#include "compdan1.h"
+#include "compdan2.h"
+#include "compdan3.h"
 
 enum FILE_TYPE {
     BMP_FILE = 1,
@@ -41,7 +55,8 @@ enum FILE_TYPE {
 int output_palette=-1;		  // 64 colors output (F18A only) palettes
 int palette_rnd=0;      	  // 1 = round palette up & down (F18A only)
 int quietmode=0;              // 0 = not quiet, 1 = i can't say anything :P
-int compress=0;               // 0 = not compressed, 1 = rle compression, 2 = ple compression, 3 = dan1 compression,, 4 = dan2 compression
+int compress=0;               // 0 = not compressed, 1 = rle compression, 2 = ple compression, 3 = dan1 compression, 
+                              //    4 = dan2 compression, 5 = dan3 compression
 int sprmode=0;                // 0 = background 1 = sprite
 int bmpmode=0;				  // 0 = normal tile mode, 1=bitmap mode
 int gramode=0;				  // 0 = TMS9918a graphic mode 2, 1 = graphic mode 1
@@ -493,6 +508,8 @@ void addcomment(FILE *fp, unsigned int ratio,unsigned int size,unsigned int comp
 		fprintf(fp, "// dan1 compression %d bytes (%d%%)\n", size,ratio);
 	else if (compress==4)
 		fprintf(fp, "// dan2 compression %d bytes (%d%%)\n", size,ratio);
+	else if (compress==5)
+		fprintf(fp, "// dan3 compression %d bytes (%d%%)\n", size,ratio);
 }
 
 int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, unsigned int *palet, unsigned int *tilecol, int num_tiles, int mapw, int maph, int savemap, int savepal)
@@ -793,6 +810,35 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
         if (savemap)
         {
             lenencode2=dan2Compress(maMem,maMemEncode,lenencode2);
+        }
+        else
+        {
+            memcpy(maMemEncode,maMem,lenencode2);
+        }
+    }	
+	else if (compress==5) { // dan3 compression
+		if (ecmmode>1)
+		{
+			lenencodet1=dan3Compress( tiMem,tiMemEncode,lenencode);
+			lenencodet2=dan3Compress( tiMem+256*8,tiMemEncode+256*8,lenencode);
+			lenencodet3=dan3Compress( tiMem+256*8*2,tiMemEncode+256*8*2,lenencode);
+		}
+		else
+        {
+			lenencode=dan3Compress( tiMem,tiMemEncode,lenencode);
+        }
+		if (gramode==1)
+		{
+			memcpy(coMemEncode,coMem,32);
+			lenencode1=32;
+		}
+		else
+        {
+			lenencode1=dan3Compress(coMem,coMemEncode,lenencode1);
+        }
+        if (savemap)
+        {
+            lenencode2=dan3Compress(maMem,maMemEncode,lenencode2);
         }
         else
         {
@@ -1211,6 +1257,10 @@ int main(int argc, char **arg) {
 				{
 					compress = 4; // DAN2 compression
 				}
+				else if( strcmp(&arg[i][1],"cdan3") == 0)
+				{
+					compress = 5; // DAN3 compression
+				}
                 else //invalid option
                 {
                     PrintOptions(arg[i]);
@@ -1361,6 +1411,8 @@ int main(int argc, char **arg) {
 			printf("\nDAN1 compression");
 		else if (compress == 4)
 			printf("\nDAN2 compression");
+		else if (compress == 5)
+			printf("\nDAN3 compression");
 
 		if (output_palette)
 			printf("\nPalette output=ON");

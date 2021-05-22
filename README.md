@@ -20,6 +20,8 @@ Doc page: https://www.portabledev.com/pvcollib/doc
 
 You can find tutorials about how install and use PVCollib on this page: https://github.com/alekmaul/pvcollib/wiki/Introduction
 
+We now have a Discord :D, just join us with this link : https://discord.gg/8kAHJgj  
+
 PVcollib and affiliated tools are distributed under the MIT license (see pvcollib_license.txt file)  
 
 PVcollib is completly free and you can support it through the Paypal button:    

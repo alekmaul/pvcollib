@@ -49,8 +49,14 @@ _vdp_dan12vram:
     push    hl
     push    bc
 		
-	call	vdpwrite
-
+	di
+		
+	ld		c, #0xBF					; Set Write in VRAM at DE
+	out		(c), e
+	set		6, d
+	out		(c), d
+	res		6, d
+    
 	ld		a, #0x80					; Init. Read bits
 
 dan1_copy_byte:							; Copy literal byte
@@ -181,6 +187,7 @@ dan1_copybytes_loop:
 dan1_special:
 	pop		de
 	
+    ei
 	ret									; exit
 
 getnibblee:

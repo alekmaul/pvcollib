@@ -1,6 +1,6 @@
 ;---------------------------------------------------------------------------------
 ;
-;	Copyright (C) 2018-2019
+;	Copyright (C) 2018-2022
 ;		Alekmaul 
 ;
 ;	This software is provided 'as-is', without any express or implied
@@ -21,52 +21,56 @@
 ;		distribution.
 ;
 ;---------------------------------------------------------------------------------
-	.module pvclvideo10
+	.module pvclvideo23
 	
 	; global from external entries / code
-	.globl _vdp_enablevdp
-	.globl _vdp_disablevdp
-	.globl  _vdp_enablenmi
-	.globl _vdp_disablenmi
-	.globl _spr_clear
-	.globl _spr_enable
-	.globl _vdp_waitvblank
-    .globl _no_nmi
 	
 	; global from this module
-	.globl _vdp_enablescr
-	.globl _vdp_disablescr
+	.globl _vdp_setscreenadr
+	.globl _vdp_swapscreen
 	
+    .area _DATA
+screen_name_table:
+	.ds    2
+    
 	.area  _CODE
 		
 ;---------------------------------------------------------------------------------
 ; Here begin routines that can't be call from programs
 ;---------------------------------------------------------------------------------
-_vdp_enablescr:
-	call 	_vdp_enablevdp
-    push    hl
-    ld      hl,#_no_nmi
-    res     0,(hl)
-    call    _vdp_enablenmi
-	ld		hl,#_spr_enable
-	ld		(hl),#00   
-    pop     hl
-
-	ret
+	.area _CODE
 	
-_vdp_disablescr:
-	push	hl
-	ld 		hl,#1
-	push	hl
-	call 	_vdp_waitvblank
-	pop		af
-	call 	_spr_clear
-	call 	_vdp_disablevdp
-    ld      hl,#_no_nmi
-    set     0,(hl)
-   	call 	_vdp_disablenmi
-	ld		hl,#_spr_enable
-	ld		(hl),#00   
-    pop     hl
+__vdp_setscreenadr:
+    exx
+    pop	hl
+    exx
+    pop	hl
+    pop	de
+    push	de
+    push	hl
+    exx
+    push	hl
+    exx
 
-	ret
+vssc1:
+    ld	(screen_name_table),hl
+
+    push	de
+
+    push	ix
+    push	iy
+    ld	a,#2
+    call	0x1FB8
+    pop	iy
+    pop	ix
+
+    pop	de
+
+    ld	(0x73F6),de
+
+    ret
+
+_vdp_swapscreen:
+    ld	de,(screen_name_table)
+    ld	hl,(0x73F6)
+    jp	vssc1

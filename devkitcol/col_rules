@@ -25,14 +25,14 @@ export LDMEGA	:=	$(DEVKITSDCC)/tools/cvmkcart
 #---------------------------------------------------------------------------------
 #vc Display errors and warnings using MSVC style
 MAX_ALLOCS_PER_NODE=20000
-CFLAGS += -mz80 -c -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc
+CFLAGS += -mz80 -I$(CVLIB)/include -I$(DEVKITSDCC)/include --std-c99 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc -c 
 ASFLAGS += -I$(DEVKITSDCC)/include
 LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000 
 
 #---------------------------------------------------------------------------------
 %.rel: %.c
 	@echo Compiling C to .rel ... $(notdir $<)
-	$(CC) $(CFLAGS) $<
+	$(CC) $(CFLAGS) $< -o $@ 
 	@rm $*.lst
 	@rm $*.asm
 

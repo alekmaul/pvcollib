@@ -193,4 +193,16 @@ void spr_mode16x16(void);
 */
 #define spr_gety(id) (sprites[id].y)
 
+/*! \fn spr_collide (sprite_t *sp1,sprite_t *sp2,unsigned sp1width,unsigned sp1height,unsigned sp2width,unsigned sp2height)
+	\brief check collision between two sprites
+    \param sp1 the first sprite structure
+    \param sp2 the second sprite structure
+    \param sp1width width of first sprite
+    \param sp1height height of first sprite
+    \param sp2width width of second sprite
+    \param sp2height height of second sprite
+    \return lobyte - first pixel set, hibyte - number of pixels set
+*/
+u8 spr_collide (sprite_t *sp1,sprite_t *sp2,unsigned sp1width,unsigned sp1height,unsigned sp2width,unsigned sp2height);
+
 #endif

@@ -1,10 +1,10 @@
 # path to colecodev root directory (for emulators, devkitcol, pvcollib)
-export DEVKITCOL := /c/colecodev/
-#export DEVKITCOL := /z/DropboxSvnClient/colecodev/pvcollib
+#export DEVKITCOL := /c/colecodev/
+export DEVKITCOL := /z/DropboxSvnClient/colecodev/pvcollib
 
 # path to devkitcol root directory for compiler
-export DEVKITSDCC := /c/colecodev/devkitcol
-#export DEVKITSDCC := /z/DropboxSvnClient/colecodev/pvcollib/devkitcol
+#export DEVKITSDCC := /c/colecodev/devkitcol
+export DEVKITSDCC := /z/DropboxSvnClient/colecodev/pvcollib/devkitcol
 
 # change global path with PVcollib
 export PATH	:=	/c/msys/bin:$(DEVKITSDCC):$(PATH)

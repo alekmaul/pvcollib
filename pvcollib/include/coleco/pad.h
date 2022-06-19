@@ -48,6 +48,7 @@
 #define	PAD_FIRE3		32
 #define	PAD_FIRE2		64
 #define	PAD_FIRE1		128
+#define PAD_FIRES       (PAD_FIRE1 | PAD_FIRE2)
 
 #define	PAD_KEY0		0
 #define	PAD_KEY1		1

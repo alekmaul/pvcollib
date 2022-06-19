@@ -55,6 +55,9 @@
  \section score_mngt Generic score API
  - \ref score.h "General scores"
 
+ \section SGM Generic API
+ - \ref sgm.h "General SGM"
+
  \section external_links Useful links
  - <a href="http://atariage.com/forums/forum/55-colecovision-programming/">AtariAge ColecoVision development forum.</a>
  - <a href="https://atariage.com/forums/topic/280138-f18a-mk2/">AtariAge F18A development topic.</a>
@@ -104,6 +107,9 @@
     <!-- score management -->
 		\example scoring/scoring.c
 
+	<!-- sgm system management -->
+		\example sgm/sgmtest/sgmtest.c
+
     <!-- sound management -->
 		\example audio/music/music.c
 		\example audio/simplesound/ssound.c
@@ -121,5 +127,6 @@
 #include "coleco/sprite.h"
 #include "coleco/video.h"
 #include "coleco/f18a.h"
+#include "coleco/sgm.h"
 
 #endif // COL_INCLUDE

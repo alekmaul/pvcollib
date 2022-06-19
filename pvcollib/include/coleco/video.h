@@ -268,7 +268,7 @@ void vdp_duplicatevram(void);
 void vdp_putvram (unsigned offset,void *data,unsigned count);
 
 /**
- * \fn void vdp_putvram (unsigned offset,void *data,unsigned count)
+ * \fn void vdp_getvram (unsigned offset,void *data,unsigned count)
  * \brief Get from VRAM to a RAM pointer with some non compressed data 
  *
  * \param offset address in VRAM of 1st data to get
@@ -330,6 +330,6 @@ void vdp_dan32vram(void *dan3data, unsigned offset);
 /*! \fn vdp_releasenmi 
 	\brief reset no_nmi flag to allow nmi 
 */
-#define vdp_releasenmi() { __asm__("\tpush hl\n\tld hl,#_no_nmi\n\tbit 7,(hl)\n\tjp z,.+6\n\tcall _nmi_direct\n\tres 0,(hl)\n\tpop hl"); }
+#define vdp_releasenmi() { __asm__("\tpush hl\n\tld hl,#_no_nmi\n\tres 0,(hl)\n\tpop hl"); }
 
 #endif

@@ -30,7 +30,6 @@
 	.globl snd_settable
 
 	; global from this code
-	.globl _nmi_direct
 	.globl snd_areas
 	.globl _buffer32
 	.globl _no_nmi
@@ -177,29 +176,22 @@ _spinner_2 = 0x73ec
 
 	;; CODE STARTS HERE WITH NMI
         .area _CODE
-  ;; direct force NMI call for the release_nmi handler
-_nmi_direct:
-	    push	  af
-	    push    hl
-	    ld      a,#1
-	    ld      (_nmi_flag),a						; flag an nmi happened even if we won't process it!
-	    ld      hl,#_no_nmi
-		set     0,(hl)                  ; prevent re-entrancy
-	    jr      _nmi_direct2
 
 ;; This is the real interrupt-driven entry point
 _int_nmi:
         push	af
-		push    hl
         ld	    a,	#1
         ld      (_nmi_flag),a           ; set NMI flag
 
-		ld      hl,#_no_nmi
-        bit     0,(hl)                  ; check if nmi() should be called
-        jp      nz,nmi_skip
-        set     0,(hl)                  ; prevent re-entrancy
+        call    0x1fdc                  ; get VDP status
+        ld      (_vdp_status),a
+
+        ld      a,(_no_nmi)             ; check if nmi() should be
+        or      a                       ;  called
+        jp      nz,nmi_exit
+        inc     a
+        ld      (_no_nmi),a
         
-_nmi_direct2:
         ld      a,(_vid_frsw) ; update flag for frequency
         inc	    a
         ld		(_vid_frsw),a
@@ -262,24 +254,12 @@ $1101:
         xor     a
         ld      (_no_nmi),a
 
-        in      a,(#0xbf)               ; get VDP status faster
-        ld      (_vdp_status),a
-
-        jp      nmi_exit
-
-; if you skipped the NMI, you better mean it in your code! :) (tursi)
-; we no longer read the VDP status in that case, which means that
-; unless you read the status register, you will never get another NMI
-; so on every enable, ALWAYS read VDP status to reset it.
-nmi_skip:
-        set     7,(hl)									; flag missed interrupt
 nmi_exit:
         ld	    a,(_spinner_enabled)
         or	    a
         jr	    z,nmi_end
         ei
 nmi_end:
-        pop     hl
         pop     af
         ret
 

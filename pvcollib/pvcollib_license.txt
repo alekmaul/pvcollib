@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------
-  Copyright (C) 2018-2020
+  Copyright (C) 2018-2021
    Alekmaul
 
   This software is provided 'as-is', without any express or implied
@@ -21,17 +21,20 @@
 --------------------------------------------------------------------------
 CHANGE LOG
 --------------------------------------------------------------------------
-V1.6.0 (mm/dd/2020)
+V1.6.0 (mm/dd/2021)
 - Add sys_memcpyf function (forward memcopy)
 - Change sys_memcpyb for backward copy
 - Add vdp_dan22vram & vdp_dan32vram compression
 - Rename vdp_dan2vram to vdp_dan12vram
 - Optimize rle & ple compression (thanks Amy Purple)
-- Update all examples regading new dan1 function name
+- Update all examples regarding new dan1 function name
 - Update all examples regarding new graphic filenames
 - Add sys_pause_delay function (thanks Amy Purple)
 - Change sys_choice to sys_choice_keypad1 
 - Add sys_choice_keypad2 function (thanks Amy Purple) 
+- Add spr_collide function (thanks Amy Purple) 
+- Add SGM detection function and example
+- Add music functions
 
 V1.5.1 (09/20/2020)
 - Add bunny example (thanks Amy Purple for sharing this game)

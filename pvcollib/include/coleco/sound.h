@@ -53,6 +53,20 @@ typedef struct
 #define SOUNDAREA5  0x702b+40
 #define SOUNDAREA6  0x702b+50
 
+/*! 
+  \brief definition of music area.
+	DURATION, [NBR-1 sounds to start | sound_no in 6 bits ], sound_no2*, sound_no2*, sound_no2*
+	these sound_no are not essential, it depends on the value of NBR.
+	IF DURATION = 0000, END MARKER.
+	IF DURATION > 7FFF, SET MUSIC TABLE POINTER TO THIS NEW LOCATION TO CONTINUE.
+*/
+typedef struct
+{
+ unsigned music_duration;
+ void *channel_data;
+} music_t;
+
+
 /**
  * \brief
  * put 1 to snd_mute to disable sound update.
@@ -102,5 +116,41 @@ void snd_stopall(void);
  * \return 0xff is sound_number is still playing, 0x00 if not
 */
 u8 snd_isplaying(u8 sound_number);
+
+/*
+ * \fn mus_startplay(void *mudata);
+ * \brief play a music specified but mudata.
+ *
+ * \param mudata entry point of music data (see music_t)
+ * \return nothing
+*/
+void mus_startplay(void *mudata);
+
+/*
+ * \fn mus_nextplay(void *mudata);
+ * \brief stop the current music and play the music specified but mudata.
+ *
+ * \param mudata entry point of music data (see music_t)
+ * \return nothing
+*/
+void mus_nextplay(void *mudata);
+
+/**
+ * \fn mus_stopplay (void)
+ * \brief Stop the current music.
+ *
+ * \return nothing
+*/
+void mus_stopplay(void);
+
+/**
+ * \fn mus_update (void)
+ * \brief This routine can be called at the end of the NMI routine, in project code.
+ * To use this routine, the program should not use the first 4 SOUNDAREAs to play sound effects, because they are reserved for the music.
+ * Because the first 4 AREAs are low priotity and because of that the sound effect in AREAs 5+ will play while continuing playing logically the music in the background.
+ *
+ * \return nothing
+*/
+void mus_update(void);
 
 #endif

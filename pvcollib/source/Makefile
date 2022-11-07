@@ -18,7 +18,7 @@ CFLAGS	:=
 S_SRC	:=	console.s console1.s console1_1.s console2.s console3.s console4.s console5.s console5_1.s console6.s \
     console7.s \
 	pad.s \
-	sound0.s sound.s sound1.s sound2.s sound3.s \
+	sound0.s sound.s sound1.s sound2.s sound3.s sound4.s \
 	sprite.s sprite1.s sprite2.s sprite3.s sprite4.s sprite5.s sprite6.s sprite7.s sprite8.s \
 	score.s score1.s score2.s score3.s score4.s \
 	video.s video1.s video1_1.s video1_2.s video2.s video3.s video3_1.s video4.s video5.s video6.s video7.s video8.s video9.s \

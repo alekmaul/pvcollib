@@ -1517,7 +1517,7 @@ int main(int argc, char **arg) {
 				printf("\nComputed screen with %d tiles.",ysize);
 		}
 		
-		if ( (ysize>255) && (bmpmode==0) && (sprmode==0) )  // fix 200318 no control if in sprite mode
+		if ( (ysize>256) && (bmpmode==0) && (sprmode==0) )  // fix 200318 no control if in sprite mode
 		{
 			printf("\nERROR : Image must have less than 256 tiles (%d here).\n",ysize);
 			return 1;

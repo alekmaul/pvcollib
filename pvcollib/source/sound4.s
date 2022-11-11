@@ -25,6 +25,8 @@
 	
 
 	; global from external entries / code
+	.globl _mus_pointer
+	.globl _mus_counter
 
 	; global from this module
     .globl  _mus_nextplay
@@ -32,13 +34,6 @@
     .globl  _mus_stopplay
     .globl  _mus_update
 
-    .area _DATA
-    
-pointer:
-    .ds 2
-counter:
-    .ds 2
-	
 	.area _CODE
     
 ;---------------------------------------------------------------------------------
@@ -59,7 +54,7 @@ _mus_nextplay:
     push de
     push bc
 next_music:
-    ld hl,#pointer
+    ld hl,#_mus_pointer
     ld (hl),e
     inc hl
     ld (hl),d
@@ -76,7 +71,7 @@ _mus_startplay:
 
 ;
 _mus_update:
-    ld hl,#counter+1
+    ld hl,#_mus_counter+1
     ld a,(hl)
     dec hl
     or a
@@ -94,7 +89,7 @@ update_counter:
     ld (hl),a
     ret
 trigger_sounds:
-    ld hl,#pointer
+    ld hl,#_mus_pointer
     ld e,(hl)
     inc hl
     ld d,(hl)
@@ -105,32 +100,30 @@ trigger_sounds:
     xor a
     ;; CASE == 0000 -> it's END OF DATA marker
     sub d
-    jr nz, $1
+    jr nz, trigger_sounds1
     sub e
     ret z
-$1:
-    ;; CASE >= 8000 -> it's a new pointer
+trigger_sounds1:
+    ;; CASE >= 8000 -> it's a new _mus_pointer
     bit 7,d
-    jr z, $2
-    ld hl,#pointer
+    jr z, trigger_sounds2
+    ld hl,#_mus_pointer
     ld (hl),e
     inc hl
     ld (hl),d
     jr trigger_sounds
-$2:
-    ;; counter = (uint) data[pointer];
+trigger_sounds2:
+    ;; _mus_counter = (uint) data[_mus_pointer];
     dec de
-    ld hl,#counter
+    ld hl,#_mus_counter
     ld (hl),e
     inc hl
     ld (hl),d
-    ld hl,#pointer
+    ld hl,#_mus_pointer
     ld e,(hl)
     inc hl
     ld d,(hl)
-
     call stop_music
-    
     ex de,hl
     ;; hl = address;
     inc hl
@@ -142,7 +135,7 @@ $2:
     inc a
     ld b,a
     ;; b is element of {1,2,3,4}
-$4:
+trigger_sounds4:
     ld a,(hl)
     inc hl
     and #0x3f
@@ -151,101 +144,104 @@ $4:
     push bc
     push de
     push hl
-    
-    push af
-    sub #1
-    ld c,a
-    ld b,#0
-    ld hl,(#0x7020)
-    rlc c
-    rlc c
-    add hl,bc
-    ld e,(hl)
-    inc hl
-    ld d,(hl)
-    push de
-    inc hl
-    ld e,(hl)
-    inc hl
-    ld d,(hl)
-    pop hl ;; de = @ Sound Area, hl = @ sound data
-    ld a,(hl)
-    inc hl
-    ld c,a
-    and #0xc0
-    ld b,a
-    pop af
-    and #0x3f
-    or b
-    ld (de),a
-    inc de
-    inc de
-    inc de ;; de = @ Sound Area + 3
-    
-    ld a,c
-    bit 5,a
-    jr z, $5
-    inc de
-    inc de
-    and #0x1f
-    ld (de),a
-    jr $6    
 
-$5:
-    cp #0x02 ; case noise with volumen sweep
-    jr nz, $7
-    dec hl
-$7:
-    ldi
-    ldi
-    ldi
-    bit 0,a
-    jr z,$8
-    ldi
-    ldi
-$10:
-    bit 1,a
-    jr z,$9
-    ldi
-    ldi
-    dec de
-    dec de
-$9:
-    dec de
-    dec de
-    dec de
-    dec de
-$6:
-    dec de
-    dec de
-    ex de,hl
-    ld (hl),d
-    dec hl
-    ld (hl),e
-    ex de, hl
+    ld      b,a
+    call	0x1ff1
+
+;    push af
+;    sub #1
+;    ld c,a
+;    ld b,#0
+;    ld hl,(#0x7020)
+;    rlc c
+;    rlc c
+;    add hl,bc
+;    ld e,(hl)
+;    inc hl
+;    ld d,(hl)
+;   push de
+;    inc hl
+;    ld e,(hl)
+;    inc hl
+;    ld d,(hl)
+;    pop hl ;; de = @ Sound Area, hl = @ sound data
+;    ld a,(hl)
+;    inc hl
+;    ld c,a
+;    and #0xc0
+;    ld b,a
+;    pop af
+;    and #0x3f
+;    or b
+;    ld (de),a
+;    inc de
+;    inc de
+;    inc de ;; de = @ Sound Area + 3
+    
+;    ld a,c
+;    bit 5,a
+;    jr z, $5
+;    inc de
+;    inc de
+;    and #0x1f
+;    ld (de),a
+;    jr $6    
+
+;$5:
+;    cp #0x02 ; case noise with volumen sweep
+;    jr nz, $7
+;    dec hl
+;$7:
+;    ldi
+;    ldi
+;    ldi
+;    bit 0,a
+;    jr z,$8
+;    ldi
+;    ldi
+;$10:
+;    bit 1,a
+;    jr z,$9
+;    ldi
+;    ldi
+;    dec de
+;    dec de
+;$9:
+;    dec de
+;    dec de
+;    dec de
+;    dec de
+;$6:
+;    dec de
+;    dec de
+;    ex de,hl
+;    ld (hl),d
+;    dec hl
+;    ld (hl),e
+;    ex de, hl
 
     pop hl
     pop de
     pop bc
     
-    djnz $4
+    djnz trigger_sounds4
     ex de,hl
-    ;; update pointer
-    ld hl,#pointer
+    ;; update _mus_pointer
+    ld hl,#_mus_pointer
     ld (hl),e
     inc hl
     ld (hl),d
 
     jp 0x0295 ;; NOT AN APPROVED COLECO BIOS ENTRY, BUT DONE ANYWAY
 
-$8:
-    inc de
-    inc de
-    jr $10
+;$8:
+;    inc de
+;    inc de
+;    jr $10
 
 ;    
 _mus_stopplay:
-    ld hl,#pointer
+    ld hl,#_mus_pointer
     ld de,#nomusic_track
     ld (hl),e
     inc hl
@@ -263,7 +259,7 @@ stop_music:
     ld b,#4
     xor a
     ld hl,#0x702b ; Address for the 1st Sound Area
-$3:
+stop_music3:
     ld (hl),#0xff
     inc hl
     inc hl
@@ -279,5 +275,5 @@ $3:
     ld (hl),a
     inc hl
     inc hl
-    djnz $3
+    djnz stop_music3
     ret

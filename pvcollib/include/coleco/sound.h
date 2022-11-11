@@ -55,15 +55,19 @@ typedef struct
 
 /*! 
   \brief definition of music area.
-	DURATION, [NBR-1 sounds to start | sound_no in 6 bits ], sound_no2*, sound_no2*, sound_no2*
+	music_duration, [NBR-1 sounds to start | sound_no1 in 6 bits ], sound_no2*, sound_no2*, sound_no2*
+	So, for 1 channel, channel_data will have directly the sound entry (ex: 0x01),
+	for 2 channels, it will be 0x41,0x02 for example
+	for 3 channels, it will be 0x81,02,03
+	for 4 channels (maximum), it will be 0xc1,02,03,04
 	these sound_no are not essential, it depends on the value of NBR.
-	IF DURATION = 0000, END MARKER.
-	IF DURATION > 7FFF, SET MUSIC TABLE POINTER TO THIS NEW LOCATION TO CONTINUE.
+	IF music_duration = 0000, END MARKER.
+	IF music_duration > 7FFF, SET MUSIC TABLE POINTER TO THIS NEW LOCATION TO CONTINUE.
 */
 typedef struct
 {
  unsigned music_duration;
- void *channel_data;
+ char channel_data[];
 } music_t;
 
 

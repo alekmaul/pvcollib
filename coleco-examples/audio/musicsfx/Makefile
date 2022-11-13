@@ -1,70 +1,16 @@
-# path to colecodev root directory (for emulators, devkitcol, pvcollib)
-#export DEVKITCOL := /c/colecodev/
-export DEVKITCOL := /f/DropboxSvnClient/colecodev/pvcollib/pvcollib
-
-# path to devkitcol root directory for compiler
-#export DEVKITSDCC := /c/colecodev/devkitcol
-export DEVKITSDCC := /f/DropboxSvnClient/colecodev/pvcollib/devkitcol
-
-
-# change global path with PVcollib
-export PATH	:=	$(DEVKITSDCC):$(PATH)
-
-#---------------------------------------------------------------------------------
-.SUFFIXES:
-#---------------------------------------------------------------------------------
-
-ifeq ($(strip $(DEVKITSDCC)),)
-$(error "Please set DEVKITSDCC in your environment. export DEVKITSDCC=<path to>DEVKITSDCC")
+ifeq ($(strip $(PVCOLLIB_HOME)),)
+$(error "Please create an environment variable PVCOLLIB_HOME with path to its folder and restart application. (you can do it on windows with <setx PVCOLLIB_HOME "/c/colecodev">)")
 endif
 
-include $(DEVKITSDCC)/col_rules
+include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# INCLUDES is a list of directories containing extra header files
-#---------------------------------------------------------------------------------
-TARGET		:=	musicsfx
-SOURCES		:=	.
-
-#---------------------------------------------------------------------------------
-# options for code generation
-#---------------------------------------------------------------------------------
-CFLAGS	+=	$(INCLUDE) 
-
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
-#---------------------------------------------------------------------------------
-LIBDIRS	:=	
-LIBOBJS +:=	
- 
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
- 
-CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
-SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
- 
-#---------------------------------------------------------------------------------
-export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel) 
- 
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-					-I$(CURDIR)/$(BUILD)
+# ROMNAME is used in col_rules file
+ROMNAME		:=	musicsfx
 
 .PHONY: all
  
 #---------------------------------------------------------------------------------
-all	:	$(OUTPUT).rom
-	@echo Generate rom ... $(notdir $@)
+all: $(ROMNAME).rom
 	
-clean:
-	@echo clean ...
-	@rm -f $(OFILES) $(TARGET).rom *.rel *.map *.lst *.lk *.ihx *.noi *.sym *.asm
-
-#---------------------------------------------------------------------------------
-
-
-#---------------------------------------------------------------------------------
-$(OUTPUT).rom	: $(OFILES)
+clean: cleanRom cleanGfx

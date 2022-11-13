@@ -1,21 +1,8 @@
-# path to colecodev root directory (for emulators, devkitcol, pvcollib)
-export DEVKITCOL := /c/colecodev/
-
-# path to devkitcol root directory for compiler
-export DEVKITSDCC := /c/colecodev/devkitcol
-
-# change global path with PVcollib
-export PATH	:=	$(DEVKITSDCC):$(PATH)
-
-#---------------------------------------------------------------------------------
-.SUFFIXES:
-#---------------------------------------------------------------------------------
-
-ifeq ($(strip $(DEVKITSDCC)),)
-$(error "Please set DEVKITSDCC in your environment. export DEVKITSDCC=<path to>DEVKITSDCC")
+ifeq ($(strip $(PVCOLLIB_HOME)),)
+$(error "Please create an environment variable PVCOLLIB_HOME with path to its folder and restart application. (you can do it on windows with <setx PVCOLLIB_HOME "/c/colecodev">)")
 endif
 
-include $(DEVKITSDCC)/col_rules
+include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output

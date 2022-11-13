@@ -1,65 +1,19 @@
-# path to colecodev root directory (for emulators, devkitcol, pvcollib)
-export DEVKITCOL := /c/colecodev/
-
-# path to devkitcol root directory for compiler
-export DEVKITSDCC := /c/colecodev/devkitcol
-
-# change global path with PVcollib
-export PATH	:=	$(DEVKITSDCC):$(PATH)
-
-#---------------------------------------------------------------------------------
-.SUFFIXES:
-#---------------------------------------------------------------------------------
-
-ifeq ($(strip $(DEVKITSDCC)),)
-$(error "Please set DEVKITSDCC in your environment. export DEVKITSDCC=<path to>DEVKITSDCC")
+ifeq ($(strip $(PVCOLLIB_HOME)),)
+$(error "Please create an environment variable PVCOLLIB_HOME with path to its folder and restart application. (you can do it on windows with <setx PVCOLLIB_HOME "/c/colecodev">)")
 endif
 
-include $(DEVKITSDCC)/col_rules
+include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# INCLUDES is a list of directories containing extra header files
-#---------------------------------------------------------------------------------
-TARGET		:=	animatedsprite
-SOURCES		:=	.
+# ROMNAME is used in col_rules file
+ROMNAME			:=	animatedsprite
 
-#---------------------------------------------------------------------------------
-# options for code generation
-#---------------------------------------------------------------------------------
-CFLAGS	+=	$(INCLUDE) 
-
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
-#---------------------------------------------------------------------------------
-LIBDIRS	:=	
-LIBOBJS +:=	
+.PHONY: bitmaps all
  
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
- 
-CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
-SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
- 
-#---------------------------------------------------------------------------------
-export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel) 
- 
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-					-I$(CURDIR)/$(BUILD)
-
-.PHONY: all
- 
-#---------------------------------------------------------------------------------
-all	: bitmaps $(OUTPUT).rom
-	@echo Generate rom ... $(notdir $@)
+ #---------------------------------------------------------------------------------
+all: bitmaps $(ROMNAME).rom
 	
-clean:
-	@echo clean ...
-	@rm -f $(OFILES) $(TARGET).rom *.rel *.map *.lst *.lk *.ihx *.noi *.sym *.asm  \
-		pacspritegfx.inc pacspritegfx.h
+clean: cleanRom cleanGfx
 
 #---------------------------------------------------------------------------------
 pacsprite.inc: pacsprite.png
@@ -67,6 +21,3 @@ pacsprite.inc: pacsprite.png
 	$(GFXCONV) -fpng -s $<
 	
 bitmaps: pacsprite.inc
-
-#---------------------------------------------------------------------------------
-$(OUTPUT).rom	: $(OFILES)

@@ -283,6 +283,7 @@ void vdp_getvram (unsigned offset,void *data,unsigned count);
  * 
  * \param rledata address of data to use
  * \param offset address in VRAM of 1st data to fill
+ * \return pointer to first unused free
 */
 void *vdp_rle2vram (void *rledata,unsigned offset);
 

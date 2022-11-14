@@ -26,11 +26,11 @@ void main (void) {
 		// put screen in mode 1 with no specific f18a stuffs
 		vdp_f18asetmode1(0x30);
 		
-		vdp_ple2vram (TILourvision, chrgen); // characters
-		vdp_ple2vram (MAPourvision, chrtab); // map
-		vdp_ple2vram (COLourvision, coltab); // colours
+		vdp_ple2vram (TILourvisiongfx, chrgen); // characters
+		vdp_ple2vram (MAPourvisiongfx, chrtab); // map
+		vdp_ple2vram (COLourvisiongfx, coltab); // colours
 
-		vdp_f18asetpalette(PALourvision,64);
+		vdp_f18asetpalette(PALourvisiongfx,64);
 		
 		vdp_enablescr();
 	}

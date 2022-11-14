@@ -34,7 +34,7 @@
 
 #include <coleco/coltypes.h>
 
-/*! 
+/** 
 	\brief definition of sound area
 */
 typedef struct
@@ -43,7 +43,7 @@ typedef struct
  unsigned sound_area;
 } sound_t;
 
-/*! 
+/** 
 	\brief sound areas 1 to 6 available pour channels
 */
 #define SOUNDAREA1  0x702b
@@ -53,7 +53,7 @@ typedef struct
 #define SOUNDAREA5  0x702b+40
 #define SOUNDAREA6  0x702b+50
 
-/*! 
+/** 
   \brief definition of music area.
 	music_duration, [NBR-1 sounds to start | sound_no1 in 6 bits ], sound_no2*, sound_no2*, sound_no2*
 	So, for 1 channel, channel_data will have directly the sound entry (ex: 0x01),
@@ -82,16 +82,14 @@ extern volatile u8 snd_mute;
  * \brief define the sound table used for playing sound
  *
  * \param snd_table address of sound table
- * \return nothing
 */
 void snd_settable (void *snd_table);
 
-/*
+/**
  * \fn snd_startplay (u8 sound_number)
  * \brief play a sound specified but sound_number
  *
  * \param sound_number aid of sound in sound table
- * \return nothing
 */
 void snd_startplay(u8 sound_number);
 
@@ -100,7 +98,6 @@ void snd_startplay(u8 sound_number);
  * \brief stop a sound specified but sound_number
  *
  * \param sound_number aid of sound in sound table
- * \return nothing
 */
 void snd_stopplay(u8 sound_number);
 
@@ -108,7 +105,6 @@ void snd_stopplay(u8 sound_number);
  * \fn snd_stopall (void)
  * \brief mute all channels
  *
- * \return nothing
 */
 void snd_stopall(void);
 
@@ -121,29 +117,25 @@ void snd_stopall(void);
 */
 u8 snd_isplaying(u8 sound_number);
 
-/*
- * \fn mus_startplay(void *mudata);
+/**
+ * \fn mus_startplay(void *mudata)
  * \brief play a music specified but mudata.
  *
  * \param mudata entry point of music data (see music_t)
- * \return nothing
 */
 void mus_startplay(void *mudata);
 
-/*
- * \fn mus_nextplay(void *mudata);
+/**
+ * \fn mus_nextplay (void *mudata)
  * \brief stop the current music and play the music specified but mudata.
  *
  * \param mudata entry point of music data (see music_t)
- * \return nothing
 */
 void mus_nextplay(void *mudata);
 
 /**
  * \fn mus_stopplay (void)
  * \brief Stop the current music.
- *
- * \return nothing
 */
 void mus_stopplay(void);
 
@@ -152,8 +144,6 @@ void mus_stopplay(void);
  * \brief This routine can be called at the end of the NMI routine, in project code.
  * To use this routine, the program should not use the first 4 SOUNDAREAs to play sound effects, because they are reserved for the music.
  * Because the first 4 AREAs are low priotity and because of that the sound effect in AREAs 5+ will play while continuing playing logically the music in the background.
- *
- * \return nothing
 */
 void mus_update(void);
 

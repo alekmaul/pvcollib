@@ -30,7 +30,7 @@ static void scroll_stones (void)
  register u8 a;
  /* scroll old buffer */
  sys_memcpyb (stone_vram,stone_vram+1,95);
- sys_memcpy (stone_vram+97,stone_vram+96,95);
+ sys_memcpyb (stone_vram+97,stone_vram+96,95);
  /* check new stones */
  if (!stonea)
  {
@@ -355,7 +355,7 @@ play_again:
   player1_health=player2_health=32;
   show_player1_health_bar(1);
   show_player2_health_bar(1);
-  sys_memcpy (sprites,sprites_init,sizeof(sprites_init));
+  sys_memcpyb (sprites,sprites_init,sizeof(sprites_init));
   old_joypad_1 = 8;
   old_joypad_2 = (sys_randbyte(0,1) == 0) ? 2 : 8;
   vdp_putstring(11,18,"Get ready");

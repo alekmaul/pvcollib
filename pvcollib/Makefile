@@ -1,77 +1,74 @@
-# path to colecodev root directory (for emulators, devkitcol, pvcollib)
-#export DEVKITCOL := /c/colecodev/
-export DEVKITCOL := /f/DropboxSvnClient/colecodev/pvcollib
-
-# path to devkitcol root directory for compiler
-#export DEVKITSDCC := /c/colecodev/devkitcol
-export DEVKITSDCC := /f/DropboxSvnClient/colecodev/pvcollib/devkitcol
-
-# change global path with PVcollib
-export PATH	:=	/c/msys/bin:$(DEVKITSDCC):$(PATH)
-
-#---------------------------------------------------------------------------------
-ifeq ($(strip $(DEVKITCOL)),)
-$(error "Please set DEVKITCOL in your environment. export DEVKITCOL=<path to>DEVKITCOL)
+ifeq ($(strip $(PVCOLLIB_HOME)),)
+$(error "Please create an environment variable PVCOLLIB_HOME with path to its folder and restart application. (you can do it on windows with <setx PVCOLLIB_HOME "/c/snesdev">)")
 endif
 
 export TOPDIR	:=	$(CURDIR)
 
+# create version number which will be used everywhere
 export PVCOLLIB_MAJOR	:= 1
 export PVCOLLIB_MINOR	:= 6
 export PVCOLLIB_PATCH	:= 0
 
+# Directory with docs config and output (via doxygen)
+export PVCDOCSDIR = $(TOPDIR)/docs
 
-VERSION	:=	$(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH)
+.PHONY: release clean all docs
 
-
-.PHONY: release clean all docs 
-
-all: include/coleco/libversion.h release docs dist-bin
+all: include/coleco/libversion.h pvcollibversion release docs
 
 #-------------------------------------------------------------------------------
 release: lib
-#-------------------------------------------------------------------------------
 	make -C source all
 
 #-------------------------------------------------------------------------------
 lib:
-#-------------------------------------------------------------------------------
 	mkdir lib
 
 #-------------------------------------------------------------------------------
+examples:
+	cd ../coleco-examples && \
+	make && \
+	make install
+
+#-------------------------------------------------------------------------------
 clean:
-#-------------------------------------------------------------------------------
 	make -C source clean
-
-#-------------------------------------------------------------------------------
-dist-src:
-#-------------------------------------------------------------------------------
-	@tar -cjf pvcollib-src-$(VERSION).tar.bz2 source include Makefile pvcollib_license.txt docs/pvcollib.dox docs/docs.css
-	@mv *.tar.gz2 ..
-
-#-------------------------------------------------------------------------------
-dist-bin: 
-#-------------------------------------------------------------------------------
-	@tar -cjf pvcollib-$(VERSION).tar.bz2 source/*.s source/Makefile Makelib include lib docs pvcollib_license.txt build_pvcollib.bat ../devkitcol ../bin ../emulators/put_emulators_here.txt ../coleco-examples
-	@mv *.tar.bz2 ..
-
-dist: dist-bin dist-src
-
-#-------------------------------------------------------------------------------
-install: dist-bin
-#-------------------------------------------------------------------------------
-	mkdir -p $(DEVKITCOL)/PVCOLLIB
-	bzip2 -cd pvcollib-$(VERSION).tar.bz2 | tar -x -C $(DEVKITCOL)/PVCOLLIB
+	rm -rf $(PVCDOCSDIR)/html
+	rm -f pvcollib_version.txt
 
 #---------------------------------------------------------------------------------
+doxygenInstalled := $(shell command -v doxygen 2> /dev/null)
 docs:
-#---------------------------------------------------------------------------------
-	$(DEVKITSDCC)/tools/doxygen ../docs/pvcollib.dox
-	@rm -f docs/*.tmp
+ifndef doxygenInstalled
+	@echo "doxygen is not installed, documentation will be not generated.";
+else
+	@rm -rf $(PVCDOCSDIR)/html; \
+	PVCDOCSDIR="$(PVCDOCSDIR)" PVCVERSION="$(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH)" doxygen "$(PVCDOCSDIR)/pvcollib.dox"
+	@if [ "$(DOCS_PDF_ON)" = "YES" ]; then\
+		$(MAKE) -C $(PVCDOCSDIR)/latex;\
+		cp $(PVCDOCSDIR)/latex/refman.pdf $(PVCDOCSDIR)/PVCOLLIB_manual.pdf;\
+	fi
+	@if [ -f 'warn.log' ]; then \
+			@cat warn.log; \
+	fi	
+	@rm -rf $(PVCDOCSDIR)/latex
+endif
+
+# Turn on Latex -> PDF conversion to run run at end of regular docs build
+# (which includes latex output but deletes it at the end).
+#
+# The conversion process requires a Latex install.
+# For Windows there are various Latex packages to choose from.
+# For Linux this appears to be the minimum:
+#   sudo apt install texlive-latex-base
+#   sudo apt install texlive-latex-recommended
+#   sudo apt install texlive-latex-extra
+#
+docspdf: DOCS_PDF_ON=YES
+docspdf: docs
 
 #---------------------------------------------------------------------------------
 include/coleco/libversion.h : Makefile
-#---------------------------------------------------------------------------------
 	@echo "#ifndef __PVCOLLIBVERSION_H__" > $@
 	@echo "#define __PVCOLLIBVERSION_H__" >> $@
 	@echo >> $@
@@ -82,3 +79,7 @@ include/coleco/libversion.h : Makefile
 	@echo '#define _PVCOLLIB_STRING "PVCOLLIB Release '$(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH)'"' >> $@
 	@echo >> $@
 	@echo "#endif // __PVCOLLIBVERSION_H__" >> $@
+
+# to ease installation for users, the version is no more in folder name (which require to update PVCOLLIB_HOME) but in specific file
+pvcollibversion:
+	@echo $(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH) > pvcollib_version.txt

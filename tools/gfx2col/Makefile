@@ -1,6 +1,3 @@
-#export PATH	:=	/c/msys/bin:$(PATH)
-export PATH := /c/MinGW32/bin/:/c/msys/bin:$(PATH)
-
 VERSION = "1.4.0"
 
 #---------------------------------------------------------------------------------
@@ -11,14 +8,21 @@ CFLAGS=-g -O2 -Wall -D__BUILD_DATE="\"`date +'%Y%m%d'`\"" -D__BUILD_VERSION="\"$
 
 SOURCES=gfx2col.c lodepng.c lodepic.c comptool.c comprle.c compdan1.c  compdan2.c  compdan3.c
 OBJS=gfx2col.o  lodepng.o lodepic.o comptool.o comprle.o compdan1.o  compdan2.o  compdan3.o
-EXE=gfx2col.exe
+EXE=gfx2col
 DEFINES =
 LIBS =
-#---------------------------------------------------------------------------------
-all: $(EXE)
+
+ifeq ($(OS),Windows_NT)
+        EXT=.exe
+else
+        EXT=
+endif
 
 #---------------------------------------------------------------------------------
-$(EXE) : $(OBJS)
+all: $(EXE)$(EXT)
+
+#---------------------------------------------------------------------------------
+$(EXE)$(EXT) : $(OBJS)
 	@echo make exe $(notdir $<)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
@@ -40,6 +44,7 @@ comptool.o : comptool.c
 	
 #---------------------------------------------------------------------------------
 clean:
-	rm -f *.o *.exe *.tds
+	rm -f $(OBJS) $(EXE)$(EXT) *.tds
 
-
+install:
+	mkdir -p ../../devkitcol/tools && cp $(EXE)$(EXT) ../../devkitcol/tools/$(EXE)$(EXT)

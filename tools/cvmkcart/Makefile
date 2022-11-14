@@ -1,8 +1,3 @@
-#export PATH	:=	/c/msys/bin:$(PATH)
-
-export PATH := /c/MinGW32/bin/:/c/msys/bin:$(PATH)
-#export PATH := /h/MinGW32/bin/:/e/ndsdev/msys/bin:$(PATH)
-
 VERSION = "1.0.0"
 
 #---------------------------------------------------------------------------------
@@ -14,14 +9,21 @@ CFLAGS=-g -O2 -Wall -D__BUILD_DATE="\"`date +'%Y%m%d'`\"" -D__BUILD_VERSION="\"$
 
 SOURCES=cvmkcart.c
 OBJS=cvmkcart.o
-EXE=cvmkcart.exe
+EXE=cvmkcart
 DEFINES = 
 LIBS = 
-#---------------------------------------------------------------------------------
-all: $(EXE)
+
+ifeq ($(OS),Windows_NT)
+        EXT=.exe
+else
+        EXT=
+endif
 
 #---------------------------------------------------------------------------------
-$(EXE) : $(OBJS)
+all: $(EXE)$(EXT)
+
+#---------------------------------------------------------------------------------
+$(EXE)$(EXT) : $(OBJS)
 	@echo make exe $(notdir $<) 
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 	
@@ -31,5 +33,8 @@ cvmkcart.o : cvmkcart.c
 
 #---------------------------------------------------------------------------------
 clean:
-	rm -f *.o *.exe *.tds
+	rm -f $(OBJS) $(EXE)$(EXT) *.tds
+
+install:
+	mkdir -p ../../devkitcol/tools && cp $(EXE)$(EXT) ../../devkitcol/tools/$(EXE)$(EXT)
 

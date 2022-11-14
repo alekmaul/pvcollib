@@ -2,11 +2,11 @@
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
-ifeq ($(strip $(DEVKITCOL)),)
-$(error "Please set DEVKITCOL in your environment. export DEVKITCOL=<path to>DEVKITCOL)
+ifeq ($(strip $(PVCOLLIB_HOME)),)
+$(error "Please create an environment variable PVCOLLIB_HOME with path to its folder and restart application. (you can do it on windows with <setx PVCOLLIB_HOME "/c/colecodev">)")
 endif
 
-include $(DEVKITSDCC)/col_rules
+include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
 # options for code generation

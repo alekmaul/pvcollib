@@ -8,14 +8,21 @@ CFLAGS=-g -O2 -Wall -D__BUILD_DATE="\"`date +'%Y%m%d'`\"" -D__BUILD_VERSION="\"$
 
 SOURCES=bin2txt.c
 OBJS=bin2txt.o
-EXE=bin2txt.exe
+EXE=bin2txt
 DEFINES = 
 LIBS = 
-#---------------------------------------------------------------------------------
-all: $(EXE)
+
+ifeq ($(OS),Windows_NT)
+        EXT=.exe
+else
+        EXT=
+endif
 
 #---------------------------------------------------------------------------------
-$(EXE) : $(OBJS)
+all: $(EXE)$(EXT)
+
+#---------------------------------------------------------------------------------
+$(EXE)$(EXT) : $(OBJS)
 	@echo make exe $(notdir $<) 
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 	
@@ -25,6 +32,8 @@ bin2txt.o : bin2txt.c
 
 #---------------------------------------------------------------------------------
 clean:
-	rm -f *.o *.exe *.tds
+	rm -f $(OBJS) $(EXE)$(EXT) *.tds
 
+install:
+	mkdir -p ../../devkitcol/tools && cp $(EXE)$(EXT) ../../devkitcol/tools/$(EXE)$(EXT)
 

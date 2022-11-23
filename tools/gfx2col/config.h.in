@@ -1,7 +1,0 @@
-#ifndef GFX2COL_VERSION_H
-#define GFX2COL_VERSION_H
-
-#define GFX2COLVERSION "@VERSION@"
-#define GFX2COLDATE " __DATE__ "
-
-#endif /* GFX2COL_VERSION_H */

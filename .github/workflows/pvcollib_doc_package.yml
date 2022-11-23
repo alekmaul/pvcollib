@@ -22,7 +22,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: master
           fetch-depth: 0
           persist-credentials: false
 

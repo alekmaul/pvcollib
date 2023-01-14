@@ -28,8 +28,8 @@
 
   ; external sound table setting routine
 	.globl snd_settable
-	.globl _mus_stopplay
-	.globl _mus_update
+	;.globl _mus_stopplay
+	;.globl _mus_update
 
 	; global from this code
 	.globl snd_areas
@@ -51,8 +51,8 @@
 	
 	.globl _snd_mute
 	
-	.globl _mus_pointer
-	.globl _mus_counter
+	;.globl _mus_pointer
+	;.globl _mus_counter
 
 	; global from C code
 	.globl _main
@@ -105,10 +105,10 @@ _vid_frsw::
 	.ds 1
 _snd_mute::
 	.ds 1
-_mus_pointer:
-    .ds 2
-_mus_counter:
-    .ds 2
+;_mus_pointer:
+;    .ds 2
+;_mus_counter:
+;    .ds 2
 	
 _spinner_1 = 0x73eb
 _spinner_2 = 0x73ec
@@ -235,7 +235,7 @@ _int_nmi:
         and		#0x01
         jr 		nz, $1101
 
-		call _mus_update				; play music if needed
+		;call _mus_update				; play music if needed
 
         call    0x1f61                   ; play sounds
         call    0x1ff4                   ; update snd_addr with snd_areas
@@ -385,7 +385,7 @@ start_program:
 	ld 		a, (0x0069)				; initialise video frequency
 	ld      (_vid_freq),a
 
-	call 	_mus_stopplay			; initialise music entry
+	;call 	_mus_stopplay			; initialise music entry
 
   ; re-enable NMIs (tursi)
 	xor     a

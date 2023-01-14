@@ -5,48 +5,12 @@ endif
 include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# INCLUDES is a list of directories containing extra header files
-#---------------------------------------------------------------------------------
-TARGET		:=	f18atest
-SOURCES		:=	.
+# ROMNAME is used in col_rules file
+ROMNAME		:=	f18atest
 
-#---------------------------------------------------------------------------------
-# options for code generation
-#---------------------------------------------------------------------------------
-CFLAGS	+=	$(INCLUDE) 
-
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
-#---------------------------------------------------------------------------------
-LIBDIRS	:=	
-LIBOBJS +:=	
+.PHONY: bitmaps all
  
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
- 
-CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
-SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
- 
-#---------------------------------------------------------------------------------
-export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel) 
- 
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-					-I$(CURDIR)/$(BUILD)
-
-.PHONY: all
- 
-#---------------------------------------------------------------------------------
-all	: $(OUTPUT).rom
-	@echo Generate rom ... $(notdir $@)
+ #---------------------------------------------------------------------------------
+all: bitmaps $(ROMNAME).rom
 	
-clean:
-	@echo clean ...
-	@rm -f $(OFILES) $(TARGET).rom *.rel *.map *.lst *.lk *.ihx *.noi *.sym *.asm  \
-		ourvisiongfx.inc ourvisiongfx.h
-
-#---------------------------------------------------------------------------------
-$(OUTPUT).rom	: $(OFILES)
+clean: cleanRom cleanGfx

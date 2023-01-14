@@ -9,7 +9,6 @@ endif
 #---------------------------------------------------------------------------------
 # path to tools
 #---------------------------------------------------------------------------------
-export PATH	:=	$(PVCOLLIB_HOME)/devkitcol/bin:$(PATH)
 
 CVLIB	:=	$(PVCOLLIB_HOME)/pvcollib
 LIBDIRCVL = $(CVLIB)/lib
@@ -23,6 +22,7 @@ LIBOBJS :=	$(LIBDIRCVL)/collib.lib $(LIBDIRCVL)/crtcol.rel
 export CC	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcc
 export AS	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdasz80
 export LD	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcc
+export LO	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdobjcopy
 export LK :=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcclib
 
 export GFXCONV	:=	$(PVCOLLIB_HOME)/devkitcol/tools/gfx2col
@@ -72,7 +72,7 @@ export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel)
 %.rom: $(OFILES)
 	@echo Linking ... $(notdir $@)
 	$(LD) $(LDFLAGS)  $(LIBOBJS) $(OFILES)
-	sdobjcopy -R .sec5 -I ihex -O binary --pad-to 0xffff --gap-fill 0xff crtcol.ihx $(ROMNAME).rom
+	$(LO) -R .sec5 -I ihex -O binary --pad-to 0xffff --gap-fill 0xff crtcol.ihx $(ROMNAME).rom
 	@mv crtcol.map $(ROMNAME).map
 	@grep "^_" $(ROMNAME).map
 	@echo
@@ -83,7 +83,8 @@ export OFILES	:=	$(BINFILES:.bin=.obj) $(SFILES:.s=.rel) $(CFILES:.c=.rel)
 
 cleanRom:
 	@echo clean rom
-	@rm -f $(ROMNAME).rom $(ROMNAME).sym $(ROMNAME).map $(ROMNAME).rel *.rel *.sym crtcol.ihx crtcol.lk crtcol.noi
+	@rm -f $(ROMNAME).rom $(ROMNAME).sym $(ROMNAME).map $(ROMNAME).rel *.rel *.sym *.lst crtcol.ihx crtcol.lk crtcol.noi
+	@rm -f $(SRC)/*.rel $(SRC)/*.sym $(SRC)/*.lst
 	
 cleanGfx:
 	@echo clean graphics data

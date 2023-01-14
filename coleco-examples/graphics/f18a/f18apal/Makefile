@@ -6,7 +6,7 @@ include ${PVCOLLIB_HOME}/devkitcol/col_rules
 
 #---------------------------------------------------------------------------------
 # ROMNAME is used in col_rules file
-ROMNAME		:=	f18aecm3
+ROMNAME		:=	f18apal
 
 .PHONY: bitmaps all
  

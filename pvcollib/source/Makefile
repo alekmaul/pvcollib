@@ -68,4 +68,4 @@ all: $(COLOBJS)
 clean:
 	@echo clean ...
 	@rm -f *.rel *.sym *.lst
-	@rm -f $(TOPDIR)/lib/*
+	@rm -f ../lib/*

@@ -31,12 +31,9 @@ LDFLAGS += $(BANKS)
  
 #---------------------------------------------------------------------------------
 all: bitmaps $(ROMNAME).rom
-	
-%.rom: $(OFILES)
-	@echo Linking ... $(notdir $@)
-	$(LD) $(LDFLAGS) $(LIBOBJS) $(OFILES)
-	$(LDMEGA) -icrtcol.ihx -b6 $(TARGET).rom
-	mv crtcol.map $(TARGET).map
+	@echo Linking Megarom ...
+	@cp $(ROMNAME).map crtcol.map 
+	$(LDMEGA) -icrtcol.ihx -b6 $(ROMNAME).rom
 
 clean: cleanRom cleanGfx
 

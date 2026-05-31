@@ -1,0 +1,36 @@
+# automatically generated with PVCOLLIB:
+pvcollib/docs/html
+pvcollib/lib
+pvcollib/pvcollib_version.txt
+pvcollib/include/coleco/libversion.h
+
+# automatically generated from vscode
+.vscode
+
+# release folder to distribute binaries
+release
+
+# exclude binaries (specific to your OS)
+devkitsnes/tools
+devkitsnes/bin
+
+# all binaries in tools folder
+tools/bin2txt/bin2txt
+tools/bin2txt/bin2txt.exe
+tools/cvmkcart/cvmkcart
+tools/cvmkcart/cvmkcart.exe
+tools/gfx2col/gfx2col
+tools/gfx2col/gfx2col.exe
+
+# all other type of files generated automatically
+*.ihx
+*.lk
+*.noi
+*.map
+*.rom
+*.sym
+*.lst
+*.rel
+
+# Mac OS cache files
+.DS_Store

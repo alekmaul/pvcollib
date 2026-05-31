@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['joypad_5f1_8',['joypad_1',['../pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c',1,'pad.h']]],
-  ['joypad_5f2_9',['joypad_2',['../pad_8h.html#a9b46ac10c27e7e4248eeb4c86a351bf8',1,'pad.h']]]
+  ['device_20api_0',['F18A video device API',['../index.html#video_f18a',1,'']]],
+  ['documentation_1',['PVcollib Documentation',['../index.html',1,'']]]
 ];

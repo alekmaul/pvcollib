@@ -71,16 +71,24 @@ int PCX_Load(char *filename, pcx_picture_ptr image)
 	}
 
 	//allocate memory for the picture + 64 empty lines
-	image->buffer = malloc( (size_t)(header->height+64)*header->width );
-	if(image->buffer == NULL)
+	if(header->width == 0 || (size_t)(header->height+64) > SIZE_MAX / header->width)
 	{
-		printf("\nERROR: Can't allocate enough memory for the picture.");
+		printf("\nERROR: Image dimensions too large.");
 		fclose(fp);
 		return 0;
 	}
-
-	//initally clear the memory (to make those extra lines be blank)
-	memset(image->buffer,0,(size_t)(header->height+64)*header->width);
+	{
+		size_t alloc_size = (size_t)(header->height+64) * header->width;
+		image->buffer = malloc(alloc_size);
+		if(image->buffer == NULL)
+		{
+			printf("\nERROR: Can't allocate enough memory for the picture.");
+			fclose(fp);
+			return 0;
+		}
+		//initally clear the memory (to make those extra lines be blank)
+		memset(image->buffer,0,alloc_size);
+	}
 
 	// load the data and decompress into buffer
 	count=0;

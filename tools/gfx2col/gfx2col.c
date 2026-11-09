@@ -52,6 +52,8 @@ enum FILE_TYPE {
     PNG_FILE
 };
 
+int file_type=BMP_FILE;		   // 1 = bmp, 2 = pcx, 3 = tga, 4 = png
+
 int output_palette=-1;		  // 64 colors output (F18A only) palettes
 int palette_rnd=0;      	  // 1 = round palette up & down (F18A only)
 int quietmode=0;              // 0 = not quiet, 1 = i can't say anything :P
@@ -64,6 +66,18 @@ int ecmmode=0;				  // 0 = noactive, 1=ecm0,2=ecm1, etc ... (F18A only, will gen
 int offset_tile=0;			  // n = offset in tile number
 int transmode=0;			  // 0 = not transparent, 1 = transprent tiles activated
 int highpriority=0;     	  // 1 = high priority for map
+int inputtileset=0;   		  // 1 = a tileset picture bitmap file is here to match with bitmap map file (usefull for map engine)
+
+int savemap=1;                		// 1 = save the map
+int savepal=1;                		// 1 = save the palette
+int tile_reduction=1;	        	// 0 = no tile reduction (warning !)
+
+pcx_picture image;                  // file with image to convert
+pcx_picture tilesetimg;             // file with tileset for image / tiles matching
+
+char filebase[256];                 // name of output file
+char filename[256];                 // use to manage filenames
+char filetileset[256];        		// name of tileset file
 
 //---------------------------------------------------------------------------
 void PutWord(int data, FILE *fp)
@@ -106,7 +120,7 @@ unsigned char *ArrangeBlocks( unsigned char *img, int width, int height,
 		rows++;
 
 	if (quietmode == 0)
-		printf("\nrows=%d",rows);
+		printf("\nArrangeBlocks for rows=%d",rows);
 
 	//get memory for the new buffer
 	buffer = (unsigned char *) malloc( rows*size*new_width*sizeof(char) );
@@ -164,8 +178,8 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 	int colval,nbcol;
 	int i,j, t,x,y;
 	int colidx, tilidx;
-	unsigned char minv,maxv,actminv,actmaxv;
-	unsigned char valtil[8];
+	unsigned char minv,maxv,actminv;//,actmaxv,colcnt;
+	//unsigned char valtil[8];
 	unsigned char newcol;
 	unsigned char *tilreorg;
 	unsigned int *mapreorg;
@@ -176,57 +190,40 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 	for (t=0;t<32;t++)
 		colmap[t]=0x100; 					// outside scope value 
 	for (t=0;t<256;t++)
-		idxcoltil[t]= 32;					// outside score value 
+		idxcoltil[t]= 32;					// outside scope value 
 		
 	//loop through tiles
 	for (t=0;t<*num_tiles;t++) 
 	{ 
-		actminv=1; actmaxv=0xF;
+		//actminv=1; actmaxv=0xF; colcnt=0;
+		minv=0xFF; maxv=0xFF;
 		for(y=0;y<8;y++) {
-			minv=0xFF; maxv=0x00;
-
-			// get the 8 values
 			for (x=0;x<8;x++) {
-				valtil[x]=buffer[t*64 + y*8 + x];
-				// get min and max value
-				if (valtil[x]<minv)
-					minv=valtil[x];
-				if (valtil[x]>maxv)
-					maxv=valtil[x];
-			}
-			// put 1 if max color
-			if (maxv <= 0x01) maxv=0xF;
-			if (minv == 0xff) minv=1;
-			// if 1st time,assign it
-			if (y==0)
-			{
-				if ( (minv!=1) && (maxv!=minv) ) actminv=minv;
-				if (maxv!=0xF) actmaxv=maxv;
-			}
-			else
-			{
-				if ( (actminv!=minv) &&  (actmaxv!=maxv) ) 
-				{
-					printf("\nERROR: Too much color (4) for 8x8 tile #%d\n",t);
+				actminv=buffer[t*64 + y*8 + x];
+				if (minv==0xFF) { // assign 1st color
+					minv=actminv;
+				}
+				else if (maxv==0xFF) { // assign 2nd color
+					maxv=actminv;
+				}
+				else if (minv==maxv) { // can assign 1st color if we have the same color
+					minv=actminv;
+				}
+				else if ( (actminv!=minv) && (actminv!=maxv) ) {
+					printf("\nERROR: Too much color for 8x8 tile #%d\n",t);
 					return 0;
 				}
-				if ( (actminv!=minv) && (actminv!=1)  && (maxv!=minv) )
-				{
-					printf("\nERROR: Too much color (min) for 8x8 tile #%d\n",t);
-					return 0;
-				}
-				else
-					if (maxv!=minv) actminv=minv;
-				if ( (actmaxv!=maxv) && (actmaxv!=0xF) && (maxv!=0xF) )
-				{
-					printf("\nERROR: Too much color (max) for 8x8 tile #%d\n",t);
-					return 0;
-				}
-				else
-					if (maxv!=0xF) actmaxv=maxv;
 			}
-			colval=(actmaxv<<4) | (actminv);		// FG color | BG color 
 		}
+		// reorder colors before adding it to the list
+		if (maxv<minv) {
+			actminv=maxv;
+			maxv=minv;
+			minv=actminv;
+		}
+
+		colval=(maxv<<4) | (minv);		 // (minv<<4) | (maxv);		// 
+
 		// try to assign for a color for the 8x8 square
 		colidx=-1;
 		for (i=0;i<32;i++)
@@ -237,8 +234,7 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 				newcol++;
 				break;
 			}
-			else if (colmap[i]==colval)
-			{
+			else if (colmap[i]==colval) {
 				colidx=i;
 				break;
 			}
@@ -267,22 +263,17 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 	// Rearrange tiles & map to fit with colors (1 colors for 8 tiles)
 	printf("\nRearrange tiles & map to fit with colors (1 colors for 8 tiles)...");fflush(stdout);
 	tilidx=0;
-	for (i=0;i<32;i++)
-	{
+	for (i=0;i<32;i++) {
 		// check all tiles
 		nbcol=0;
-		for (t=0;t<*num_tiles;t++) 
-		{
+		for (t=0;t<*num_tiles;t++) {
 			// if we find the color, just put the tile
-			if (idxcoltil[t]==colmap[i])
-			{
+			if (idxcoltil[t]==colmap[i]) {
 				// if we have now more than 8 tiles, need to go next color entry
-				if (nbcol==8)
-				{
+				if (nbcol==8) {
 					nbcol=0;
 					newcol++;
-					for (j=31;j>i;j--)
-					{
+					for (j=31;j>i;j--) {
 						colmap[j]=colmap[j-1];
 					}
 					i++;
@@ -292,10 +283,8 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 				// Put the tile
 				memcpy(&tilreorg[tilidx],&buffer[t*64],64);
 				// Adapt the map
-				for (j=0;j<mapw*maph;j++)
-				{
-					if (*(tilemap+j)==t)
-					{
+				for (j=0;j<mapw*maph;j++) {
+					if (*(tilemap+j)==t) {
 						*(mapreorg+j)=(tilidx/64);
 					}
 				}
@@ -305,8 +294,7 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 		}
 		
 		// one color is finished, if we are not near a 8 tiles border, need to adapt
-		if (nbcol & 7)
-		{
+		if (nbcol & 7) {
 			tilidx+=(8-nbcol)*64;
 		}
 	}
@@ -329,11 +317,72 @@ unsigned int MakeCol(unsigned char *buffer, unsigned int *tilemap, unsigned char
 }
 
 //---------------------------------------------------------------------------
+unsigned int *MakeMapWithTileSet(unsigned char *img, unsigned char *imgtileset,int *num_tiles,
+			 int xsize, int ysize, int tile_x, int tile_y, unsigned char optimize)
+{
+	unsigned int *map;
+	int current;	//the current tile we're looking at
+	int i,t;
+	int x,y;
+
+	//allocate map
+	map=(unsigned int *) malloc((size_t)tile_x*tile_y*sizeof(int));
+	if(map==NULL) {
+		return 0;
+	}
+
+	//clear map
+	memset(map,0,tile_x*tile_y*sizeof(int));
+
+	current=0;
+	t=0;
+
+	for(y=0;y<ysize;y++)
+    {
+    	for(x=0;x<xsize;x++)
+	    {
+			//check for matches with tileset
+			for(i=0;i<xsize*ysize;i++)
+			{
+				if( memcmp(&imgtileset[i*64],&img[current*64],64) == 0 ) 
+				{
+					break;
+				}
+			}
+
+			//is it a new tile?
+			if(i==xsize*ysize)
+			{
+				// yes -> error, can't be in this state
+				printf("\nWARNING: Can't find tile %d in tileset",current);
+				t=0;
+			}
+			else
+			{	// no -> find what tile number it is
+				t=i;
+			}
+
+    		//put tile number in map
+	    	map[y*tile_x+x] = t;
+		}
+
+		//goto the next tile
+		current++;
+	}
+
+	//also return the number of new tiles
+	*num_tiles = xsize*ysize;
+
+	return map;
+	
+}//end of MakeMapWithTileSet
+
+//---------------------------------------------------------------------------
 unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles, int xsize, int ysize, int tile_x, int tile_y, unsigned char optimize)
 {
 	unsigned int *map;
 	int newtiles;
-	int current,palette,oldpal;	//the current tile we're looking at
+	int current,palette;	//the current tile we're looking at
 	int i,t;
 	int x,y;
 
@@ -349,7 +398,6 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 	current=0;
 	t=0;
 	newtiles=0;
-	oldpal=-1;
 
 	for(y=0;y<ysize;y++)
     {
@@ -363,13 +411,6 @@ unsigned int *MakeMap(unsigned char *img, unsigned int *colf18a, int *num_tiles,
 				palette = (img[current*64] >> 2) & 0x0F;
 			else				// ecm 1 and others
 				palette = (img[current*64] >> 1) & 0x1F;
-			/* test purpose if (ecmmode>1) 
-			{
-				if (oldpal!=palette) {
-					printf("\npalette=%04x",palette);fflush(stdout);
-					oldpal=palette;
-				}
-			}*/
 
     		//check for matches with previous tiles if tile_reduction on
             if (optimize)
@@ -849,97 +890,104 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	// write to files
 	fprintf(fpc,"// Generated by gfx2col\n\n");
 	
-	if (ecmmode>1)
+	if (inputtileset==0) // tileset mode saves only the map
 	{
-		addcomment(fpc, (((num_tiles*8)-lenencodet1)*100)/(num_tiles*8),lenencodet1,compress);
-		fprintf(fpc, "const unsigned char TILP1%s[%d]={\n", filenamef,lenencodet1);
-		// write characters & colors
-		for (t = 0; t < lenencodet1; t++) {
-			if(t) {
-				if((t & 31) == 0)
-					fprintf(fpc, ",\n");
-				else
-					fprintf(fpc, ", ");
-			}
-			fprintf(fpc, "0x%02X", *(tiMemEncode+t));
-		}
-		fprintf(fpc, "\n};\n\n");
-		if (ecmmode>2)
+		if (ecmmode>1)
 		{
-			addcomment(fpc, (((num_tiles*8)-lenencodet2)*100)/(num_tiles*8),lenencodet2,compress);
-			fprintf(fpc, "const unsigned char TILP2%s[%d]={\n", filenamef,lenencodet2);
+			addcomment(fpc, (((num_tiles*8)-lenencodet1)*100)/(num_tiles*8),lenencodet1,compress);
+			fprintf(fpc, "const unsigned char TILP1%s[%d]={\n", filenamef,lenencodet1);
 			// write characters & colors
-			for (t = 0; t < lenencodet2; t++) {
+			for (t = 0; t < lenencodet1; t++) {
 				if(t) {
 					if((t & 31) == 0)
 						fprintf(fpc, ",\n");
 					else
 						fprintf(fpc, ", ");
 				}
-				fprintf(fpc, "0x%02X", *(tiMemEncode+t+256*8));
+				fprintf(fpc, "0x%02X", *(tiMemEncode+t));
 			}
 			fprintf(fpc, "\n};\n\n");
+			if (ecmmode>2)
+			{
+				addcomment(fpc, (((num_tiles*8)-lenencodet2)*100)/(num_tiles*8),lenencodet2,compress);
+				fprintf(fpc, "const unsigned char TILP2%s[%d]={\n", filenamef,lenencodet2);
+				// write characters & colors
+				for (t = 0; t < lenencodet2; t++) {
+					if(t) {
+						if((t & 31) == 0)
+							fprintf(fpc, ",\n");
+						else
+							fprintf(fpc, ", ");
+					}
+					fprintf(fpc, "0x%02X", *(tiMemEncode+t+256*8));
+				}
+				fprintf(fpc, "\n};\n\n");
+			}
+			if (ecmmode>3)
+			{
+				addcomment(fpc, ((num_tiles*8-lenencodet3)*100)/(num_tiles*8),lenencodet3,compress);
+				fprintf(fpc, "const unsigned char TILP3%s[%d]={\n", filenamef,lenencodet3);
+				// write characters & colors
+				for (t = 0; t < lenencodet3; t++) {
+					if(t) {
+						if((t & 31) == 0)
+							fprintf(fpc, ",\n");
+						else
+							fprintf(fpc, ", ");
+					}
+					fprintf(fpc, "0x%02X", *(tiMemEncode+t+256*8*2));
+				}
+				fprintf(fpc, "\n};\n\n");
+			}
 		}
-		if (ecmmode>3)
+		else
 		{
-			addcomment(fpc, ((num_tiles*8-lenencodet3)*100)/(num_tiles*8),lenencodet3,compress);
-			fprintf(fpc, "const unsigned char TILP3%s[%d]={\n", filenamef,lenencodet3);
+			addcomment(fpc, ((num_tiles*8-lenencode)*100)/(num_tiles*8),lenencode,compress);
+			fprintf(fpc, "const unsigned char TIL%s[%d]={\n", filenamef,lenencode);
 			// write characters & colors
-			for (t = 0; t < lenencodet3; t++) {
+			for (t = 0; t < lenencode; t++) {
 				if(t) {
 					if((t & 31) == 0)
 						fprintf(fpc, ",\n");
 					else
 						fprintf(fpc, ", ");
 				}
-				fprintf(fpc, "0x%02X", *(tiMemEncode+t+256*8*2));
+				fprintf(fpc, "0x%02X", *(tiMemEncode+t));
 			}
 			fprintf(fpc, "\n};\n\n");
 		}
-	}
-	else
-	{
-		addcomment(fpc, ((num_tiles*8-lenencode)*100)/(num_tiles*8),lenencode,compress);
-		fprintf(fpc, "const unsigned char TIL%s[%d]={\n", filenamef,lenencode);
-		// write characters & colors
-		for (t = 0; t < lenencode; t++) {
-			if(t) {
-				if((t & 31) == 0)
-					fprintf(fpc, ",\n");
-				else
-					fprintf(fpc, ", ");
-			}
-			fprintf(fpc, "0x%02X", *(tiMemEncode+t));
-		}
-		fprintf(fpc, "\n};\n\n");
 	}
 	
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
-		if (gramode!=1)
+		if (inputtileset==0) // tileset mode saves only the map
 		{
-			if (ecmmode>1)
+			if (gramode!=1)
 			{
-				addcomment(fpc, ((num_tiles-lenencode1)*100)/(num_tiles),lenencode1,compress);
-			}
-			else
-				addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
-		}
-		fprintf(fpc, "const unsigned char COL%s[%d]={\n", filenamef,lenencode1);
-		for (t = 0; t < lenencode1; t++) {
-			if(t) {
-				if((t & 31) == 0)
-					fprintf(fpc, ",\n");
+				if (ecmmode>1)
+				{
+					addcomment(fpc, ((num_tiles-lenencode1)*100)/(num_tiles),lenencode1,compress);
+				}
 				else
-					fprintf(fpc, ", ");
+					addcomment(fpc, ((num_tiles*8-lenencode1)*100)/(num_tiles*8),lenencode1,compress);
 			}
-			fprintf(fpc, "0x%02X", *(coMemEncode+t));
+			fprintf(fpc, "const unsigned char COL%s[%d]={\n", filenamef,lenencode1);
+			for (t = 0; t < lenencode1; t++) {
+				if(t) {
+					if((t & 31) == 0)
+						fprintf(fpc, ",\n");
+					else
+						fprintf(fpc, ", ");
+				}
+				fprintf(fpc, "0x%02X", *(coMemEncode+t));
+			}
+			fprintf(fpc, "\n};\n\n");
 		}
-		fprintf(fpc, "\n};\n\n");
 			
 		// write map if needed
-		if (savemap) {
+		if (savemap) 
+		{
 			addcomment(fpc, ((mapw*maph-lenencode2)*100)/(mapw*maph),lenencode2,compress);
 			fprintf(fpc, "const unsigned char MAP%s[%d]={\n", filenamef,lenencode2);
 			for (t = 0; t < lenencode2; t++) {
@@ -1004,20 +1052,27 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	// write hearder file
 	fprintf(fph, "#ifndef %s_INC_\n", filenamef);
 	fprintf(fph, "#define %s_INC_\n\n", filenamef);
-	if (ecmmode>1)
-	{
-		fprintf(fph, "#define SZTILP1%s %d\n", filenamef,lenencodet1);
-		fprintf(fph, "#define SZTILP2%s %d\n", filenamef,lenencodet2);
-		fprintf(fph, "#define SZTILP3%s %d\n", filenamef,lenencodet3);
 
+	if (inputtileset==0) // tileset mode saves only the map
+	{
+		if (ecmmode>1)
+		{
+			fprintf(fph, "#define SZTILP1%s %d\n", filenamef,lenencodet1);
+			fprintf(fph, "#define SZTILP2%s %d\n", filenamef,lenencodet2);
+			fprintf(fph, "#define SZTILP3%s %d\n", filenamef,lenencodet3);
+
+		}
+		else
+			fprintf(fph, "#define SZTIL%s %d\n", filenamef,lenencode);
 	}
-	else
-		fprintf(fph, "#define SZTIL%s %d\n", filenamef,lenencode);
+
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
-
-		fprintf(fph, "#define SZCOL%s %d\n", filenamef,lenencode1);
+		if (inputtileset==0) // tileset mode saves only the map
+		{
+			fprintf(fph, "#define SZCOL%s %d\n", filenamef,lenencode1);
+		}
 		if (savemap)
 			fprintf(fph, "#define SZMAP%s %d\n", filenamef,lenencode2);
 		fprintf(fph,"\n");
@@ -1029,13 +1084,23 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 		fprintf(fph, "extern const unsigned char TILP3%s[];\n", filenamef);
 	}
 	else
-		fprintf(fph, "extern const unsigned char TIL%s[];\n", filenamef);
+	{
+		if (inputtileset==0) // tileset mode saves only the map
+		{
+			fprintf(fph, "extern const unsigned char TIL%s[];\n", filenamef);
+		}
+	}
 	// do that only if it is not a sprite
 	if (sprmode==0) 
 	{
-		fprintf(fph, "extern const unsigned char COL%s[];\n", filenamef);
+		if (inputtileset==0) // tileset mode saves only the map
+		{
+			fprintf(fph, "extern const unsigned char COL%s[];\n", filenamef);
+		}
 		if (savemap)
+		{
 			fprintf(fph, "extern const unsigned char MAP%s[];\n", filenamef);
+		}
 	}
 	if (savepal)
 	{
@@ -1061,6 +1126,45 @@ int Convert2Pic(char *filebase, unsigned char *buffer, unsigned int *tilemap, un
 	return -1;
 } //end of Convert2Pic
 
+//---------------------------------------------------------------------------
+int LoadTileSet(void)
+{
+	if (filetileset[strlen(filetileset)-4] == '.') 
+    {
+		filetileset[strlen(filetileset)-4] = '\0';
+	}
+	switch (file_type) {
+		case 2 : // PCX
+			sprintf(filename,"%s.pcx",filetileset);
+			if (quietmode == 0)
+				printf("\ngfx2col: 'Opening tileset file: [%s]'",filename);
+			if(!PCX_Load(filename,(pcx_picture_ptr) &tilesetimg))
+				return 1;
+			break;
+		case 3 : // TGA
+			sprintf(filename,"%s.tga",filetileset);
+			if (quietmode == 0)
+				printf("\ngfx2col: 'Opening tileset file: [%s]'",filename);
+			if(!TGA_Load(filename,(pcx_picture_ptr) &tilesetimg))
+				return 1;
+			break;
+		case 4 : // PNG
+			sprintf(filename,"%s.png",filetileset);
+			if (quietmode == 0)
+				printf("\ngfx2col: 'Opening tileset file: [%s]'",filename);
+			if(!PNG_Load(filename,(pcx_picture_ptr) &tilesetimg))
+				return 1;
+			break;
+		default : // BMP for everithing else
+			sprintf(filename,"%s.bmp",filetileset);
+			if (quietmode == 0)
+				printf("\ngfx2col: 'Opening tileset file: [%s]'",filename);
+			if(!BMP_Load(filename,(pcx_picture_ptr) &tilesetimg))
+				return 1;
+			break;
+	}
+    return 0;
+}
 
 //---------------------------------------------------------------------------
 void PrintOptions(char *str) {
@@ -1087,6 +1191,7 @@ void PrintOptions(char *str) {
 	printf("\n-mR!                             No tile reduction (not advised)");
 	printf("\n-mn#              	           Generate the whole picture with an offset for tile number");
 	printf("\n                   	            where # is the offset in decimal (0 to 2047)");
+	printf("\n-mt(filename)     			   Tileset picture filename (PNG,BMP,PCX) for PVColLib map engine matching");
 	printf("\n\n--- Palette options ---");
 	printf("\n-p!                              Exclude palette from output");
 	printf("\n-po                              Export palette (16 colors (ecm0) or 64 colors(ecm1-3)");
@@ -1112,29 +1217,22 @@ int main(int argc, char **arg) {
 	
 	int height, width;
 	int xsize, ysize,xsize1, ysize1;
-	pcx_picture image;
 
-	unsigned char *buffer, *buff=NULL;
+	unsigned char *buffer, *buff=NULL,*buffertileset;
 	unsigned int *tilemap,*timap=NULL;
 
-	char filebase[256]="";
-	char filename[256];
+	int num_tiles1;
 
-	int i, x,y; 
+	int i, x,y, j1;
 
-    int file_type=BMP_FILE;
-    int tile_reduction=1;         // 0 = no tile reduction (warning !)
-    int savemap=1;                // 1 = save the map
-    int savepal=1;                // 1 = save the palette
-    
-	// Show something to begin :)
-	if (quietmode == 0) {
-		printf("\n==============================");
-		printf("\n---gfx2col v"GFX2COLVERSION" "GFX2COLDATE"---");
-		printf("\n------------------------------");
-		printf("\n(c) 2018-2020 Alekmaul");
-		printf("\n==============================\n");
-	}
+    // init all filenames
+    strcpy(filebase,"");
+    strcpy(filename,"");
+    strcpy(filetileset,"");
+
+	// init all buffers
+	buffer=NULL;
+	buffertileset=NULL;
 
 	//parse the arguments
 	for(i=1;i<argc;i++)	
@@ -1179,6 +1277,12 @@ int main(int argc, char **arg) {
 				else if( strcmp(&arg[i][1],"mR!") == 0)
 				{
 					tile_reduction=0;
+				}
+				else if(arg[i][2]=='t') // tile file for map engine matching
+				{
+					strcpy(filetileset,&arg[i][3]);
+                    inputtileset=1;
+					savepal=0;
 				}
 				else
 				{
@@ -1306,6 +1410,15 @@ int main(int argc, char **arg) {
 		}
 	}
 
+	// Show something to begin :)
+	if (quietmode == 0) {
+		printf("\n==============================");
+		printf("\n---gfx2col v"GFX2COLVERSION" "GFX2COLDATE"---");
+		printf("\n------------------------------");
+		printf("\n(c) 2018-2023 Alekmaul");
+		printf("\n==============================\n");
+	}
+
 	if( filebase[0] == 0 ) {
 		printf("\nERROR: You must specify a base filename.");
 		PrintOptions("");
@@ -1355,6 +1468,20 @@ int main(int argc, char **arg) {
 	width = image.header.width;
 	xsize = width>>3; ysize = height>>3;
 	
+    // if tileset filename is available, try to load tiles
+    if (strlen(filetileset)) 
+    {
+        if (LoadTileSet())
+        {
+            return 1;
+        }
+        else 
+        {
+            //convert the palette
+            ConvertPalette(tilesetimg.palette, palette);
+        }
+    }
+
 	//Print what the user has selected
 	if (quietmode == 0) {
 		printf("\n****** O P T I O N S ***************");
@@ -1476,19 +1603,44 @@ int main(int argc, char **arg) {
 		free(timap);
 	}
 	else {
+		//first arrange into a list of 8x8 blocks 
+        if (inputtileset) 
+        {
+			// dont' care of xsize & ysize, just rearrange tileset for map processing later
+			j1=tilesetimg.header.width/8;
+			num_tiles1=tilesetimg.header.height/8;
+            buffertileset=ArrangeBlocks(tilesetimg.buffer, tilesetimg.header.width, tilesetimg.header.height, 8, &j1, &num_tiles1, 8);
+            free(tilesetimg.buffer);
+        }
+
 		// now re-arrange into a list of 8x8 blocks for easy conversion
 		buffer=ArrangeBlocks( image.buffer, width, height, 8, &xsize, &ysize, 8);
 		free(image.buffer);
+
 		if(buffer==NULL)
 		{
 			printf("\nERROR:Not enough memory to do image operations...\n");
 			return 1;
 		}
+		if(inputtileset && buffertileset==NULL)
+		{
+			printf("\nERROR: Not enough memory to do image operations on tileset file...\n");
+			return 1;
+		}
 			
 		//make the tile map now
-		tilemap=MakeMap(buffer, colorspal, &ysize, xsize, ysize, xsize, ysize, tile_reduction );
+        if (inputtileset) 
+   	    {
+       	    tilemap=MakeMapWithTileSet(buffer, buffertileset, &ysize, xsize, ysize, xsize, ysize, tile_reduction);
+       	}
+       	else
+       	{
+			tilemap=MakeMap(buffer, colorspal, &ysize, xsize, ysize, xsize, ysize, tile_reduction );
+		}
 		if(tilemap==NULL) 
 		{
+			if (inputtileset && buffertileset!=NULL) 
+                free(buffertileset);
 			free(buffer);
 			printf("\nERROR:Not enough memory to do tile map optimizations..\n");
 			return 1;
@@ -1517,7 +1669,7 @@ int main(int argc, char **arg) {
 				printf("\nComputed screen with %d tiles.",ysize);
 		}
 		
-		if ( (ysize>256) && (bmpmode==0) && (sprmode==0) )  // fix 200318 no control if in sprite mode
+		if ( (ysize>256) && (bmpmode==0) && (sprmode==0) && (inputtileset==0) )  // fix 200318 no control if in sprite mode & 230215 or in tileset mode
 		{
 			printf("\nERROR : Image must have less than 256 tiles (%d here).\n",ysize);
 			return 1;
@@ -1534,6 +1686,8 @@ int main(int argc, char **arg) {
 	}
 
 	//free up image & tilemap memory
+	if (inputtileset && buffertileset!=NULL) 
+        free(buffertileset);
 	free(tilemap);
 	free(buffer);
 

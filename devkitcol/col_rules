@@ -23,7 +23,7 @@ export CC	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcc
 export AS	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdasz80
 export LD	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcc
 export LO	:=	$(PVCOLLIB_HOME)/devkitcol/bin/sdobjcopy
-export LK :=	$(PVCOLLIB_HOME)/devkitcol/bin/sdcclib
+export LK :=	$(PVCOLLIB_HOME)/devkitcol/bin/sdar
 
 export GFXCONV	:=	$(PVCOLLIB_HOME)/devkitcol/tools/gfx2col
 export LDMEGA	:=	$(PVCOLLIB_HOME)/devkitcol/tools/cvmkcart

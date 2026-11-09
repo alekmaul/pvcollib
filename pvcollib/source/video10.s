@@ -32,7 +32,8 @@
 	.globl _spr_enable
 	.globl _vdp_waitvblank
     .globl _no_nmi
-	
+	.globl _vdp_f18aok
+
 	; global from this module
 	.globl _vdp_enablescr
 	.globl _vdp_disablescr

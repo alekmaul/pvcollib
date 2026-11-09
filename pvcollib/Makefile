@@ -8,6 +8,7 @@ export TOPDIR	:=	$(CURDIR)
 export PVCOLLIB_MAJOR	:= 1
 export PVCOLLIB_MINOR	:= 6
 export PVCOLLIB_PATCH	:= 0
+export PVCOLLIB_VERSION := $(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH)
 
 # Directory with docs config and output (via doxygen)
 export PVCDOCSDIR = $(TOPDIR)/docs
@@ -83,3 +84,6 @@ include/coleco/libversion.h : Makefile
 # to ease installation for users, the version is no more in folder name (which require to update PVCOLLIB_HOME) but in specific file
 pvcollibversion:
 	@echo $(PVCOLLIB_MAJOR).$(PVCOLLIB_MINOR).$(PVCOLLIB_PATCH) > pvcollib_version.txt
+
+# Declare the phony targets
+.PHONY: release clean all docs

@@ -14,19 +14,6 @@
 #include "gfxsb2.h"									// to add definition of graphics
 #include "gfxsb3.h"									// to add definition of graphics
 
-// Switch of the banks
-#define SWITCH_IN_BANK1		{ dummy=(*(volatile unsigned char*) 0xFFF8); } // b1 with 16k
-#define SWITCH_IN_BANK2		{ dummy=(*(volatile unsigned char*) 0xFFF9); } // b2 with 16k
-#define SWITCH_IN_BANK3		{ dummy=(*(volatile unsigned char*) 0xFFFA); } // b3 with 16k
-#define SWITCH_IN_BANK4		{ dummy=(*(volatile unsigned char*) 0xFFFB); } // b4 with 16k
-#define SWITCH_IN_BANK5		{ dummy=(*(volatile unsigned char*) 0xFFFC); } // b5 with 16k
-#define SWITCH_IN_BANK6		{ dummy=(*(volatile unsigned char*) 0xFFFD); } // b6 with 16k
-#define SWITCH_IN_BANK7		{ dummy=(*(volatile unsigned char*) 0xFFFE); } // b7 with 16k
-#define SWITCH_IN_BANK8		{ dummy=(*(volatile unsigned char*) 0xFFFF); } // b8 with 16k
-
-// var for bank switching
-unsigned char dummy;
-
 //---------------------------------------------------------------------------------
 // The NMI routine. Gets called 50 or 60 times per second 
 // nothing to update for bitmap example

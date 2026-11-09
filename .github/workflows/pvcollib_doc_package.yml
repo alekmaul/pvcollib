@@ -5,7 +5,7 @@ name: PVCOLLIB Build Deploy Documentation
 on:
   push:         # <- Déclenché lorsque l'on pousse du code...
     branches:
-      - master  # <- ... mais seulement sur la branche "master"
+      - develop  # <- ... mais seulement sur la branche "master"
   workflow_dispatch:
 
 jobs:
@@ -22,12 +22,10 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
         with:
-          ref: master
-          fetch-depth: 0
+          ref: develop
           persist-credentials: false
 
-      # 2. Partie spécifique à Sphinx (installation des
-      #    dépendances et génération de la doc)
+      # 2. installation des dépendances et génération de la doc)
 
       - name: Install Doxygen
         run: |
@@ -37,7 +35,7 @@ jobs:
       - name: "Build Doxygen Doc"
         run: |
           cd pvcollib
-          PVCDOCSDIR="docs" PVCVERSION="1.6.0" doxygen docs/pvcollib.dox
+          make docs
         shell: bash
 
       # 3. Déploiement sur les Github Pages

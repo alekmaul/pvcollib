@@ -47,11 +47,15 @@ _vdp_getchar:
 	push    hl
 	add     hl, sp
 	call    calcoffset
-	ld      bc, #0x0001
-	ld      a,#1
-	call    0x1fe2
-	pop     hl
+	ld a,e								; Send LSB of address
+	out	(#0xBF),a
+	ld a,d								; Send MSB of address
+	out	(#0xBF),a
+	ld c,#0xBE							; C = port address
+	ini									; Input a byte of data
+	nop									; Wait for the VDP to catch up
+	nop
+	pop hl
 	ret
-	
 
 	

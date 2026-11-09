@@ -46,6 +46,13 @@ _vdp_putchar:
 	ld      hl, #4
 	add     hl, sp
 	call    calcoffset
-	ld      bc, #0x0001
-	ld      a,#1
-	jp      0x1fdf
+	ld a,e								; Send LSB of address
+	out	(#0xBF),a
+	ld a,d								; Send MSB of address
+	add	a,#0x40							; Send MSB of address + 40H
+	out	(#0xBF),a
+	ld c,#0xBE							; C = port address
+	outi								; Output a byte of data
+	nop									; Wait for the VDP to catch up
+	nop
+	ret

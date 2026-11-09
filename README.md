@@ -8,7 +8,7 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-blue.svg)](https://discord.gg/8kAHJgj)
 [![Current Release](https://img.shields.io/github/v/release/alekmaul/pvcollib?label=Current%20Release)](https://github.com/alekmaul/pvcollib/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/alekmaul/pvcollib/total?label=Total%20Downloads)](https://github.com/alekmaul/pvcollib/releases)
-[![Build](https://github.com/alekmaul/pvcollib/actions/workflows/pvsneslib_build_package.yml/badge.svg?branch=develop)](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml)
+[![Build](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml/badge.svg?branch=develop)](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml)
 
 It contains sdcc compiler / linker and a library (sources included) which offer facilities to use backgrounds / sprites / pads / music & sound on ColecoVision system.   
 Sdcc compiler from Philipp Klaus Krause - SDCC Release Manager  (https://sourceforge.net/projects/sdcc/files/).  
@@ -33,11 +33,11 @@ PVcollib and affiliated tools are distributed under the MIT license (see pvcolli
 
 Bug reports, pull requests, and discussion are all welcome on the [GitHub project](https://github.com/alekmaul/pvcollib) or on [Discord](https://discord.gg/8kAHJgj).
 
-PVSnesLib and its affiliated tools are distributed under the MIT license — see [`pvcollib_license`](https://github.com/alekmaul/pvcollib/blob/master/pvcollib/pvcollib_license.txt).
+PVColLib and its affiliated tools are distributed under the MIT license — see [`pvcollib_license`](https://github.com/alekmaul/pvcollib/blob/master/pvcollib/pvcollib_license.txt).
 
 ## Support the project
 
-PVSnesLib is free to use. If it's been useful to you and help you create a game, consider supporting development.   
+PVColLib is free to use. If it's been useful to you and help you create a game, consider supporting development.   
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-yellow?logo=paypal)](https://paypal.me/GIRARD996)
 

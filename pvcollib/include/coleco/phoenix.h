@@ -46,7 +46,7 @@
 #define sys_phoenixok vdp_f18aok;
 
 /**
- * \fn void sys_phoenixinit(void)
+ * \fn sys_phoenixinit
  * \brief Test Phoenix console<br>
  * Activate f18a and init vdp_f18aok/sys_phoenixok variable with 1 if it is ok<br>
  * Testing sys_phoenixok variable to know if on Phoenix console<br>

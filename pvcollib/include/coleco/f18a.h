@@ -79,7 +79,7 @@ void vdp_f18ainit(void);
 void vdp_f18asetpalette(void *data,unsigned char count);
 
 /**
- * \fn void vdp_f18asetpaletteentry(void *data,u8 entry,unsigned char count)
+ * \fn void vdp_f18asetpaletteentry(void *data,unsigned offset,unsigned char count)
  * \brief Send a palette RGB 12bits color entries to f18a device<br>
  *
  * \param data address of data to use

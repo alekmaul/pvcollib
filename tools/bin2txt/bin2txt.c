@@ -73,7 +73,6 @@ int main(int argc, char **arg)
 	unsigned char bytei;
     unsigned char tabascii[16];
     
-
 	// Show something to begin :)
 	if (quietmode == 0) {
 		printf("\n=============================");

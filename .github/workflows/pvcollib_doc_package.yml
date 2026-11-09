@@ -6,6 +6,8 @@ on:
   push:         # <- Déclenché lorsque l'on pousse du code...
     branches:
       - develop  # <- ... mais seulement sur la branche "master"
+    paths:
+      -pvcollib/**
   workflow_dispatch:
 
 jobs:
@@ -35,6 +37,7 @@ jobs:
       - name: "Build Doxygen Doc"
         run: |
           cd pvcollib
+          export PVCOLLIB_HOME=`pwd`
           make docs
         shell: bash
 

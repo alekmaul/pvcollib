@@ -1,1 +1,128 @@
+name: PVCOLLIB Build & Release
 
+      # ------------------------------------ #
+      # Events to trigger the action         #
+      # ------------------------------------ #
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "develop"
+
+env:
+  SDCC_VERSION: "3.9.0"
+  SDCC_URL: https://sourceforge.net/projects/sdcc/files
+
+      # ------------------------------------ #
+      # Set O.S matrix                       #
+      # ------------------------------------ #
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux
+          - os: windows-latest
+            name: windows
+          - os: macos-latest
+            name: darwin
+
+    steps:
+      # ------------------------------------ #
+      # Install SDCC 3.9.0                   #
+      # ------------------------------------ #
+      - name: Install SDCC ${{ env.SDCC_VERSION }} for Linux
+        if: matrix.name == 'linux'
+        run: |
+          curl -fsSL -o sdcc.tar.bz2 "${SDCC_URL}/sdcc-linux-amd64/${SDCC_VERSION}/sdcc-${SDCC_VERSION}-amd64-unknown-linux2.5.tar.bz2/download"
+          mkdir -p "$HOME/sdcc"
+          tar -xjf sdcc.tar.bz2 -C "$HOME/sdcc" --strip-components=1
+          rm sdcc.tar.bz2
+          echo "$HOME/sdcc/bin" >> "$GITHUB_PATH"
+      - name: Install SDCC ${{ env.SDCC_VERSION }} for Windows
+        if: matrix.name == 'windows'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -UserAgent "Wget" -Uri "$env:SDCC_URL/sdcc-win64/$env:SDCC_VERSION/sdcc-$env:SDCC_VERSION-x64-setup.exe/download" -OutFile sdcc-setup.exe
+          Start-Process -FilePath .\sdcc-setup.exe -ArgumentList '/S','/D=C:\sdcc' -Wait
+          Remove-Item sdcc-setup.exe
+          "C:\sdcc\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Install SDCC ${{ env.SDCC_VERSION }} for MacOS
+        if: matrix.name == 'darwin'
+        run: |
+          curl -fsSL -o sdcc.tar.bz2 "${SDCC_URL}/sdcc-macos-amd64/${SDCC_VERSION}/sdcc-${SDCC_VERSION}-x86_64-apple-macosx.tar.bz2/download"
+          mkdir -p "$HOME/sdcc"
+          tar -xjf sdcc.tar.bz2 -C "$HOME/sdcc" --strip-components=1
+          rm sdcc.tar.bz2
+          echo "$HOME/sdcc/bin" >> "$GITHUB_PATH"
+      - name: Check SDCC version
+        shell: bash
+        run: sdcc --version
+
+      # ------------------------------------ #
+      # Checkout the project                 #
+      # ------------------------------------ #
+      - name: Check out PVCOLLIB
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          submodules: recursive
+          persist-credentials: false
+
+      # ------------------------------------ #
+      # Compiling sources and create release #
+      # ------------------------------------ #
+      - name: Build & Release PVCOLLIB for Linux
+        if: (matrix.name == 'linux')
+        run: |
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+      - name: Build & Release PVCOLLIB for Windows
+        if: (matrix.name == 'windows')
+        shell: C:\msys64\usr\bin\bash.exe --login -eo pipefail {0}
+        env:
+          MSYSTEM: MINGW64
+          CHERE_INVOKING: 1
+          MSYS2_PATH_TYPE: inherit
+        run: |
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+      - name: Build & Release PVCOLLIB for MacOS
+        if: (matrix.name == 'darwin')
+        run: |
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+
+      # ------------------------------------ #
+      # Checking libraries linking           #
+      # ------------------------------------ #
+      - name: Checking libraries linking PVCOLLIB toolchain
+        if: matrix.name == 'darwin'
+        run: |
+          otool -L devkitcol/bin/* devkitcol/tools/* | tee pvcollib_toolchain_linking_${{ matrix.name }}.log || true
+      - name: Checking libraries linking PVCOLLIB toolchain
+        if: matrix.name == 'windows' || matrix.name == 'linux'
+        shell: bash
+        run: |
+          ldd devkitcol/bin/* devkitcol/tools/* | tee pvcollib_toolchain_linking_${{ matrix.name }}.log || true
+
+      # ------------------------------------ #
+      # Upload releases                      #
+      # ------------------------------------ #
+      - name: Upload PVCOLLIB release
+        uses: actions/upload-artifact@v6
+        with:
+          name: PVCOLLIB Release for ${{ matrix.name }}
+          path: release/pvcollib_64b_${{ matrix.name }}.zip
+
+      # ------------------------------------ #
+      # Upload releases                      #
+      # ------------------------------------ #
+      - name: Upload PVCOLLIB logs
+        uses: actions/upload-artifact@v6
+        with:
+          name: PVCOLLIB Release Logs for ${{ matrix.name }}
+          path: "*.log"

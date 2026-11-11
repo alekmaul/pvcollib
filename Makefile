@@ -52,6 +52,7 @@ $(SDCC_STAMP):
 	@echo "* Installing SDCC $(SDCC_VERSION) for $(SDCC_OS) in devkitcol ..."
 	@curl -fsSL -o $(SDCC_ARCHIVE) $(SDCC_URL)/$(SDCC_ARCHIVE)
 	@tar -xzf $(SDCC_ARCHIVE) -C devkitcol
+	@chmod +x devkitcol/bin/*
 	@rm -f $(SDCC_ARCHIVE)
 	@touch $@
 

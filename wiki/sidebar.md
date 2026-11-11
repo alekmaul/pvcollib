@@ -1,7 +1,7 @@
 # Installation #
 
-  1. **[Installation with Windows](https://github.com/alekmaul/pvcollib/wiki/Installation-with-Windows)**
-  1. **[PVcollib and Programmer Notepad](https://github.com/alekmaul/pvcollib/wiki/PVcollib-and-Programmer-Notepad)**
+  1. **[Installation](https://github.com/alekmaul/pvcollib/wiki/installation-and-helloworld-example)**
+  1. **[PVcollib and Programmer Notepad](https://github.com/alekmaul/pvcollib/wiki/pvcollib-and-programmer-notepad)**
 
 # Programming #
 

@@ -35,7 +35,7 @@ export LDMEGA	:=	$(PVCOLLIB_HOME)/devkitcol/tools/cvmkcart
 MAX_ALLOCS_PER_NODE=20000
 CFLAGS += -mz80 -I$(CVLIB)/include -I$(PVCOLLIB_HOME)/devkitcol/include --std-c99 --opt-code-size --fverbose-asm --max-allocs-per-node $(MAX_ALLOCS_PER_NODE) --vc -c 
 ASFLAGS += -I$(PVCOLLIB_HOME)/devkitcol/include
-LDFLAGS += -mz80 --no-std-crt0  --code-loc 0x8048 --data-loc 0x7000 
+LDFLAGS += -mz80 --no-std-crt0 -L$(PVCOLLIB_HOME)/devkitcol/lib/z80 --code-loc 0x8048 --data-loc 0x7000
 
 #---------------------------------------------------------------------------------
 # Search all .asm and .c files until 3rd level in the tree

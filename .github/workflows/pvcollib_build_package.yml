@@ -9,10 +9,6 @@ on:
     branches:
       - "develop"
 
-env:
-  SDCC_VERSION: "3.9.0"
-  SDCC_URL: https://sourceforge.net/projects/sdcc/files
-
       # ------------------------------------ #
       # Set O.S matrix                       #
       # ------------------------------------ #
@@ -32,35 +28,31 @@ jobs:
 
     steps:
       # ------------------------------------ #
-      # Install SDCC 3.9.0                   #
+      # Install minimal dependencies         #
+      # (SDCC 3.9.0 is installed by make,    #
+      #  doxygen is mandatory for release)   #
       # ------------------------------------ #
-      - name: Install SDCC ${{ env.SDCC_VERSION }} for Linux
+      - name: Install dependencies for Linux
         if: matrix.name == 'linux'
         run: |
-          curl -fsSL -o sdcc.tar.bz2 "${SDCC_URL}/sdcc-linux-amd64/${SDCC_VERSION}/sdcc-${SDCC_VERSION}-amd64-unknown-linux2.5.tar.bz2/download"
-          mkdir -p "$HOME/sdcc"
-          tar -xjf sdcc.tar.bz2 -C "$HOME/sdcc" --strip-components=1
-          rm sdcc.tar.bz2
-          echo "$HOME/sdcc/bin" >> "$GITHUB_PATH"
-      - name: Install SDCC ${{ env.SDCC_VERSION }} for Windows
+          sudo apt-get update -y
+          sudo apt-get install -y doxygen
+      - name: Install dependencies for Windows
         if: matrix.name == 'windows'
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -UserAgent "Wget" -Uri "$env:SDCC_URL/sdcc-win64/$env:SDCC_VERSION/sdcc-$env:SDCC_VERSION-x64-setup.exe/download" -OutFile sdcc-setup.exe
-          Start-Process -FilePath .\sdcc-setup.exe -ArgumentList '/S','/D=C:\sdcc' -Wait
-          Remove-Item sdcc-setup.exe
-          "C:\sdcc\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      - name: Install SDCC ${{ env.SDCC_VERSION }} for MacOS
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: >-
+            base-devel
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-doxygen
+            zip
+      - name: Install dependencies for MacOS
         if: matrix.name == 'darwin'
         run: |
-          curl -fsSL -o sdcc.tar.bz2 "${SDCC_URL}/sdcc-macos-amd64/${SDCC_VERSION}/sdcc-${SDCC_VERSION}-x86_64-apple-macosx.tar.bz2/download"
-          mkdir -p "$HOME/sdcc"
-          tar -xjf sdcc.tar.bz2 -C "$HOME/sdcc" --strip-components=1
-          rm sdcc.tar.bz2
-          echo "$HOME/sdcc/bin" >> "$GITHUB_PATH"
-      - name: Check SDCC version
-        shell: bash
-        run: sdcc --version
+          export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+          brew install doxygen || true
 
       # ------------------------------------ #
       # Checkout the project                 #
@@ -74,6 +66,7 @@ jobs:
 
       # ------------------------------------ #
       # Compiling sources and create release #
+      # (make downloads SDCC in devkitcol)   #
       # ------------------------------------ #
       - name: Build & Release PVCOLLIB for Linux
         if: (matrix.name == 'linux')
@@ -82,11 +75,7 @@ jobs:
           make release | tee pvcollib_release_${{ matrix.name }}.log
       - name: Build & Release PVCOLLIB for Windows
         if: (matrix.name == 'windows')
-        shell: C:\msys64\usr\bin\bash.exe --login -eo pipefail {0}
-        env:
-          MSYSTEM: MINGW64
-          CHERE_INVOKING: 1
-          MSYS2_PATH_TYPE: inherit
+        shell: msys2 {0}
         run: |
           export PVCOLLIB_HOME=$(pwd)
           make release | tee pvcollib_release_${{ matrix.name }}.log
@@ -97,8 +86,12 @@ jobs:
           make release | tee pvcollib_release_${{ matrix.name }}.log
 
       # ------------------------------------ #
-      # Checking libraries linking           #
+      # Checking SDCC version & libraries    #
       # ------------------------------------ #
+      - name: Checking SDCC version
+        shell: bash
+        run: |
+          devkitcol/bin/sdcc --version | tee pvcollib_sdcc_version_${{ matrix.name }}.log
       - name: Checking libraries linking PVCOLLIB toolchain
         if: matrix.name == 'darwin'
         run: |
@@ -119,7 +112,7 @@ jobs:
           path: release/pvcollib_64b_${{ matrix.name }}.zip
 
       # ------------------------------------ #
-      # Upload releases                      #
+      # Upload logs                          #
       # ------------------------------------ #
       - name: Upload PVCOLLIB logs
         uses: actions/upload-artifact@v6

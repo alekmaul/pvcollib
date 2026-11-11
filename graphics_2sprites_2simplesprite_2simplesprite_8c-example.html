@@ -1,6 +1,6 @@
 <!-- HTML header for doxygen 1.8.14-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
 <head>
 <meta http-equiv="cache-control" content="max-age=86400"/>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
@@ -11,6 +11,15 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    // Initialize Dark Mode
+    DoxygenAwesomeDarkModeToggle.init();
+    // Initialize Copy Button
+    DoxygenAwesomeFragmentCopyButton.init();
+</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -19,7 +28,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="dox_extra.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this aaooaaa div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
    <div id="projectname">PVColLib
    &#160;<span id="projectnumber">1.6.0</span>
    </div>
-   <div id="projectbrief">Documentation to code in C or ASM for the Colecovision</div>
+   <div id="projectbrief">Documentation to code in C or ASM for the ColecoVision</div>
   </td>
  </tr>
  </tbody>
@@ -152,20 +161,20 @@ $(document).ready(function(){initNavTree('graphics_2sprites_2simplesprite_2simpl
 <div class="line">    <span class="comment">// Wait for nothing :P</span></div>
 <div class="line">    <span class="keywordflow">while</span>(1) {</div>
 <div class="line">        <span class="keywordflow">if</span> (<a id="a12" name="a12"></a><a class="code hl_variable" href="pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c">joypad_1</a> &amp; PAD_RIGHT) { </div>
-<div class="line">            <span class="keywordflow">if</span> (xp&lt;(256-16)) { xp++; spr_setx(idpac,xp); } </div>
+<div class="line">            <span class="keywordflow">if</span> (xp&lt;(256-16)) { xp++; <a id="a13" name="a13"></a><a class="code hl_define" href="sprite_8h.html#aff746a56677d9b5bf50f78e96636746f">spr_setx</a>(idpac,xp); } </div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c">joypad_1</a> &amp; PAD_LEFT)  { </div>
-<div class="line">            <span class="keywordflow">if</span> (xp&gt;0) { xp--; spr_setx(idpac,xp); } </div>
+<div class="line">            <span class="keywordflow">if</span> (xp&gt;0) { xp--; <a class="code hl_define" href="sprite_8h.html#aff746a56677d9b5bf50f78e96636746f">spr_setx</a>(idpac,xp); } </div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c">joypad_1</a> &amp; PAD_DOWN)  { </div>
-<div class="line">            <span class="keywordflow">if</span> (yp&lt;(192-16)) {  yp++; <a id="a13" name="a13"></a><a class="code hl_define" href="sprite_8h.html#a72d1860d0d0c3864264c84f75e3abfa4">spr_sety</a>(idpac,yp); } </div>
+<div class="line">            <span class="keywordflow">if</span> (yp&lt;(192-16)) {  yp++; <a id="a14" name="a14"></a><a class="code hl_define" href="sprite_8h.html#a72d1860d0d0c3864264c84f75e3abfa4">spr_sety</a>(idpac,yp); } </div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c">joypad_1</a> &amp; PAD_UP)    { </div>
 <div class="line">            <span class="keywordflow">if</span> (yp&gt;0) { yp--; <a class="code hl_define" href="sprite_8h.html#a72d1860d0d0c3864264c84f75e3abfa4">spr_sety</a>(idpac,yp); } </div>
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// Wait Vblank</span></div>
-<div class="line">        <a id="a14" name="a14"></a><a class="code hl_function" href="video_8h.html#ad76f787a2444b8f4afa6bb70b0042a03">vdp_waitvblank</a>(1);</div>
+<div class="line">        <a id="a15" name="a15"></a><a class="code hl_function" href="video_8h.html#ad76f787a2444b8f4afa6bb70b0042a03">vdp_waitvblank</a>(1);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// startup module will issue a soft reboot if it comes here </span></div>
 <div class="line">}</div>
@@ -175,6 +184,7 @@ $(document).ready(function(){initNavTree('graphics_2sprites_2simplesprite_2simpl
 <div class="ttc" id="asprite_8h_html_aadfd6e3971cead76fb3622fa59c44b6a"><div class="ttname"><a href="sprite_8h.html#aadfd6e3971cead76fb3622fa59c44b6a">spr_set</a></div><div class="ttdeci">#define spr_set(id, xp, yp, col, pat)</div><div class="ttdoc">sets an sprite entry to the supplied values</div><div class="ttdef"><b>Definition</b> sprite.h:136</div></div>
 <div class="ttc" id="asprite_8h_html_ac8c4f13a1f085d8360594bbb3b91166b"><div class="ttname"><a href="sprite_8h.html#ac8c4f13a1f085d8360594bbb3b91166b">spr_enable</a></div><div class="ttdeci">volatile u8 spr_enable</div><div class="ttdoc">0 or 1 if sprites can be displayed or not</div></div>
 <div class="ttc" id="asprite_8h_html_ae669d00fa95aa9fd5476d035c9f77ab8"><div class="ttname"><a href="sprite_8h.html#ae669d00fa95aa9fd5476d035c9f77ab8">spr_update</a></div><div class="ttdeci">void spr_update(void)</div><div class="ttdoc">put sprite on screen Put all 32 sprites on screen. Must be call in NMI routine.</div></div>
+<div class="ttc" id="asprite_8h_html_aff746a56677d9b5bf50f78e96636746f"><div class="ttname"><a href="sprite_8h.html#aff746a56677d9b5bf50f78e96636746f">spr_setx</a></div><div class="ttdeci">#define spr_setx(id, xp)</div><div class="ttdoc">set the x sprite coordinate</div><div class="ttdef"><b>Definition</b> sprite.h:161</div></div>
 <div class="ttc" id="avideo_8h_html_a40527bb5f06aebd1246928ff048bf060"><div class="ttname"><a href="video_8h.html#a40527bb5f06aebd1246928ff048bf060">vdp_setdefaultchar</a></div><div class="ttdeci">void vdp_setdefaultchar(u8 flags)</div><div class="ttdoc">Put default font.</div></div>
 <div class="ttc" id="avideo_8h_html_a5493708fc4555c113a2adf1b0184fe64"><div class="ttname"><a href="video_8h.html#a5493708fc4555c113a2adf1b0184fe64">vdp_enablescr</a></div><div class="ttdeci">void vdp_enablescr(void)</div><div class="ttdoc">Allows VDP to work and NMI to be catch.</div></div>
 <div class="ttc" id="avideo_8h_html_a637ac20cdb5b3b7327599ed22465c931"><div class="ttname"><a href="video_8h.html#a637ac20cdb5b3b7327599ed22465c931">vdp_putvram</a></div><div class="ttdeci">void vdp_putvram(unsigned offset, void *data, unsigned count)</div><div class="ttdoc">Fill the VRAM with some non compressed data.</div></div>
@@ -189,7 +199,7 @@ $(document).ready(function(){initNavTree('graphics_2sprites_2simplesprite_2simpl
 <!-- HTML footer for doxygen 1.8.14-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-    <li class="footer">Generated on Sun May 31 2026       Generated on Sun May 31 2026 04:39:51 for PVColLib by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Nov 11 2026       Generated by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
 </div>
 </body>
 </html>

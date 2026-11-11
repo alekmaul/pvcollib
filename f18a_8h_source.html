@@ -1,6 +1,6 @@
 <!-- HTML header for doxygen 1.8.14-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
 <head>
 <meta http-equiv="cache-control" content="max-age=86400"/>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
@@ -11,6 +11,15 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    // Initialize Dark Mode
+    DoxygenAwesomeDarkModeToggle.init();
+    // Initialize Copy Button
+    DoxygenAwesomeFragmentCopyButton.init();
+</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -19,7 +28,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="dox_extra.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this aaooaaa div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
    <div id="projectname">PVColLib
    &#160;<span id="projectnumber">1.6.0</span>
    </div>
-   <div id="projectbrief">Documentation to code in C or ASM for the Colecovision</div>
+   <div id="projectbrief">Documentation to code in C or ASM for the ColecoVision</div>
   </td>
  </tr>
  </tbody>
@@ -156,7 +165,7 @@ $(document).ready(function(){initNavTree('f18a_8h_source.html',''); initResizabl
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="f18a_8h.html#ad430a983ad96955c4e111d5b42e8fd5b">   79</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="f18a_8h.html#ad430a983ad96955c4e111d5b42e8fd5b">vdp_f18asetpalette</a>(<span class="keywordtype">void</span> *data,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> count);</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keywordtype">void</span> vdp_f18asetpaletteentry(<span class="keywordtype">void</span> *data,<span class="keywordtype">unsigned</span> offset,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> count);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="f18a_8h.html#a313071ea88a8ca6a26044d0c3f34b8b0">   89</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="f18a_8h.html#a313071ea88a8ca6a26044d0c3f34b8b0">vdp_f18asetpaletteentry</a>(<span class="keywordtype">void</span> *data,<span class="keywordtype">unsigned</span> offset,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> count);</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="f18a_8h.html#aa60d185a5b6378c269c4cdefb4782c67">  102</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="f18a_8h.html#aa60d185a5b6378c269c4cdefb4782c67">vdp_f18asetmode1</a>(u8 flags);</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
@@ -167,6 +176,7 @@ $(document).ready(function(){initNavTree('f18a_8h_source.html',''); initResizabl
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="acoltypes_8h_html"><div class="ttname"><a href="coltypes_8h.html">coltypes.h</a></div><div class="ttdoc">Custom types used by pvcollib.</div></div>
 <div class="ttc" id="af18a_8h_html_a0df35876d5d9c1b30ceaa2659ebb9357"><div class="ttname"><a href="f18a_8h.html#a0df35876d5d9c1b30ceaa2659ebb9357">vdp_f18aok</a></div><div class="ttdeci">volatile u8 vdp_f18aok</div><div class="ttdoc">vdp_f18aok is set if f18a module is present  when calling vdp_f18ainit function</div></div>
+<div class="ttc" id="af18a_8h_html_a313071ea88a8ca6a26044d0c3f34b8b0"><div class="ttname"><a href="f18a_8h.html#a313071ea88a8ca6a26044d0c3f34b8b0">vdp_f18asetpaletteentry</a></div><div class="ttdeci">void vdp_f18asetpaletteentry(void *data, unsigned offset, unsigned char count)</div><div class="ttdoc">Send a palette RGB 12bits color entries to f18a device</div></div>
 <div class="ttc" id="af18a_8h_html_a7f254d9050a4fffdbc5ae96d05849b20"><div class="ttname"><a href="f18a_8h.html#a7f254d9050a4fffdbc5ae96d05849b20">vdp_f18ainit</a></div><div class="ttdeci">void vdp_f18ainit(void)</div><div class="ttdoc">Activate f18a device  Activate f18a and init vdp_f18aok variable with 1 if it is ok</div></div>
 <div class="ttc" id="af18a_8h_html_a9741920404c60abc1c77eb9df8998b05"><div class="ttname"><a href="f18a_8h.html#a9741920404c60abc1c77eb9df8998b05">vdp_f18asetscrolly</a></div><div class="ttdeci">void vdp_f18asetscrolly(u8 bgnum, u8 y)</div><div class="ttdoc">Sets the vertical scroll offset to the specified location.</div></div>
 <div class="ttc" id="af18a_8h_html_aa60d185a5b6378c269c4cdefb4782c67"><div class="ttname"><a href="f18a_8h.html#aa60d185a5b6378c269c4cdefb4782c67">vdp_f18asetmode1</a></div><div class="ttdeci">void vdp_f18asetmode1(u8 flags)</div><div class="ttdoc">Activate mode 1 in bitmap mode for f18a ONLY</div></div>
@@ -178,7 +188,7 @@ $(document).ready(function(){initNavTree('f18a_8h_source.html',''); initResizabl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li><li class="navelem"><a class="el" href="f18a_8h.html">f18a.h</a></li>
-    <li class="footer">Generated on Sun May 31 2026       Generated on Sun May 31 2026 04:39:51 for PVColLib by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Nov 11 2026       Generated by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
 </div>
 </body>
 </html>

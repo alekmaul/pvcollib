@@ -1,6 +1,6 @@
 <!-- HTML header for doxygen 1.8.14-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
 <head>
 <meta http-equiv="cache-control" content="max-age=86400"/>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
@@ -11,6 +11,15 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    // Initialize Dark Mode
+    DoxygenAwesomeDarkModeToggle.init();
+    // Initialize Copy Button
+    DoxygenAwesomeFragmentCopyButton.init();
+</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -19,7 +28,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="dox_extra.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this aaooaaa div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
    <div id="projectname">PVColLib
    &#160;<span id="projectnumber">1.6.0</span>
    </div>
-   <div id="projectbrief">Documentation to code in C or ASM for the Colecovision</div>
+   <div id="projectbrief">Documentation to code in C or ASM for the ColecoVision</div>
   </td>
  </tr>
  </tbody>
@@ -134,34 +143,47 @@ $(document).ready(function(){initNavTree('console_8h_source.html',''); initResiz
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;<a class="code" href="coltypes_8h.html">coleco/coltypes.h</a>&gt;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">extern</span> u8 <a class="code hl_variable" href="console_8h.html#aa757ae09831c155d9ac9306c2118beab">buffer32</a>[32];</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">extern</span> <span class="keyword">volatile</span> u8 <a class="code hl_variable" href="console_8h.html#a53428dffba59cdff3cd7c39aba51df63">vid_freq</a>;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="console_8h.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">   63</a></span>u16 <a class="code hl_function" href="console_8h.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">sys_random</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="console_8h.html#a9e041a4d153b3774ed21fa4630026fc4">   73</a></span>u8 <a class="code hl_function" href="console_8h.html#a9e041a4d153b3774ed21fa4630026fc4">sys_randbyte</a>(u8 A, u8 B);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">//---------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">// Switch of the banks</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#define SWITCH_IN_BANK1     { dummy=(*(volatile unsigned char*) 0xFFF8); } </span><span class="comment">// b1 with 16k</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#define SWITCH_IN_BANK2     { dummy=(*(volatile unsigned char*) 0xFFF9); } </span><span class="comment">// b2 with 16k</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#define SWITCH_IN_BANK3     { dummy=(*(volatile unsigned char*) 0xFFFA); } </span><span class="comment">// b3 with 16k</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#define SWITCH_IN_BANK4     { dummy=(*(volatile unsigned char*) 0xFFFB); } </span><span class="comment">// b4 with 16k</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#define SWITCH_IN_BANK5     { dummy=(*(volatile unsigned char*) 0xFFFC); } </span><span class="comment">// b5 with 16k</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#define SWITCH_IN_BANK6     { dummy=(*(volatile unsigned char*) 0xFFFD); } </span><span class="comment">// b6 with 16k</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#define SWITCH_IN_BANK7     { dummy=(*(volatile unsigned char*) 0xFFFE); } </span><span class="comment">// b7 with 16k</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#define SWITCH_IN_BANK8     { dummy=(*(volatile unsigned char*) 0xFFFF); } </span><span class="comment">// b8 with 16k</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">extern</span> u8 <a class="code hl_variable" href="console_8h.html#ada5015a4596df5a2a24709c608537a00">dummy</a>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">extern</span> u8 <a class="code hl_variable" href="console_8h.html#aa757ae09831c155d9ac9306c2118beab">buffer32</a>[32];</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keyword">extern</span> <span class="keyword">volatile</span> u8 <a class="code hl_variable" href="console_8h.html#a53428dffba59cdff3cd7c39aba51df63">vid_freq</a>;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="console_8h.html#abf19ef1f84fb54321a10b501aab19cdc">   80</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="console_8h.html#a4f220c3c7fa29ff3a97765d140f16fea">   88</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a4f220c3c7fa29ff3a97765d140f16fea">sys_pause_delay</a>(<span class="keywordtype">unsigned</span> cycles);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="console_8h.html#a73fe2ed032d9d01aa14f63b1cf76fd6a">   97</a></span>u16 <a class="code hl_function" href="console_8h.html#a73fe2ed032d9d01aa14f63b1cf76fd6a">sys_strlen</a>(<span class="keywordtype">char</span> *text);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="console_8h.html#aa6d25725161c2c658d2bcf667aef3a62">  106</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#aa6d25725161c2c658d2bcf667aef3a62">sys_utoa</a>(<span class="keywordtype">unsigned</span> value,<span class="keywordtype">char</span> *buffer);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="console_8h.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">   81</a></span>u16 <a class="code hl_function" href="console_8h.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">sys_random</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="console_8h.html#a9e041a4d153b3774ed21fa4630026fc4">   91</a></span>u8 <a class="code hl_function" href="console_8h.html#a9e041a4d153b3774ed21fa4630026fc4">sys_randbyte</a>(u8 A, u8 B);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="console_8h.html#abf19ef1f84fb54321a10b501aab19cdc">   98</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="console_8h.html#a4f220c3c7fa29ff3a97765d140f16fea">  106</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a4f220c3c7fa29ff3a97765d140f16fea">sys_pause_delay</a>(<span class="keywordtype">unsigned</span> cycles);</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="console_8h.html#af542a03344e9ef82c556717a82fc6a0a">  115</a></span><span class="keywordtype">char</span> *<a class="code hl_function" href="console_8h.html#af542a03344e9ef82c556717a82fc6a0a">sys_str</a>(<span class="keywordtype">unsigned</span> value);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="console_8h.html#a73fe2ed032d9d01aa14f63b1cf76fd6a">  115</a></span>u16 <a class="code hl_function" href="console_8h.html#a73fe2ed032d9d01aa14f63b1cf76fd6a">sys_strlen</a>(<span class="keywordtype">char</span> *text);</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="console_8h.html#a73cb7046a1aba38bd96c4b3584f4cd27">  125</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a73cb7046a1aba38bd96c4b3584f4cd27">sys_memcpyb</a> (<span class="keywordtype">void</span> *dest,<span class="keywordtype">void</span> *src,<span class="keywordtype">unsigned</span> num);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="console_8h.html#a43d44a658239ecbb976888adfb534c54">  135</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a43d44a658239ecbb976888adfb534c54">sys_memcpyf</a>(<span class="keywordtype">void</span> *dest,<span class="keywordtype">void</span> *src,<span class="keywordtype">unsigned</span> num);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="console_8h.html#a3c3a726d3fc1ac759cd587195dd2f335">  145</a></span>u8 <a class="code hl_function" href="console_8h.html#a3c3a726d3fc1ac759cd587195dd2f335">sys_choice_keypad1</a>(u8 minval, u8 maxval);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="console_8h.html#a102c0dd7e8b662de90b171ee96d2cd44">  155</a></span>u8 <a class="code hl_function" href="console_8h.html#a102c0dd7e8b662de90b171ee96d2cd44">sys_choice_keypad2</a>(u8 minval, u8 maxval);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="console_8h.html#aa6d25725161c2c658d2bcf667aef3a62">  124</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#aa6d25725161c2c658d2bcf667aef3a62">sys_utoa</a>(<span class="keywordtype">unsigned</span> value,<span class="keywordtype">char</span> *buffer);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="console_8h.html#af542a03344e9ef82c556717a82fc6a0a">  133</a></span><span class="keywordtype">char</span> *<a class="code hl_function" href="console_8h.html#af542a03344e9ef82c556717a82fc6a0a">sys_str</a>(<span class="keywordtype">unsigned</span> value);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="console_8h.html#a73cb7046a1aba38bd96c4b3584f4cd27">  143</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a73cb7046a1aba38bd96c4b3584f4cd27">sys_memcpyb</a> (<span class="keywordtype">void</span> *dest,<span class="keywordtype">void</span> *src,<span class="keywordtype">unsigned</span> num);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="console_8h.html#a43d44a658239ecbb976888adfb534c54">  153</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="console_8h.html#a43d44a658239ecbb976888adfb534c54">sys_memcpyf</a>(<span class="keywordtype">void</span> *dest,<span class="keywordtype">void</span> *src,<span class="keywordtype">unsigned</span> num);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="console_8h.html#a3c3a726d3fc1ac759cd587195dd2f335">  163</a></span>u8 <a class="code hl_function" href="console_8h.html#a3c3a726d3fc1ac759cd587195dd2f335">sys_choice_keypad1</a>(u8 minval, u8 maxval);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="console_8h.html#a102c0dd7e8b662de90b171ee96d2cd44">  173</a></span>u8 <a class="code hl_function" href="console_8h.html#a102c0dd7e8b662de90b171ee96d2cd44">sys_choice_keypad2</a>(u8 minval, u8 maxval);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="acoltypes_8h_html"><div class="ttname"><a href="coltypes_8h.html">coltypes.h</a></div><div class="ttdoc">Custom types used by pvcollib.</div></div>
 <div class="ttc" id="aconsole_8h_html_a102c0dd7e8b662de90b171ee96d2cd44"><div class="ttname"><a href="console_8h.html#a102c0dd7e8b662de90b171ee96d2cd44">sys_choice_keypad2</a></div><div class="ttdeci">u8 sys_choice_keypad2(u8 minval, u8 maxval)</div><div class="ttdoc">Wait until a key between two values if pressed on keypad 2.</div></div>
 <div class="ttc" id="aconsole_8h_html_a3c3a726d3fc1ac759cd587195dd2f335"><div class="ttname"><a href="console_8h.html#a3c3a726d3fc1ac759cd587195dd2f335">sys_choice_keypad1</a></div><div class="ttdeci">u8 sys_choice_keypad1(u8 minval, u8 maxval)</div><div class="ttdoc">Wait until a key between two values if pressed on keypad 1.</div></div>
@@ -175,6 +197,7 @@ $(document).ready(function(){initNavTree('console_8h_source.html',''); initResiz
 <div class="ttc" id="aconsole_8h_html_aa757ae09831c155d9ac9306c2118beab"><div class="ttname"><a href="console_8h.html#aa757ae09831c155d9ac9306c2118beab">buffer32</a></div><div class="ttdeci">u8 buffer32[32]</div><div class="ttdoc">buffer32 used for some functions.  can be used by program too.</div></div>
 <div class="ttc" id="aconsole_8h_html_aa9aabe5f00e8ff35a3440e0fbd44fed4"><div class="ttname"><a href="console_8h.html#aa9aabe5f00e8ff35a3440e0fbd44fed4">sys_random</a></div><div class="ttdeci">u16 sys_random(void)</div><div class="ttdoc">Generate and return a randomized 16 bit number.</div></div>
 <div class="ttc" id="aconsole_8h_html_abf19ef1f84fb54321a10b501aab19cdc"><div class="ttname"><a href="console_8h.html#abf19ef1f84fb54321a10b501aab19cdc">sys_pause</a></div><div class="ttdeci">void sys_pause(void)</div><div class="ttdoc">Wait until a fire button is pressed (do a pause)</div></div>
+<div class="ttc" id="aconsole_8h_html_ada5015a4596df5a2a24709c608537a00"><div class="ttname"><a href="console_8h.html#ada5015a4596df5a2a24709c608537a00">dummy</a></div><div class="ttdeci">u8 dummy</div><div class="ttdoc">dummy used for bank switching. can be used by program too.</div></div>
 <div class="ttc" id="aconsole_8h_html_af542a03344e9ef82c556717a82fc6a0a"><div class="ttname"><a href="console_8h.html#af542a03344e9ef82c556717a82fc6a0a">sys_str</a></div><div class="ttdeci">char * sys_str(unsigned value)</div><div class="ttdoc">return a converted value in string</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -182,7 +205,7 @@ $(document).ready(function(){initNavTree('console_8h_source.html',''); initResiz
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li><li class="navelem"><a class="el" href="console_8h.html">console.h</a></li>
-    <li class="footer">Generated on Sun May 31 2026       Generated on Sun May 31 2026 04:39:51 for PVColLib by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Nov 11 2026       Generated by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
 </div>
 </body>
 </html>

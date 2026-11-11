@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hi_0',['hi',['../structscore__t.html#a47a478b0b6c3d6c442dc708ad768c5d1',1,'score_t']]]
+  ['dummy_0',['dummy',['../console_8h.html#ada5015a4596df5a2a24709c608537a00',1,'console.h']]]
 ];

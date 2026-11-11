@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lo_0',['lo',['../structscore__t.html#a2a4c1aa7f0af4a13e5f2fd3229a2e054',1,'score_t']]]
+  ['keypad_5f1_0',['keypad_1',['../pad_8h.html#adb051c00ecc80901633e8bf97c771ee3',1,'pad.h']]],
+  ['keypad_5f2_1',['keypad_2',['../pad_8h.html#af7f59d7af79140adc96867fde3a92e97',1,'pad.h']]]
 ];

@@ -12,5 +12,6 @@ var console_8h =
     [ "sys_strlen", "console_8h.html#a73fe2ed032d9d01aa14f63b1cf76fd6a", null ],
     [ "sys_utoa", "console_8h.html#aa6d25725161c2c658d2bcf667aef3a62", null ],
     [ "buffer32", "console_8h.html#aa757ae09831c155d9ac9306c2118beab", null ],
+    [ "dummy", "console_8h.html#ada5015a4596df5a2a24709c608537a00", null ],
     [ "vid_freq", "console_8h.html#a53428dffba59cdff3cd7c39aba51df63", null ]
 ];

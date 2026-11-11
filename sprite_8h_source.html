@@ -1,6 +1,6 @@
 <!-- HTML header for doxygen 1.8.14-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
 <head>
 <meta http-equiv="cache-control" content="max-age=86400"/>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
@@ -11,6 +11,15 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    // Initialize Dark Mode
+    DoxygenAwesomeDarkModeToggle.init();
+    // Initialize Copy Button
+    DoxygenAwesomeFragmentCopyButton.init();
+</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -19,7 +28,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="dox_extra.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this aaooaaa div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
    <div id="projectname">PVColLib
    &#160;<span id="projectnumber">1.6.0</span>
    </div>
-   <div id="projectbrief">Documentation to code in C or ASM for the Colecovision</div>
+   <div id="projectbrief">Documentation to code in C or ASM for the ColecoVision</div>
   </td>
  </tr>
  </tbody>
@@ -190,13 +199,13 @@ $(document).ready(function(){initNavTree('sprite_8h_source.html',''); initResiza
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="preprocessor">    }</span></div>
 </div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="preprocessor">#define spr_setx(id,xp) { sprites[id].x=xp; }</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="sprite_8h.html#aff746a56677d9b5bf50f78e96636746f">  161</a></span><span class="preprocessor">#define spr_setx(id,xp) { sprites[id].x=xp; }</span></div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="sprite_8h.html#a72d1860d0d0c3864264c84f75e3abfa4">  168</a></span><span class="preprocessor">#define spr_sety(id,yp) { sprites[id].y=yp; }</span></div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#define spr_setpat(id,pat) { sprites[id].pattern=pat; }</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="sprite_8h.html#a4ed7f868f83e1ac8325d63744cd1c1ce">  175</a></span><span class="preprocessor">#define spr_setpat(id,pat) { sprites[id].pattern=pat; }</span></div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">#define spr_setcol(id,col) { sprites[id].colour=col; }</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="sprite_8h.html#a2d9b82bbd254b3997f8be40979be8d86">  182</a></span><span class="preprocessor">#define spr_setcol(id,col) { sprites[id].colour=col; }</span></div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="sprite_8h.html#aeea60b775064110893e9ae7d84d3c1f5">  188</a></span><span class="preprocessor">#define spr_getx(id) (sprites[id].x)</span></div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
@@ -224,7 +233,7 @@ $(document).ready(function(){initNavTree('sprite_8h_source.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li><li class="navelem"><a class="el" href="sprite_8h.html">sprite.h</a></li>
-    <li class="footer">Generated on Sun May 31 2026       Generated on Sun May 31 2026 04:39:51 for PVColLib by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Nov 11 2026       Generated by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
 </div>
 </body>
 </html>

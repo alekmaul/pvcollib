@@ -1,6 +1,6 @@
 <!-- HTML header for doxygen 1.8.14-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
 <head>
 <meta http-equiv="cache-control" content="max-age=86400"/>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
@@ -11,6 +11,15 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+    // Initialize Dark Mode
+    DoxygenAwesomeDarkModeToggle.init();
+    // Initialize Copy Button
+    DoxygenAwesomeFragmentCopyButton.init();
+</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -19,7 +28,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="dox_extra.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this aaooaaa div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
    <div id="projectname">PVColLib
    &#160;<span id="projectnumber">1.6.0</span>
    </div>
-   <div id="projectbrief">Documentation to code in C or ASM for the Colecovision</div>
+   <div id="projectbrief">Documentation to code in C or ASM for the ColecoVision</div>
   </td>
  </tr>
  </tbody>
@@ -170,12 +179,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>vdp_enablevdp</b> (vo
 <tr class="memitem:acb0e0bd43f5d41e1d213a7e445a077d0" id="r_acb0e0bd43f5d41e1d213a7e445a077d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#acb0e0bd43f5d41e1d213a7e445a077d0">vdp_getvram</a> (unsigned offset, void *data, unsigned count)</td></tr>
 <tr class="memdesc:acb0e0bd43f5d41e1d213a7e445a077d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get from VRAM to a RAM pointer with some non compressed data.  <br /></td></tr>
 <tr class="separator:acb0e0bd43f5d41e1d213a7e445a077d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbcc5f8cd2c39f9f24a55335805beca4" id="r_acbcc5f8cd2c39f9f24a55335805beca4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#acbcc5f8cd2c39f9f24a55335805beca4">vdp_linebmp</a> (u8 x0, u8 y0, u8 x1, u8 y1)</td></tr>
+<tr class="memdesc:acbcc5f8cd2c39f9f24a55335805beca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data in VRAM with some DAN2 compressed data.  <br /></td></tr>
+<tr class="separator:acbcc5f8cd2c39f9f24a55335805beca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3365bea622a4fceccd49769a379579af" id="r_a3365bea622a4fceccd49769a379579af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#a3365bea622a4fceccd49769a379579af">vdp_ple2vram</a> (void *pledata, unsigned offset)</td></tr>
 <tr class="memdesc:a3365bea622a4fceccd49769a379579af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data in VRAM with some Pletter compressed data.  <br /></td></tr>
 <tr class="separator:a3365bea622a4fceccd49769a379579af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb96b903b1f7d99034521cfbe46f1530" id="r_afb96b903b1f7d99034521cfbe46f1530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#afb96b903b1f7d99034521cfbe46f1530">vdp_putarea</a> (void *table, u8 x, u8 y, u8 width, u8 height)</td></tr>
 <tr class="memdesc:afb96b903b1f7d99034521cfbe46f1530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put an area of chars to screen.  <br /></td></tr>
 <tr class="separator:afb96b903b1f7d99034521cfbe46f1530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be6650e0e080fb796c53559a225f625" id="r_a0be6650e0e080fb796c53559a225f625"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#a0be6650e0e080fb796c53559a225f625">vdp_putareabmp</a> (u8 x, u8 y, u8 width, u8 height, void *tablegen, void *tablecol)</td></tr>
+<tr class="memdesc:a0be6650e0e080fb796c53559a225f625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put an area of chars to screen with bitmap mode.  <br /></td></tr>
+<tr class="separator:a0be6650e0e080fb796c53559a225f625"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb95cb4406dff5e9ac77c4038341d25" id="r_a6cb95cb4406dff5e9ac77c4038341d25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="video_8h.html#a6cb95cb4406dff5e9ac77c4038341d25">vdp_putchar</a> (u8 x, u8 y, char value)</td></tr>
 <tr class="memdesc:a6cb95cb4406dff5e9ac77c4038341d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a single char on screen.  <br /></td></tr>
 <tr class="separator:a6cb95cb4406dff5e9ac77c4038341d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -541,6 +556,57 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>vdp_setmode2txt</b> (
 
 </div>
 </div>
+<a id="acbcc5f8cd2c39f9f24a55335805beca4" name="acbcc5f8cd2c39f9f24a55335805beca4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbcc5f8cd2c39f9f24a55335805beca4">&#9670;&#160;</a></span>vdp_linebmp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vdp_linebmp </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>y1</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put data in VRAM with some DAN2 compressed data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x0</td><td>x start coordinate of line </td></tr>
+    <tr><td class="paramname">y0</td><td>y start coordinate of line </td></tr>
+    <tr><td class="paramname">x1</td><td>x end coordinate of line </td></tr>
+    <tr><td class="paramname">y1</td><td>y end coordinate of line </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a3365bea622a4fceccd49769a379579af" name="a3365bea622a4fceccd49769a379579af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3365bea622a4fceccd49769a379579af">&#9670;&#160;</a></span>vdp_ple2vram()</h2>
 
@@ -627,11 +693,76 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>vdp_setmode2txt</b> (
 <p>Put an area of chars to screen. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">table</td><td>area in ram to load chars </td></tr>
+    <tr><td class="paramname">table</td><td>area in rom for chars map </td></tr>
     <tr><td class="paramname">x</td><td>column of the chars </td></tr>
     <tr><td class="paramname">y</td><td>line of the chars </td></tr>
     <tr><td class="paramname">width</td><td>length of x chars to put </td></tr>
     <tr><td class="paramname">height</td><td>length of y chars to put </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0be6650e0e080fb796c53559a225f625" name="a0be6650e0e080fb796c53559a225f625"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0be6650e0e080fb796c53559a225f625">&#9670;&#160;</a></span>vdp_putareabmp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vdp_putareabmp </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>tablegen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>tablecol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Put an area of chars to screen with bitmap mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>column of the chars </td></tr>
+    <tr><td class="paramname">y</td><td>line of the chars </td></tr>
+    <tr><td class="paramname">width</td><td>length of x chars to put </td></tr>
+    <tr><td class="paramname">height</td><td>length of y chars to put </td></tr>
+    <tr><td class="paramname">tablegen</td><td>area in rom with chars patterns </td></tr>
+    <tr><td class="paramname">tablecol</td><td>area in rom with chars colors </td></tr>
   </table>
   </dd>
 </dl>
@@ -1016,7 +1147,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>vdp_setmode2txt</b> (
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="audio_2music_2music_8c-example.html#a13">audio/music/music.c</a>, <a class="el" href="audio_2simplesound_2ssound_8c-example.html#a13">audio/simplesound/ssound.c</a>, <a class="el" href="graphics_2backgrounds_2dancompress_2grafdancomp_8c-example.html#a5">graphics/backgrounds/dancompress/grafdancomp.c</a>, <a class="el" href="graphics_2backgrounds_2notcompress_2grafnocomp_8c-example.html#a5">graphics/backgrounds/notcompress/grafnocomp.c</a>, <a class="el" href="graphics_2backgrounds_2plecompress_2grafplecomp_8c-example.html#a5">graphics/backgrounds/plecompress/grafplecomp.c</a>, <a class="el" href="graphics_2backgrounds_2rlecompress_2grafrlecomp_8c-example.html#a5">graphics/backgrounds/rlecompress/grafrlecomp.c</a>, <a class="el" href="graphics_2f18a_2f18abitmap1_2f18abitmap1_8c-example.html#a11">graphics/f18a/f18abitmap1/f18abitmap1.c</a>, <a class="el" href="graphics_2f18a_2f18aecm3_2f18aecm3_8c-example.html#a13">graphics/f18a/f18aecm3/f18aecm3.c</a>, <a class="el" href="graphics_2f18a_2f18atest_2f18atest_8c-example.html#a9">graphics/f18a/f18atest/f18atest.c</a>, <a class="el" href="graphics_2sprites_2animatedsprite_2animatedsprite_8c-example.html#a14">graphics/sprites/animatedsprite/animatedsprite.c</a>, <a class="el" href="graphics_2sprites_2simplesprite_2simplesprite_8c-example.html#a14">graphics/sprites/simplesprite/simplesprite.c</a>, <a class="el" href="helloworld_2helloworld_8c-example.html#a6">helloworld/helloworld.c</a>, <a class="el" href="input_2input_8c-example.html#a8">input/input.c</a>, <a class="el" href="megacart_2megacart_8c-example.html#a0">megacart/megacart.c</a>, <a class="el" href="palntsc_2palntsc_8c-example.html#a7">palntsc/palntsc.c</a>, <a class="el" href="random_2randvalue_8c-example.html#a10">random/randvalue.c</a>, <a class="el" href="scoring_2scoring_8c-example.html#a14">scoring/scoring.c</a>, and <a class="el" href="sgm_2sgmtest_2sgmtest_8c-example.html#a8">sgm/sgmtest/sgmtest.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="audio_2music_2music_8c-example.html#a13">audio/music/music.c</a>, <a class="el" href="audio_2simplesound_2ssound_8c-example.html#a13">audio/simplesound/ssound.c</a>, <a class="el" href="graphics_2backgrounds_2dancompress_2grafdancomp_8c-example.html#a5">graphics/backgrounds/dancompress/grafdancomp.c</a>, <a class="el" href="graphics_2backgrounds_2notcompress_2grafnocomp_8c-example.html#a5">graphics/backgrounds/notcompress/grafnocomp.c</a>, <a class="el" href="graphics_2backgrounds_2plecompress_2grafplecomp_8c-example.html#a5">graphics/backgrounds/plecompress/grafplecomp.c</a>, <a class="el" href="graphics_2backgrounds_2rlecompress_2grafrlecomp_8c-example.html#a5">graphics/backgrounds/rlecompress/grafrlecomp.c</a>, <a class="el" href="graphics_2f18a_2f18abitmap1_2f18abitmap1_8c-example.html#a11">graphics/f18a/f18abitmap1/f18abitmap1.c</a>, <a class="el" href="graphics_2f18a_2f18aecm3_2f18aecm3_8c-example.html#a13">graphics/f18a/f18aecm3/f18aecm3.c</a>, <a class="el" href="graphics_2f18a_2f18atest_2f18atest_8c-example.html#a9">graphics/f18a/f18atest/f18atest.c</a>, <a class="el" href="graphics_2sprites_2animatedsprite_2animatedsprite_8c-example.html#a16">graphics/sprites/animatedsprite/animatedsprite.c</a>, <a class="el" href="graphics_2sprites_2simplesprite_2simplesprite_8c-example.html#a15">graphics/sprites/simplesprite/simplesprite.c</a>, <a class="el" href="helloworld_2helloworld_8c-example.html#a6">helloworld/helloworld.c</a>, <a class="el" href="input_2input_8c-example.html#a8">input/input.c</a>, <a class="el" href="megacart_2megacart_8c-example.html#a0">megacart/megacart.c</a>, <a class="el" href="palntsc_2palntsc_8c-example.html#a7">palntsc/palntsc.c</a>, <a class="el" href="random_2randvalue_8c-example.html#a10">random/randvalue.c</a>, <a class="el" href="scoring_2scoring_8c-example.html#a14">scoring/scoring.c</a>, and <a class="el" href="sgm_2sgmtest_2sgmtest_8c-example.html#a8">sgm/sgmtest/sgmtest.c</a>.</dd>
 </dl>
 
 </div>
@@ -1027,7 +1158,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>vdp_setmode2txt</b> (
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_ab28da7dde20c2d62f737d8395421769.html">coleco</a></li><li class="navelem"><a class="el" href="video_8h.html">video.h</a></li>
-    <li class="footer">Generated on Sun May 31 2026       Generated on Sun May 31 2026 04:39:51 for PVColLib by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Nov 11 2026       Generated by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
 </div>
 </body>
 </html>

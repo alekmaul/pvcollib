@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['joypad_5f1_0',['joypad_1',['../pad_8h.html#aab27e2fb6abb3d432d535e3ad00e868c',1,'pad.h']]],
-  ['joypad_5f2_1',['joypad_2',['../pad_8h.html#a9b46ac10c27e7e4248eeb4c86a351bf8',1,'pad.h']]]
+  ['hi_0',['hi',['../structscore__t.html#a47a478b0b6c3d6c442dc708ad768c5d1',1,'score_t']]]
 ];

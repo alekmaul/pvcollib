@@ -92,7 +92,6 @@ endif
 	@cp -r $(PVCOLLIB_PATH)/lib $(RELEASE_PATH)/$(PVCOLLIB_PATH)
 	@cp -r $(PVCOLLIB_PATH)/docs/html $(RELEASE_PATH)/$(PVCOLLIB_PATH)
 	@cp pvcollib_logo.png $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_logo.png
-	@cp $(PVCOLLIB_PATH)/pvcollib_Logo.png $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_Logo.png
 	@cp $(PVCOLLIB_PATH)/pvcollib_license.txt $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_license.txt
 	@cp $(PVCOLLIB_PATH)/pvcollib_version.txt $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_version.txt
 	@cp -r $(COL_EXAMPLES_PATH) $(RELEASE_PATH)/coleco-examples

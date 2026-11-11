@@ -10,12 +10,13 @@
 [![Downloads](https://img.shields.io/github/downloads/alekmaul/pvcollib/total?label=Total%20Downloads)](https://github.com/alekmaul/pvcollib/releases)
 [![Build](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml/badge.svg?branch=develop)](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml)
 
-It contains sdcc compiler / linker and a library (sources included) which offer facilities to use backgrounds / sprites / pads / music & sound on ColecoVision system.   
-Sdcc compiler from Philipp Klaus Krause - SDCC Release Manager  (https://sourceforge.net/projects/sdcc/files/).  
+PVCollib uses SDCC 3.9.0. You don't need to install it: running make downloads it automatically into devkitcol/bin from the sdcc-3.9.0 release (curl and tar are needed).  
+
 C Library is based on works from Amy Purple (aka newcoleco), a great Colecovision coder and music composer (<no website currently>).  
-A great thanks to Amy Purple continuing to help me to improve the library, thanks to her!
+A great thanks to Amy Purple continuing to help me to improve the library, thanks to her!  
+
 F18A support from matthew180 (http://codehackcreate.com/archives/592) with the help of digress (http://eriscreations.com) on Colecovision.  
-NMI cautions in ctrcol.s from Tursi (http://www.harmlesslion.com/cgi-bin/showprog.cgi?ColecoVision), thanks to him !
+NMI cautions in ctrcol.s from Tursi (http://www.harmlesslion.com/cgi-bin/showprog.cgi?ColecoVision), thanks to him!  
 
 It also contains examples to help how to use functions with the library. You can find the Doxygen documentation of the library in the ['docs'](pvcollib/docs/html/files.html) directory.  
 

@@ -1,0 +1,124 @@
+name: PVCOLLIB Build & Release
+
+      # ------------------------------------ #
+      # Events to trigger the action         #
+      # ------------------------------------ #
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "develop"
+
+      # ------------------------------------ #
+      # Set O.S matrix                       #
+      # ------------------------------------ #
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux
+          - os: windows-latest
+            name: windows
+          - os: macos-latest
+            name: darwin
+
+    steps:
+      # ------------------------------------ #
+      # Install minimal dependencies         #
+      # (SDCC 3.9.0 is installed by make,    #
+      #  doxygen is mandatory for release)   #
+      # ------------------------------------ #
+      - name: Install dependencies for Linux
+        if: matrix.name == 'linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y doxygen
+      - name: Install dependencies for Windows
+        if: matrix.name == 'windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            base-devel
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-doxygen
+            zip
+      - name: Install dependencies for MacOS
+        if: matrix.name == 'darwin'
+        run: |
+          export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+          brew install doxygen || true
+
+      # ------------------------------------ #
+      # Checkout the project                 #
+      # ------------------------------------ #
+      - name: Check out PVCOLLIB
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          submodules: recursive
+          persist-credentials: false
+
+      # ------------------------------------ #
+      # Compiling sources and create release #
+      # (make downloads SDCC in devkitcol)   #
+      # ------------------------------------ #
+      - name: Build & Release PVCOLLIB for Linux
+        if: (matrix.name == 'linux')
+        shell: bash
+        run: |
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+      - name: Build & Release PVCOLLIB for Windows
+        if: (matrix.name == 'windows')
+        shell: msys2 {0}
+        run: |
+          set -o pipefail
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+      - name: Build & Release PVCOLLIB for MacOS
+        if: (matrix.name == 'darwin')
+        shell: bash
+        run: |
+          export PVCOLLIB_HOME=$(pwd)
+          make release | tee pvcollib_release_${{ matrix.name }}.log
+
+      # ------------------------------------ #
+      # Checking SDCC version & libraries    #
+      # ------------------------------------ #
+      - name: Checking SDCC version
+        shell: bash
+        run: |
+          devkitcol/bin/sdcc --version | tee pvcollib_sdcc_version_${{ matrix.name }}.log
+      - name: Checking libraries linking PVCOLLIB toolchain
+        if: matrix.name == 'darwin'
+        run: |
+          otool -L devkitcol/bin/* devkitcol/tools/* | tee pvcollib_toolchain_linking_${{ matrix.name }}.log || true
+      - name: Checking libraries linking PVCOLLIB toolchain
+        if: matrix.name == 'windows' || matrix.name == 'linux'
+        shell: bash
+        run: |
+          ldd devkitcol/bin/* devkitcol/tools/* | tee pvcollib_toolchain_linking_${{ matrix.name }}.log || true
+
+      # ------------------------------------ #
+      # Upload releases                      #
+      # ------------------------------------ #
+      - name: Upload PVCOLLIB release
+        uses: actions/upload-artifact@v6
+        with:
+          name: PVCOLLIB Release for ${{ matrix.name }}
+          path: release/pvcollib_64b_${{ matrix.name }}.zip
+
+      # ------------------------------------ #
+      # Upload logs                          #
+      # ------------------------------------ #
+      - name: Upload PVCOLLIB logs
+        uses: actions/upload-artifact@v6
+        with:
+          name: PVCOLLIB Release Logs for ${{ matrix.name }}
+          path: "*.log"

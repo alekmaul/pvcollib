@@ -11,8 +11,8 @@ pvcollib/include/coleco/libversion.h
 release
 
 # exclude binaries (specific to your OS)
-devkitsnes/tools
-devkitsnes/bin
+devkitcol/tools
+devkitcol/bin
 
 # all binaries in tools folder
 tools/bin2txt/bin2txt
@@ -23,6 +23,7 @@ tools/gfx2col/gfx2col
 tools/gfx2col/gfx2col.exe
 
 # all other type of files generated automatically
+*.o
 *.ihx
 *.lk
 *.noi
@@ -31,6 +32,8 @@ tools/gfx2col/gfx2col.exe
 *.sym
 *.lst
 *.rel
+*gfx.h
+*gfx.inc
 
 # Mac OS cache files
 .DS_Store

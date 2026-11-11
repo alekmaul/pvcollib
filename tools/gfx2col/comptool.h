@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <mem.h>
+#include <string.h>
 
 #define bool unsigned char
 #define byte unsigned char

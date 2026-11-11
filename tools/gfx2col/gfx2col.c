@@ -30,8 +30,8 @@
 //INCLUDES
 #include <stdlib.h>
 #include <stdio.h>
-#include <memory.h>
-#include <malloc.h>
+#include <string.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "gfx2col.h"

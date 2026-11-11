@@ -4,7 +4,7 @@
 COMPILER_PATH       := compiler
 TOOLS_PATH          := tools
 COL_EXAMPLES_PATH  := coleco-examples
-SNES_VSCODE_PATH 	:= vscode-template
+COL_VSCODE_PATH 	:= vscode-template
 PVCOLLIB_PATH      := pvcollib
 RELEASE_PATH        := release/pvcollib
 
@@ -28,23 +28,45 @@ else
 	$(error Unsupported operating system)
 endif
 
+# SDCC compiler, downloaded from the pvcollib "sdcc-x.y.z" GitHub release
+SDCC_VERSION := 3.9.0
+SDCC_URL     := https://github.com/alekmaul/pvcollib/releases/download/sdcc-$(SDCC_VERSION)
+ifneq ($(filter windows mingw,$(OPERATING_SYSTEM)),)
+SDCC_OS := windows
+else
+SDCC_OS := $(OPERATING_SYSTEM)
+endif
+SDCC_ARCHIVE := sdcc-$(SDCC_VERSION)-$(SDCC_OS).tar.gz
+SDCC_STAMP   := devkitcol/bin/.sdcc-$(SDCC_VERSION)
+
 # default target - dependencies allow parallel builds with make -j
-all: tools pvcollib examples
+all: sdcc tools pvcollib examples
 	@echo
 	@echo "* Build finished successfully !"
 	@echo
+
+# download and install SDCC in devkitcol/bin (only once per SDCC version)
+sdcc: $(SDCC_STAMP)
+
+$(SDCC_STAMP):
+	@echo "* Installing SDCC $(SDCC_VERSION) for $(SDCC_OS) in devkitcol ..."
+	@curl -fsSL -o $(SDCC_ARCHIVE) $(SDCC_URL)/$(SDCC_ARCHIVE)
+	@tar -xzf $(SDCC_ARCHIVE) -C devkitcol
+	@chmod +x devkitcol/bin/*
+	@rm -f $(SDCC_ARCHIVE)
+	@touch $@
+
+# build pvcollib (requires compiler to be installed)
+pvcollib: sdcc
+	$(MAKE) -C $(PVCOLLIB_PATH)
 
 # build tools (independent of compiler, can run in parallel)
 tools:
 	$(MAKE) -C $(TOOLS_PATH)
 	$(MAKE) -C $(TOOLS_PATH) install
 
-# build pvcollib (requires compiler to be installed)
-pvcollib: 
-	$(MAKE) -C $(PVCOLLIB_PATH)
-
-# build snes-examples (requires pvcollib and tools)
-examples: pvcollib tools
+# build coleco-examples (requires pvcollib and tools)
+examples: sdcc pvcollib tools
 	$(MAKE) -C $(COL_EXAMPLES_PATH)
 	$(MAKE) -C $(COL_EXAMPLES_PATH) install
 
@@ -69,14 +91,14 @@ endif
 	@cp -r $(PVCOLLIB_PATH)/include $(RELEASE_PATH)/$(PVCOLLIB_PATH)
 	@cp -r $(PVCOLLIB_PATH)/lib $(RELEASE_PATH)/$(PVCOLLIB_PATH)
 	@cp -r $(PVCOLLIB_PATH)/docs/html $(RELEASE_PATH)/$(PVCOLLIB_PATH)
-	@cp $(PVCOLLIB_PATH)/pvcollib_Logo.png $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_Logo.png
+	@cp pvcollib_logo.png $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_logo.png
 	@cp $(PVCOLLIB_PATH)/pvcollib_license.txt $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_license.txt
-	@cp $(PVCOLLIB_PATH)/pvcollib_snesmod.txt $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_snesmod.txt
 	@cp $(PVCOLLIB_PATH)/pvcollib_version.txt $(RELEASE_PATH)/$(PVCOLLIB_PATH)/pvcollib_version.txt
-	@cp -r $(COL_EXAMPLES_PATH) $(RELEASE_PATH)/snes-examples
+	@cp -r $(COL_EXAMPLES_PATH) $(RELEASE_PATH)/coleco-examples
+	@cp -r $(COL_VSCODE_PATH) $(RELEASE_PATH)/vscode-template
 	@cd release && zip -q -y -r -m pvcollib_$(ARCH)_$(OPERATING_SYSTEM).zip pvcollib
 
 	@echo "* Release pvcollib_$(ARCH)_$(OPERATING_SYSTEM) created successfully !"
 	@echo
 
-.PHONY: all clean release tools pvcollib examples
+.PHONY: all clean release tools sdcc pvcollib examples

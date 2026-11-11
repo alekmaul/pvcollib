@@ -18,26 +18,7 @@ SPECIAL THANKS
                
 CHANGE LOG
 ----------------------
-VERSION 1.40 (October, 2020)
-- Add dan2 & dan3 compression to gfx2col (dan3 currently does not work)
-
-VERSION 1.30 (January, 2020)
-- Add lots of feature in gfx2col for f18a
-
-VERSION 1.20 (December, 2019)
-- Add graphic mode 1 in gfx2col
-
-VERSION 1.11 (November, 2019)
-- Fix bitmap mode issues in gfx2col
-- Remove O2 compiler option
-- Add cvmkart alias in col_rules
-
-VERSION 1.10 (November, 2019)
-- Added doxygen, gfx2col
-- Added cvmkcart
-
-VERSION 1.00 (November, 2018)
-- Initial release 
+- See github changelog of the release
 
 If you have questions, please email Alekmaul at alekmaul@portabledev.com.
 

@@ -48,6 +48,9 @@
 #elif defined(__SDCC_gbz80)
 #include <asm/gbz80/features.h>
 
+#elif defined(__SDCC_ez80_z80)
+#include <asm/ez80_z80/features.h>
+
 #elif defined(__SDCC_mcs51)
 #include <asm/mcs51/features.h>
 

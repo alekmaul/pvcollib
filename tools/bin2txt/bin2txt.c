@@ -27,6 +27,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
+// portable replacement of strupr (Windows only)
+static char *str_upper(char *s)
+{
+	char *p;
+	for (p = s; *p; p++)
+		*p = (char)toupper((unsigned char)*p);
+	return s;
+}
 
 #define BIN2TXTVERSION __BUILD_VERSION
 #define BIN2TXTDATE __BUILD_DATE
@@ -73,7 +83,6 @@ int main(int argc, char **arg)
 	unsigned char bytei;
     unsigned char tabascii[16];
     
-
 	// Show something to begin :)
 	if (quietmode == 0) {
 		printf("\n=============================");
@@ -185,7 +194,7 @@ int main(int argc, char **arg)
 		fprintf(fpo, "// bin2txt converted binary data\n");
 		fprintf(fpo, "// binary file size : %d bytes\n",filesize);
 		fprintf(fpo, "//----------------------------------------------------------------------\n\n");
-		strupr(filebase);
+		str_upper(filebase);
 		fprintf(fpo, "#ifndef %s_INC_\n", filebase);
 		fprintf(fpo, "#define %s_INC_\n\n", filebase);
 		fprintf(fpo, "#define %s_SIZE 0x%x\n\n", filebase,filesize);
@@ -231,7 +240,7 @@ int main(int argc, char **arg)
 		fprintf(fpo, "; binary file size : %d bytes\n",filesize);
 		fprintf(fpo, ";----------------------------------------------------------------------\n\n");
 		fprintf(fpo, ".section \".%s\" superfree\n\n", filebase);
-		strupr(filebase);
+		str_upper(filebase);
 		fprintf(fpo, ".define %s_SIZE %xh\n\n", filebase,filesize);
 		fprintf(fpo, "%s:\n", filebase);
 		

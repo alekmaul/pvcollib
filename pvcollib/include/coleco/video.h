@@ -200,13 +200,26 @@ void vdp_getarea (void *table, u8 x, u8 y, u8 width, u8 height);
  * \fn void vdp_putarea (void *table, u8 x, u8 y, u8 width, u8 height)
  * \brief  Put an area of chars to screen
  *
- * \param table area in ram to load chars
+ * \param table area in rom for chars map
  * \param x column of the chars
  * \param y line of the chars
  * \param width length of x chars to put
  * \param height length of y chars to put
 */
 void vdp_putarea (void *table, u8 x, u8 y, u8 width, u8 height);
+
+/**
+ * \fn void vdp_putareabmp (u8 x, u8 y, u8 width, u8 height,void *tablegen,void *tablecol)
+ * \brief  Put an area of chars to screen with bitmap mode
+ *
+ * \param x column of the chars
+ * \param y line of the chars
+ * \param width length of x chars to put
+ * \param height length of y chars to put
+ * \param tablegen area in rom with chars patterns
+ * \param tablecol area in rom with chars colors
+*/
+void vdp_putareabmp (u8 x, u8 y, u8 width, u8 height,void *tablegen,void *tablecol);
 
 /**
  * \fn  void vdp_setdefaultchar(u8 flags)
@@ -332,5 +345,17 @@ void vdp_dan32vram(void *dan3data, unsigned offset);
 	\brief reset no_nmi flag to allow nmi 
 */
 #define vdp_releasenmi() { __asm__("\tpush hl\n\tld hl,#_no_nmi\n\tres 0,(hl)\n\tpop hl"); }
+
+/**
+ * \fn void vdp_linebmp(u8 x0, u8 y0, u8 x1, u8 y1)
+ * \brief Put data in VRAM with some DAN2 compressed data 
+ *
+ * \param x0 x start coordinate of line
+ * \param y0 y start coordinate of line
+ * \param x1 x end coordinate of line
+ * \param y1 y end coordinate of line
+*/
+void vdp_linebmp(u8 x0, u8 y0, u8 x1, u8 y1);
+
 
 #endif

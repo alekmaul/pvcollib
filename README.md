@@ -1,31 +1,46 @@
-# A C library for the ColecoVision #
+# PVColLib
+
+**PVColLib** (**P**rogrammer **V**aluable **Colecovision** **Lib**rary) is an open and free library to develop programs for the ColecoVision using the C programming language.
+
 ![PVcollib](https://www.portabledev.com/wp-content/uploads/2019/11/pvcollib_logo.png)
 
-PVcollib V1.5.1 (09, 20, 2020)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/)
+[![Discord](https://img.shields.io/badge/chat-on%20discord-blue.svg)](https://discord.gg/8kAHJgj)
+[![Current Release](https://img.shields.io/github/v/release/alekmaul/pvcollib?label=Current%20Release)](https://github.com/alekmaul/pvcollib/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/alekmaul/pvcollib/total?label=Total%20Downloads)](https://github.com/alekmaul/pvcollib/releases)
+[![Build](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml/badge.svg?branch=develop)](https://github.com/alekmaul/pvcollib/actions/workflows/pvcollib_build_package.yml)
 
-PVcollib is an open and free library to develop programs for ColecoVision in C language.
+PVCollib uses SDCC 3.9.0. You don't need to install it: running make downloads it automatically into devkitcol/bin from the sdcc-3.9.0 release (curl and tar are needed).  
 
-It contains sdcc compiler / linker and a library (sources included) which offer facilities to use backgrounds / sprites / pads / music & sound on ColecoVision system.   
-Sdcc compiler from Philipp Klaus Krause - SDCC Release Manager  (https://sourceforge.net/projects/sdcc/files/).  
 C Library is based on works from Amy Purple (aka newcoleco), a great Colecovision coder and music composer (<no website currently>).  
-A great thanks to Amy Purple continuing to help me to improve the library, thanks to her !
+A great thanks to Amy Purple continuing to help me to improve the library, thanks to her!  
+
 F18A support from matthew180 (http://codehackcreate.com/archives/592) with the help of digress (http://eriscreations.com) on Colecovision.  
-NMI cautions in ctrcol.s from Tursi (http://www.harmlesslion.com/cgi-bin/showprog.cgi?ColecoVision), thanks to him !
+NMI cautions in ctrcol.s from Tursi (http://www.harmlesslion.com/cgi-bin/showprog.cgi?ColecoVision), thanks to him!  
 
 It also contains examples to help how to use functions with the library. You can find the Doxygen documentation of the library in the ['docs'](pvcollib/docs/html/files.html) directory.  
 
-GitHub page: https://github.com/alekmaul/pvcollib    
-Wiki page: https://github.com/alekmaul/pvcollib/wiki  
-Doc page: https://www.portabledev.com/pvcollib/doc
-
 You can find tutorials about how install and use PVCollib on this page: https://github.com/alekmaul/pvcollib/wiki/Introduction
-
-We now have a Discord :D, just join us with this link : https://discord.gg/8kAHJgj  
 
 PVcollib and affiliated tools are distributed under the MIT license (see pvcollib_license.txt file)  
 
-PVcollib is completly free and you can support it through the Paypal button:    
-[![Paypal](https://www.paypalobjects.com/fr_FR/FR/i/btn/x-click-but04.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y5USKF23DQVLC)  
+## Documentation
+
+- [API documentation](https://alekmaul.github.io/pvcollib/) (generated from source)
+- [Project Wiki](https://github.com/alekmaul/pvcollib/wiki) — setup, build details, and guides
+- [Discord community](https://discord.gg/8kAHJgj) — ask questions, share your project
+
+## Contributing
+
+Bug reports, pull requests, and discussion are all welcome on the [GitHub project](https://github.com/alekmaul/pvcollib) or on [Discord](https://discord.gg/8kAHJgj).
+
+PVColLib and its affiliated tools are distributed under the MIT license — see [`pvcollib_license`](https://github.com/alekmaul/pvcollib/blob/master/pvcollib/pvcollib_license.txt).
+
+## Support the project
+
+PVColLib is free to use. If it's been useful to you and help you create a game, consider supporting development.   
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-yellow?logo=paypal)](https://paypal.me/GIRARD996)
 
 Thanks and happy coding =) !
 

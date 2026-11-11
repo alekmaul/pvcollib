@@ -53,6 +53,7 @@
 	
 	;.globl _mus_pointer
 	;.globl _mus_counter
+	.globl _dummy
 
 	; global from C code
 	.globl _main
@@ -109,7 +110,9 @@ _snd_mute::
 ;    .ds 2
 ;_mus_counter:
 ;    .ds 2
-	
+_dummy:
+	.ds 1
+		
 _spinner_1 = 0x73eb
 _spinner_2 = 0x73ec
 

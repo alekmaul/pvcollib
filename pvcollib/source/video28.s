@@ -21,7 +21,7 @@
 ;		distribution.
 ;
 ;---------------------------------------------------------------------------------
-	.module pvclvideo24
+	.module pvclvideo28
 	
 
 	; global from external entries / code

@@ -41,12 +41,12 @@ jobs:
         if: matrix.name == 'windows'
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
-          update: false
+          msystem: UCRT64
+          update: true
           install: >-
             base-devel
-            mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-doxygen
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-doxygen
             zip
       - name: Install dependencies for MacOS
         if: matrix.name == 'darwin'
@@ -70,6 +70,7 @@ jobs:
       # ------------------------------------ #
       - name: Build & Release PVCOLLIB for Linux
         if: (matrix.name == 'linux')
+        shell: bash
         run: |
           export PVCOLLIB_HOME=$(pwd)
           make release | tee pvcollib_release_${{ matrix.name }}.log
@@ -77,10 +78,12 @@ jobs:
         if: (matrix.name == 'windows')
         shell: msys2 {0}
         run: |
+          set -o pipefail
           export PVCOLLIB_HOME=$(pwd)
           make release | tee pvcollib_release_${{ matrix.name }}.log
       - name: Build & Release PVCOLLIB for MacOS
         if: (matrix.name == 'darwin')
+        shell: bash
         run: |
           export PVCOLLIB_HOME=$(pwd)
           make release | tee pvcollib_release_${{ matrix.name }}.log

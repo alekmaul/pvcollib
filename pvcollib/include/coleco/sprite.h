@@ -153,7 +153,7 @@ void spr_mode16x16(void);
 	sprites[id].y=yp; \
 	}
 
-/*! \fn spr_setx(id) 
+/*! \fn spr_setx(id,xp)
 	\brief set the x sprite coordinate 
     \param id the sprite number to be get [0 - 31]
     \param xp the x location of the sprite in pixels
@@ -167,14 +167,14 @@ void spr_mode16x16(void);
 */
 #define spr_sety(id,yp) { sprites[id].y=yp; }
 
-/*! \fn spr_setpat(id) 
+/*! \fn spr_setpat(id,pat)
 	\brief set the sprite pattern
     \param id the sprite number to be get [0 - 31]
     \param pat the pattern of the sprite (multiple of 4)
 */
 #define spr_setpat(id,pat) { sprites[id].pattern=pat; }
 
-/*! \fn spr_setcol(id) 
+/*! \fn spr_setcol(id,col)
 	\brief set the sprite color
     \param id the sprite number to be get [0 - 31]
     \param col the sprite color (0 to 15)

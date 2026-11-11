@@ -148,6 +148,7 @@ void nmi (void) {
 
 //---------------------------------------------------------------------------------
 void main (void) {
+#if 0
 	// Put sound table and mute all channel
 	snd_settable(snd_table);
 	snd_stopall();
@@ -178,4 +179,5 @@ void main (void) {
 		vdp_waitvblank(1); // default wait vblank
 	}
 	// startup module will issue a soft reboot if it comes here 
+#endif
 }

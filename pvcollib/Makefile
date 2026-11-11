@@ -81,7 +81,7 @@ include/coleco/libversion.h : Makefile
 	@echo >> $@
 	@echo "#endif // __PVCOLLIBVERSION_H__" >> $@
 
-# This target generates a text file containing the current version number of PVSnesLib. This allows for easier installation for users, as the version is no longer included in the folder name (which previously required users to update the 'pvcollib_home' variable). Instead, the version can now be found in this specific file.
+# This target generates a text file containing the current version number of PVColLib. This allows for easier installation for users, as the version is no longer included in the folder name (which previously required users to update the 'pvcollib_home' variable). Instead, the version can now be found in this specific file.
 pvcollibversion:
 	@echo $(PVCOLLIB_VERSION) > pvcollib_version.txt
 

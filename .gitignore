@@ -11,8 +11,8 @@ pvcollib/include/coleco/libversion.h
 release
 
 # exclude binaries (specific to your OS)
-devkitsnes/tools
-devkitsnes/bin
+devkitcol/tools
+devkitcol/bin
 
 # all binaries in tools folder
 tools/bin2txt/bin2txt

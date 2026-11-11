@@ -30,13 +30,13 @@
 #ifndef __SDC51_STDARG_H
 #define __SDC51_STDARG_H 1
 
-#if defined(__SDCC_z80) || defined(__SDCC_z180) || defined(__SDCC_r2k) || defined(__SDCC_r3ka) || defined(__SDCC_tlcs90) || defined(__SDCC_gbz80) || defined(__SDCC_hc08) || defined(__SDCC_s08) || defined(__SDCC_stm8)
+#if defined(__SDCC_z80) || defined(__SDCC_z180) || defined(__SDCC_r2k) || defined(__SDCC_r3ka) || defined(__SDCC_tlcs90) || defined (__SDCC_ez80_z80) || defined(__SDCC_gbz80) || defined(__SDCC_hc08) || defined(__SDCC_s08) || defined(__SDCC_stm8)
 
 typedef unsigned char * va_list;
 #define va_start(marker, last)  { marker = (va_list)&last + sizeof(last); }
 #define va_arg(marker, type)    *((type *)((marker += sizeof(type)) - sizeof(type)))
 
-#elif defined(__SDCC_ds390) || defined(__SDCC_ds400)
+#elif defined(__SDCC_ds390) || defined(__SDCC_ds400) || defined(__SDCC_pdk13) || defined(__SDCC_pdk14) || defined(__SDCC_pdk15)
 
 typedef unsigned char * va_list;
 #define va_start(marker, first) { marker = (va_list)&first; }
